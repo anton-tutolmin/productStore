@@ -46,6 +46,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: '/node_modules/'
       },
+      
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader',
@@ -53,6 +54,7 @@ module.exports = {
           name: '[name].[ext]'
         }
       },
+
       {
         test: /\.css$/,
         use: [
@@ -64,6 +66,7 @@ module.exports = {
           }
         ],
       },
+
       {
         test: /\.scss$/,
         use: [
@@ -80,7 +83,8 @@ module.exports = {
             options: { sourceMap: true }
           }
         ]
-      }
+      },
+      
     ],
   },
 

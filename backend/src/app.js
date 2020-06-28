@@ -4,6 +4,8 @@ const KoaBody = require('koa-body');
 const send = require('koa-send');
 const serve = require('koa-static');
 
+const router = require('./middleware/router');
+
 const PORT = 3000;
 
 const staticDir = path.resolve(__dirname, '..', '..', 'frontend', 'public')
@@ -15,6 +17,8 @@ app.use(async (ctx, next) => {
   await next();
   console.log('<<< OUT <<<');
 });
+
+app.use(router.routes());
 
 app.use(serve(staticDir));
 
