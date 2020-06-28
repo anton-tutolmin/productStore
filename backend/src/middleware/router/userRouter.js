@@ -15,12 +15,12 @@ router
   })
 
   .post('/users/login', async (ctx, next) => {
-    await UserService.login(ctx.request.body);
+    await UserService.login(JSON.parse(ctx.request.body));
     ctx.response.body = { message: 'ok' };
   })
 
   .post('/users/register', async (ctx, next) => {
-    await UserService.register(ctx.request.body);
+    await UserService.register(JSON.parse(ctx.request.body));
     ctx.response.body = { message: 'ok' }
   })
 
@@ -30,7 +30,10 @@ router
   })
 
   .put('/users:id', async (ctx, next) => {
-    await UserService.updateById(ctx.params.id, ctx.request.body);
+    await UserService.updateById(
+      ctx.params.id,
+      JSON.parse(ctx.request.body)
+    );
     ctx.response.body = { message: 'ok' };
   })
 
