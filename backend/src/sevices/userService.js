@@ -1,37 +1,52 @@
 const UserHandler = require('../operations/userHandler');
+const OrderHandler = require('../operations/orderHandler');
 
-const userSevice = () => {
+const userService = () => {
 
-  const getAll = () => {
+  const getAll = async () => {
     const users = await UserHandler.getAll();
     users.map(user => ({
       username: user.username,
+      email: user.email,
       phone: user.phone
     }));
+    return users;
   }
 
-  const getProfile = () => {
-    //TODO
+  const getProfile = async (id) => {
+    const profile = await UserHandler.getProfile(id);
+    const profile = {
+      username: profile.username,
+      email: profile.email,
+      phone: profile.phone
+    }
+    return profile;
   }
 
-  const login = (body) => {
-    //TODO
+  const login = async (body) => {
+    await UserHandler.login(body);
   }
 
-  const register = (body) => {
-    //TODO
+  const register = async (body) => {
+    await UserHandler.register(body)
   }
 
-  const getById = (id) => {
-    //TODO
+  const getById = async (id) => {
+    const user = await UserHandler.getById(id);
+    user = {
+      username: user.username,
+      email: user.email,
+      phone: user.phone
+    };
   }
 
-  const updateById = (id) => {
-    //TODO
+  const updateById = async (id, body) => {
+    await UserHandler.updateById(id, body);
   }
 
-  const deleteById = (id) => {
-    //TODO
+  const deleteById = async (id) => {
+    await UserHandler.deleteById(id);
+    await OrderHandler.deleteByUserId(id);
   }
 }
 

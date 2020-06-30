@@ -7,4 +7,4 @@ const UserSchema = new Schema({
   phone: String,
 });
 
-module.exports = model('users', UserSchema);
+module.exports = model('orders', OrderSchema);
