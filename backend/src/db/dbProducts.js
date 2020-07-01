@@ -28,3 +28,5 @@ const dbProducts = {
     await Product.deleteOne({_id: id});
   }
 }
+
+module.exports = dbProducts;
