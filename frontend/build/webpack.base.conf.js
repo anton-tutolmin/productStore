@@ -46,14 +46,6 @@ module.exports = {
         loader: 'babel-loader',
         exclude: '/node_modules/'
       },
-      
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]'
-        }
-      },
 
       {
         test: /\.css$/,
@@ -96,13 +88,7 @@ module.exports = {
       hash: false,
       template: `${PATHS.src}/index.html`,
       filename: './index.html'
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: `${PATHS.src}/utils/img`, to: `${PATHS.assets}img` },
-        { from: `${PATHS.src}/utils/static`, to: '' }
-      ]
-    }),
+    })
   ],
 
 

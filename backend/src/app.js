@@ -5,16 +5,21 @@ const send = require('koa-send');
 const serve = require('koa-static');
 const mongoose = require('mongoose');
 
-const User = require('./models/User');
+require('dotenv').config();
+const PORT = process.env.PORT;
+const url = process.env.URL;
 
-const router = require('./middleware/router');
+const passport = require('koa-passport');
 
-const PORT = 3000;
-const url = 'mongodb+srv://Anton:12win4456@cluster0-z82da.mongodb.net/productStore';
+const router = require('./routes');
 
 const staticDir = path.resolve(__dirname, '..', '..', 'frontend', 'public')
 
-const app = new Koa(KoaBody());
+const app = new Koa();
+app.keys = ['secret'];
+
+app.use(KoaBody());
+app.use(passport.initialize());
 
 app.use(async (ctx, next) => {
   console.log('<<< IN <<<');

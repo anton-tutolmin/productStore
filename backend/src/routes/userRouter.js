@@ -1,35 +1,35 @@
 const KoaRouter = require('koa-router');
-const UserService = require('../../services/userService');
+const UserController = require('../controllers/user');
 const router = new KoaRouter();
 
 router
   .get('/users', async (ctx, next) => {
-    const users = await UserService.getAll();
+    const users = await UserController.getAll();
     ctx.response.body = { users };
   })
 
   .get('/users/profile', async (ctx, next) => {
-    const userProfile = await UserService.getProfile(ctx.session.id);
+    const userProfile = await UserController.getProfile(ctx.session.id);
     ctx.response.body = { userProfile };
   })
 
   .post('/users/login', async (ctx, next) => {
-    await UserService.login(ctx.request.body);
+    await UserController.login(ctx.request.body);
     ctx.response.body = { message: 'ok' };
   })
 
   .post('/users/register', async (ctx, next) => {
-    await UserService.register(ctx.request.body);
+    await UserController.register(ctx.request.body);
     ctx.response.body = { message: 'ok' }
   })
 
   .get('/users:id', async (ctx, next) => {
-    const user = await UserService.getById(ctx.params.id);
+    const user = await UserController.getById(ctx.params.id);
     ctx.response.body = { user };
   })
 
   .put('/users:id', async (ctx, next) => {
-    await UserService.updateById(
+    await UserController.updateById(
       ctx.params.id,
       ctx.request.body
     );
@@ -37,7 +37,7 @@ router
   })
 
   .delete('/users:id', async (ctx, next) => {
-    await UserService.deleteById(ctx.params.id);
+    await UserController.deleteById(ctx.params.id);
     ctx.response.body = { message: 'ok' };
   })
 
