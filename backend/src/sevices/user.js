@@ -1,11 +1,16 @@
 const UserResource = require('../resources/user');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { createIndexes } = require('../models/User');
 
 const userService = {
 
   getAllUsers: async () => {
     const users = await UserResource.getAllUsers();
+    return users;
+  },
+
+  getUserById: async (id) => {
+    const user = UserResource.getUserById(id);
     return user;
   },
 
@@ -13,36 +18,23 @@ const userService = {
     const username = params.username;
     const password = params.password;
 
-    const user = UserResource.getUserByUsername(username);
+    const user = await UserResource.getUserByUsername(username);
 
     if (!user) {
-      throw new Error('There is no user with such username');
+      throw new Error('There is no such user');
     }
 
-    if ()
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
+    if (!isValidPassword) {
+      throw new Error('Wrong password');
+    }
+
+    const token = jwt.sign({id: user._id}, process.env.KEY);
+    
+    return token;
   },
 
-  const register = async (body) => {
-    await UserHandler.register(body)
-  },
-
-  const getById = async (id) => {
-    const user = await UserHandler.getById(id);
-    user = {
-      username: user.username,
-      email: user.email,
-      phone: user.phone
-    };
-  },
-
-  const updateById = async (id, body) => {
-    await UserHandler.updateById(id, body);
-  },
-
-  const deleteById = async (id) => {
-    await UserHandler.deleteById(id);
-    await OrderHandler.deleteByUserId(id);
-  },
 }
 
 

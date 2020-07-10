@@ -2,30 +2,53 @@ const UserService = require('../sevices/user');
 
 const UserController = {
 
-  getAllUsers: async () => {
-    const users = await UserService.getAll();
-    return users;
+  getAllUsers: async (ctx, next) => {
+    const users = await UserService.getAllUsers();
+    ctx.response.body = {users};
+    next();
   },
 
-  getUserById: async (id) => {
+  getUserById: async (ctx, next) => {
     const user = await UserService.getById(id);
-    return id;
+    ctx.response.body = {user};
+    next();
   },
 
-  login: async (params) => {
+  login: async (ctx, next) => {
+    const params = {
+      username: ctx.request.body.username,
+      password: ctx.request.body.password
+    };
     await UserService.login(params);
+    ctx.response.body = {message: 'User login'};
+    next();
   },
 
-  register: async (params) => {
+  register: async (ctx, next) => {
+    const params = {
+      username: ctx.request.body.username,
+      email: ctx.request.body.email,
+      phone: ctx.request.body.phone,
+      password: ctx.request.body.password
+    };
     await UserService.login(params);
+    ctx.response.body = {message: 'User registered'};
+    next();
   },
 
-  updateUserById: async (id, params) => {
-    await UserService.updateById(params);
+  updateUserById: async (ctx, next) => {
+    const id = ctx.params.id;
+    const params = ctx.request.body;
+    await UserService.updateById(id, params);
+    ctx.response.body = {message: 'User updated'};
+    next();
   },
 
-  deleteUserById: async (id) => {
+  deleteUserById: async (ctx, next) => {
+    const id = ctx.params.id;
     await UserService.deleteById(id);
+    ctx.response.body = {message: 'User deleted'};
+    next();
   }
 
 }

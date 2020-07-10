@@ -3,10 +3,7 @@ const UserController = require('../controllers/user');
 const router = new KoaRouter();
 
 router
-  .get('/users', async (ctx, next) => {
-    const users = await UserController.getAll();
-    ctx.response.body = { users };
-  })
+  .get('/users', UserController.getAllUsers)
 
   .get('/users/profile', async (ctx, next) => {
     const userProfile = await UserController.getProfile(ctx.session.id);
