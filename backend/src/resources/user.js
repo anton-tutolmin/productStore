@@ -18,9 +18,10 @@ const UserResource = {
   },
 
   createUser: async (params) => {
-    await User.create({
+    const user = await User.create({
       ...params
     });
+    return user;
   },
 
   updateUser: async (id, params) => {

@@ -23,7 +23,11 @@ app.use(passport.initialize());
 
 app.use(async (ctx, next) => {
   console.log('<<< IN <<<');
-  await next();
+  try {
+    await next();
+  } catch (e) {
+    ctx.response.body = {error: e.message};
+  }
   console.log('<<< OUT <<<');
 });
 
