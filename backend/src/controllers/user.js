@@ -8,7 +8,7 @@ const UserController = {
   },
 
   getUserById: async (ctx, next) => {
-    const user = await UserService.getById(id);
+    const user = await UserService.getUserById(ctx.params.id);
     ctx.response.body = {user};
   },
 
