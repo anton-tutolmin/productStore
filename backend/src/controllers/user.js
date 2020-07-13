@@ -1,4 +1,4 @@
-const UserService = require('../sevices/user');
+const UserService = require('../sevices/userService');
 
 const UserController = {
 
@@ -12,22 +12,21 @@ const UserController = {
     ctx.response.body = {user};
   },
 
-  createUser: async (params) => {
-    const user = await UserService.createUser(params);
-    return user;
+  createUser: async (ctx, next) => {
+    const user = await UserService.createUser(ctx.request.body);
+    ctx.response.body = {user}
   },
 
   updateUserById: async (ctx, next) => {
     const id = ctx.params.id;
-    const params = ctx.request.body;
-    await UserService.updateById(id, params);
-    ctx.response.body = {message: 'User updated'};
+    await UserService.updateUserById(id, ctx.request.body);
+    ctx.response.body = {message: 'User updated'}
   },
 
   deleteUserById: async (ctx, next) => {
     const id = ctx.params.id;
-    await UserService.deleteById(id);
-    ctx.response.body = {message: 'User deleted'};
+    await UserService.deleteUserById(id);
+    ctx.response.body = {message: 'User deleted'}
   }
 
 }

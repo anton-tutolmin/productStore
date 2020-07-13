@@ -24,7 +24,7 @@ const UserResource = {
     return user;
   },
 
-  updateUser: async (id, params) => {
+  updateUserById: async (id, params) => {
     await User.updateOne(
       {
         _id: id
@@ -35,7 +35,7 @@ const UserResource = {
     );
   },
 
-  deleteUser: async (id) => {
+  deleteUserById: async (id) => {
     await User.deleteOne({_id: id});
   }
 }

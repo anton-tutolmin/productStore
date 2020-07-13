@@ -1,4 +1,6 @@
 const passport = require('../config/passport');
+const jwt = require('jsonwebtoken');
+const UserService = require('./userService');
 
 const TokenService = {
 
@@ -29,11 +31,12 @@ const TokenService = {
       if (info !== undefined) {
         ctx.response.body = {...info};
       } else {
+        console.log();
         const hashedUser = {
           username: user.username,
           password: user.password,
           email: ctx.request.body.email,
-          phone: ctx.request.phone
+          phone: ctx.request.body.phone
         };
 
         const createdUser = await UserService.createUser(hashedUser);
