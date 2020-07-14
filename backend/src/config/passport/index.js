@@ -27,8 +27,7 @@ passport.use('register', new LocalStrategy(
       done(null, false, {message: 'This username already been taken'});
     } else {
       const hashedPassword = await Bcrypt.hashPassword(password);
-
-      done(null, {username: username, password: hashPassword});
+      done(null, {username: username, password: hashedPassword});
     }
   }
 ));
@@ -42,7 +41,7 @@ passport.use('login', new LocalStrategy(
       done(null, false, {message: 'There is no user with this username'});
     }
 
-    const isValidPassword = Bcrypt.validatePassword(password);
+    const isValidPassword = await Bcrypt.validatePassword(password);
 
     if (!isValidPassword) {
       done(null, false, {message: 'Wrong password'});

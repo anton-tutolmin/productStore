@@ -1,4 +1,5 @@
 const UserResource = require('../resources/user');
+const Bcrypt = require('../config/bcrypt');
 
 const userService = {
 
@@ -18,17 +19,23 @@ const userService = {
   },
 
   createUser: async (body) => {
+    const hashedPassword = await Bcrypt.hashPassword(body.password);
     const params = {
       username: body.username,
-      phone: body.password,
-      
+      email: body.email,
+      phone: body.phone,
+      password: hashedPassword
     }
     const user = await UserResource.createUser(params);
     return user;
   },
 
   updateUserById: async (id, body) => {
-    const params = {}
+    const params = {
+      username: body.username,
+      email: body.email,
+      phone: body.phone
+    }
     await UserResource.updateUserById(id, params);
   },
 
