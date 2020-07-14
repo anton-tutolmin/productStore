@@ -1,4 +1,4 @@
-const UserResource = require('../resources/user');
+const UserResource = require('../resources/userResource');
 const Bcrypt = require('../config/bcrypt');
 
 async function getAllUsers() {
