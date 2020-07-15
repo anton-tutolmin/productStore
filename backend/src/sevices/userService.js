@@ -1,5 +1,6 @@
 const UserResource = require('../resources/userResource');
 const Bcrypt = require('../config/bcrypt');
+const userValidator = require('./validatorService/user');
 
 async function getAllUsers() {
   const users = await UserResource.getAllUsers();
@@ -17,6 +18,7 @@ async function getUserByUsername(username) {
 }
 
 async function createUser(body) {
+  userValidator.validateCreateBody(body);
   const hashedPassword = await Bcrypt.hashPassword(body.password);
   const params = {
     username: body.username,
@@ -29,11 +31,23 @@ async function createUser(body) {
 }
 
 async function updateUserById(id, body) {
-  const params = {
-    username: body.username,
-    email: body.email,
-    phone: body.phone
+  userValidator.validateUpdateBody(body);
+
+  const params = {};
+  for (let param of Object.keys(body)) {
+    if (param === 'username') {
+      params.username = body[param];
+    }
+
+    if (param === 'email') {
+      params.email = body[param];
+    }
+
+    if (param === 'phone') {
+      params.phone = body[param];
+    }
   }
+
   await UserResource.updateUserById(id, params);
 }
 

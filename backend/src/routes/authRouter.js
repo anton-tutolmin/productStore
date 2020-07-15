@@ -1,13 +1,13 @@
 const KoaRouter = require('koa-router');
-const AuthController = require('../controllers/auth');
+const AuthController = require('../controllers/authController');
 
 const router = new KoaRouter();
 
 router
-  .get('/users/profile', AuthController.profile)
+  .get('/profile', AuthController.profile)
   
-  .post('/users/login', AuthController.login)
+  .post('/login', AuthController.login)
   
-  .post('/users/register', AuthController.register)
+  .post('/register', AuthController.register)
 
 module.exports = router;
