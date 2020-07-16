@@ -4,10 +4,16 @@ const AuthController = require('../controllers/authController');
 const router = new KoaRouter();
 
 router
-  .get('/profile', AuthController.profile)
+  .get('/profile', async (ctx, next) => {
+    await AuthController.profile(ctx, next);
+  })
   
-  .post('/login', AuthController.login)
+  .post('/login', async (ctx , next) => {
+    await AuthController.login(ctx, next);
+  })
   
-  .post('/register', AuthController.register)
+  .post('/register', async (ctx, next) => {
+    await AuthController.register(ctx, next);
+  })
 
 module.exports = router;
