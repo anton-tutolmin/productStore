@@ -15,7 +15,7 @@ router
   })
 
   .put('/users/:id', async (ctx, next) => {
-    await UserController.updateUserById(ctx.params.id);
+    await UserController.updateUserById(ctx.params.id, ctx.request.body);
     ctx.response.body = {message: 'User updated'}
   })
 
