@@ -1,5 +1,4 @@
 const UserResource = require('../resources/userResource');
-const Bcrypt = require('../config/bcrypt');
 const userValidator = require('./validatorService/user');
 
 async function getAllUsers() {
@@ -14,19 +13,12 @@ async function getUserById(id) {
 
 async function getUserByUsername(username) {
   const user = await UserResource.getUserByUsername(username);
+
   return user;
 }
 
 async function createUser(body) {
-  userValidator.validateCreateBody(body);
-  const hashedPassword = await Bcrypt.hashPassword(body.password);
-  const params = {
-    username: body.username,
-    email: body.email,
-    phone: body.phone,
-    password: hashedPassword
-  }
-  const user = await UserResource.createUser(params);
+  const user = await UserResource.createUser(body);
   return user;
 }
 
@@ -48,7 +40,8 @@ async function updateUserById(id, body) {
     }
   }
 
-  await UserResource.updateUserById(id, params);
+  const user = await UserResource.updateUserById(id, params);
+  return user;
 }
 
 async function deleteUserById(id) {

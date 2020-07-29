@@ -4,12 +4,14 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const Bcrypt = require('../bcrypt');
+const keys = require('./keys');
 
 const UserService = require('../../sevices/userService');
 
+
 const JwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_KEY
+  secretOrKey: keys.jwtKey
 };
 
 const LocalOptions = {
@@ -56,17 +58,8 @@ passport.use('jwt', new JwtStrategy(JwtOptions, async (data, done) => {
   if (!user) {
     done(null, false, {message: 'There is no such user'});
   }
-
   done(null, user);
 }));
 
-passport.serializeUser(async (user, done) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id, done) => {
-  const user = await UserService.getUserById(id);
-  done(null, user)
-});
 
 module.exports = passport;

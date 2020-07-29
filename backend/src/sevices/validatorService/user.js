@@ -28,13 +28,17 @@ function validateUpdateBody(body) {
 }
 
 function validatePassword(password) {
-  if (!password || password.length < 5) {
+  if (
+    !password ||
+    password.length < 5 ||
+    username.match(/[^A-Za-z0-9]/g)
+  ) {
     throw new Error('Password is not correct');
   }
 }
 
 function validateUsername(username) {
-  if (!username || username.length < 5) {
+  if (!username || username.length < 5 || username.match(/[^\w]/g)) {
     throw new Error('Username is not correct')
   }
 }
@@ -44,7 +48,7 @@ function validatePhone(phone) {
     !phone ||
     typeof phone !== 'string' ||
     phone.length !== 11 ||
-    phone.match(/[^0-9]/g).length !== 0
+    phone.match(/[^0-9]/g)
   ) {
     throw new Error('Phone is not correct');
   }
@@ -54,7 +58,7 @@ function validateEmail(email) {
   if (
     !email ||
     typeof email !== 'string' ||
-    phone.match(/\w@[gmail|email|yandex].[com|ru]$/g).length !== 0
+    !email.match(/\w{5,}@(gmail|yandex).(ru|com)/g)
   ) {
     throw new Error('Email is not correct');
   }

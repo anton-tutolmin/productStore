@@ -2,6 +2,8 @@ const passport = require('../config/passport');
 const jwt = require('jsonwebtoken');
 const UserService = require('./userService');
 
+const key = require('../config/passport/keys').jwtKey;
+
 const TokenService = {
 
   login: async (ctx, next) => {
@@ -12,7 +14,7 @@ const TokenService = {
       if (info !== undefined) {
         ctx.response.body = {...info};
       } else {
-        const token = jwt.sign({id: user._id}, process.env.JWT_KEY);
+        const token = jwt.sign({id: user._id}, key);
         ctx.response.body = {
           auth: true,
           token: token,
@@ -31,7 +33,6 @@ const TokenService = {
       if (info !== undefined) {
         ctx.response.body = {...info};
       } else {
-        console.log();
         const hashedUser = {
           username: user.username,
           password: user.password,
@@ -41,7 +42,7 @@ const TokenService = {
 
         const createdUser = await UserService.createUser(hashedUser);
 
-        const token = jwt.sign({id: createdUser._id}, process.env.JWT_KEY);
+        const token = jwt.sign({id: createdUser._id}, key);
 
         ctx.response.body = {
           auth: true,

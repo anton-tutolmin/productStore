@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-const saltRounds = process.env.SALT_ROUNDS;
+const saltRounds = 10;
 
 const Bcrypt = {
 

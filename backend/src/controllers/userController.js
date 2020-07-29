@@ -24,15 +24,10 @@ async function deleteUserById(id) {
   await UserService.deleteUserById(id);
 }
 
-function test() {
-  return 3;
-}
-
 module.exports = {
   getAllUsers,
   getUserById,
   createUser,
   updateUserById,
   deleteUserById,
-  test
 };

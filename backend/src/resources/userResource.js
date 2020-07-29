@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { Types } = require('mongoose');
 
 async function getAllUsers() {
   const users = await User.find({});
@@ -6,6 +7,8 @@ async function getAllUsers() {
 }
 
 async function getUserById(id) {
+  validateId(id);
+  
   const user = await User.findOne({_id: id});
   return user;
 }
@@ -16,25 +19,26 @@ async function getUserByUsername(username) {
 }
 
 async function createUser(params) {
-  const user = await User.create({
-    ...params
-  });
+  const user = await User.create({...params});
   return user;
 }
 
 async function updateUserById(id, params) {
-  await User.updateOne(
-    {
-      _id: id
-    },
-    {
-      ...params
-    }
-  );
+  validateId(id);
+  await User.updateOne({_id: id}, {...params});
+  const user = await User.findOne({_id: id});
+  return user;
 }
 
 async function deleteUserById(id) {
+  validateId(id);
   await User.deleteOne({_id: id});
+}
+
+function validateId(id) {
+  if (!Types.ObjectId.isValid(id)) {
+    throw new Error('Not valid id');
+  }
 }
 
 module.exports = {
