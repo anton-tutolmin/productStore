@@ -1,13 +1,11 @@
 const OrdersController = require('../src/controllers/ordersController');
-const ProductController = require('../src/controllers/');
+const ProductController = require('../src/controllers/productController');
 const UserController = require('../src/controllers/userController');
 const mongoose = require('mongoose');
 
 const url = require('./config').url;
 
 describe('Order operations test', () => {
-
-  const createdOrder;
 
   beforeAll(async () => {
     await mongoose.connect(url, {
@@ -25,6 +23,8 @@ describe('Order operations test', () => {
   });
 
   describe('Order operations test: ', () => {
+
+    let createdOrder;
 
     test('Creating order:', async () => {
       const user = await UserController.createUser({
@@ -44,13 +44,13 @@ describe('Order operations test', () => {
 
       const order = await OrdersController.createOrder({
         status: 'created',
-        authorId: user._id,
-        productId: product._id
+        authorId: user._id.toString(),
+        productId: product._id.toString()
       });
 
       expect(order.status).toBe('created');
-      expect(order.authorId).toBe(user._id);
-      expect(order.productId).toBe(product._id);
+      expect(order.authorId).toBe(user._id.toString());
+      expect(order.productId).toBe(product._id.toString());
 
       createdOrder = order;
     });

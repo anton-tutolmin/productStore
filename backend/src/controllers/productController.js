@@ -1,7 +1,7 @@
 const ProductService = require('../sevices/productService');
 
-async function createProduct(product) {
-  const product = await ProductService.createProduct();
+async function createProduct(body) {
+  const product = await ProductService.createProduct(body);
   return product;
 }
 
@@ -16,11 +16,12 @@ async function getProductById(id) {
 }
 
 async function updateProductById(id, params) {
-  const product = await ProductService.updateProductById(id, params)
+  const product = await ProductService.updateProductById(id, params);
+  return product;
 }
 
-async function deleteProductsById(id) {
-
+async function deleteProductById(id) {
+  await ProductService.deleteProductById(id);
 }
 
 module.exports = {
@@ -28,5 +29,5 @@ module.exports = {
   getAllProducts,
   getProductById,
   updateProductById,
-  deleteProductsById
+  deleteProductById
 }
