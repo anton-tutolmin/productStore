@@ -24,7 +24,6 @@ passport.use('register', new LocalStrategy(
   LocalOptions,
   async (username, password, done) => {
     const user = await UserService.getUserByUsername(username);
-
     if (user) {
       done(null, false, {message: 'This username already been taken'});
     } else {
@@ -43,7 +42,7 @@ passport.use('login', new LocalStrategy(
       done(null, false, {message: 'There is no user with this username'});
     }
 
-    const isValidPassword = await Bcrypt.validatePassword(password);
+    const isValidPassword = await Bcrypt.validatePassword(password, user.password);
 
     if (!isValidPassword) {
       done(null, false, {message: 'Wrong password'});
@@ -60,6 +59,5 @@ passport.use('jwt', new JwtStrategy(JwtOptions, async (data, done) => {
   }
   done(null, user);
 }));
-
 
 module.exports = passport;

@@ -23,8 +23,6 @@ async function createUser(body) {
 }
 
 async function updateUserById(id, body) {
-  userValidator.validateUpdateBody(body);
-
   const params = {};
   for (let param of Object.keys(body)) {
     if (param === 'username') {

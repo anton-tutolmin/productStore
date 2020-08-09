@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "test": "jest"
+    "test:api": "jest tests/api.test.js",
+    "test:all": "jest tests/all.test.js",
+    "test:user": "jest tests/user.test.js",
+    "test:product": "jest tests/product.test.js",
+    "test:order": "jest tests/order.test.js"
   },
   "author": "",
   "license": "ISC",

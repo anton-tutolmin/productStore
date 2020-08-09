@@ -1,17 +1,23 @@
 
-function validateLoginBody(body) {
+async function validateLoginBody(ctx, next) {
+  const body = {...ctx.request.body};
   validateUsername(body.username);
-  validatePassword(body.password)
+  validatePassword(body.password);
+  await next();
 }
 
-function validateCreateBody(body) {
+async function validateCreateBody(ctx, next) {
+  const body = {...ctx.request.body};
   validateUsername(body.username);
   validatePassword(body.password);
   validateEmail(body.email);
   validatePhone(body.phone);
+  validateStatus(body.status);
+  await next()
 }
 
-function validateUpdateBody(body) {
+async function validateUpdateBody(ctx, next) {
+  const body = {...ctx.request.body};
   for (let param of Object.keys(body)) {
     if (param === 'username') {
       validateUsername(body[param]);
@@ -24,14 +30,19 @@ function validateUpdateBody(body) {
     if (param === 'phone') {
       validatePhone(body[param]);
     }
+
+    if (param === 'status') {
+      validateStatus(body[param]);
+    }
   }
+  await next();
 }
 
 function validatePassword(password) {
   if (
     !password ||
     password.length < 5 ||
-    username.match(/[^A-Za-z0-9]/g)
+    password.match(/[^A-Za-z0-9]/g)
   ) {
     throw new Error('Password is not correct');
   }
@@ -61,6 +72,17 @@ function validateEmail(email) {
     !email.match(/\w{5,}@(gmail|yandex).(ru|com)/g)
   ) {
     throw new Error('Email is not correct');
+  }
+}
+
+function validateStatus(status) {
+  if (
+    !status ||
+    status !== 'client' &&
+    status !== 'curier' &&
+    status !== 'clientcurier'
+  ) {
+    throw new Error('Status is not correct');
   }
 }
 

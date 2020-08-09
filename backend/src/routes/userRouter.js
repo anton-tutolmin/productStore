@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const validator = require('../sevices/validatorService/user');
 
 const UserController = require('../controllers/userController');
 const router = new KoaRouter();
@@ -14,7 +15,7 @@ router
     ctx.response.body = {user};
   })
 
-  .put('/api/users/:id', async (ctx, next) => {
+  .put('/api/users/:id', validator.validateUpdateBody, async (ctx, next) => {
     const user = await UserController.updateUserById(ctx.params.id, ctx.request.body);
     ctx.response.body = {user}
   })

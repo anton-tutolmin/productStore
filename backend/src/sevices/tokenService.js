@@ -63,6 +63,7 @@ const TokenService = {
       } else {
         ctx.response.body = {
           auth: true,
+          id: user._id,
           username: user.username,
           email: user.email,
           phone: user.phone

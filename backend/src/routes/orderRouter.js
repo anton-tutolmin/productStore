@@ -5,7 +5,9 @@ const router = new KoaRouter();
 router
 
   // for clients - create new order
-  .post('/orders')
+  .post('/orders', async (ctx, next) => {
+
+  })
 
   // get information about order
   .get('/orders:id')
