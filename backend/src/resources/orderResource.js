@@ -15,6 +15,16 @@ async function getOrderById(id) {
   return order;
 }
 
+async function getOrderByAuthorId(authorId) {
+  const order = await Order.findOne({authorId});
+  return order;
+}
+
+async function getOrderByProductId(productId) {
+  const order = await Order.findOne({productId});
+  return order;
+}
+
 async function updateOrderById(id, params) {
   await Order.updateOne({_id: id}, {...params});
 }
@@ -24,17 +34,19 @@ async function deleteOrderById(id) {
 }
 
 async function deleteOrderByAuthorId(authorId) {
-  await Order.deleteOne({authroId: authorId});
+  await Order.deleteOne({authorId});
 }
 
 async function deleteOrderByProductId(productId) {
-  await Order.deleteOne({productId: productId});
+  await Order.deleteOne({productId});
 }
 
 module.exports = {
   createOrder,
   getAllOrders,
   getOrderById,
+  getOrderByAuthorId,
+  getOrderByProductId,
   updateOrderById,
   deleteOrderById,
   deleteOrderByAuthorId,

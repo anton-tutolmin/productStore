@@ -1,6 +1,11 @@
 const User = require('../models/User');
 const { Types } = require('mongoose');
 
+async function createUser(body) {
+  const user = await User.create({...body});
+  return user;
+}
+
 async function getAllUsers() {
   const users = await User.find({});
   return users;
@@ -18,16 +23,9 @@ async function getUserByUsername(username) {
   return user;
 }
 
-async function createUser(params) {
-  const user = await User.create({...params});
-  return user;
-}
-
 async function updateUserById(id, params) {
   validateId(id);
   await User.updateOne({_id: id}, {...params});
-  const user = await User.findOne({_id: id});
-  return user;
 }
 
 async function deleteUserById(id) {

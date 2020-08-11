@@ -15,6 +15,16 @@ async function getOrderById(id) {
   return order;
 }
 
+async function getOrderByAuthorId(authorId) {
+  const order = await OrderResource.getOrderByAuthorId(authorId);
+  return order;
+}
+
+async function getOrderByProductId(productId) {
+  const order = await OrderResource.getOrderByProductId(productId);
+  return order;
+}
+
 async function updateOrderById(id, params) {
   await OrderResource.updateOrderById(id, params);
   const order = OrderResource.getOrderById(id);
@@ -37,8 +47,10 @@ module.exports = {
   createOrder,
   getAllOrders,
   getOrderById,
+  getOrderByAuthorId,
+  getOrderByProductId,
   updateOrderById,
   deleteOrderById,
   deleteOrderByAuthorId,
-  deleteOrderByProductId
+  deleteOrderByProductId,
 }

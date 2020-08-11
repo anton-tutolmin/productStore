@@ -1,4 +1,5 @@
 const ProductResource = require('../resources/productResource');
+const OrderService = require('./orderService');
 
 async function createProduct(body) {
   const product = await ProductResource.createProduct(body);
@@ -23,6 +24,7 @@ async function updateProductById(id, params) {
 
 async function deleteProductById(id) {
   await ProductResource.deleteProductById(id);
+  await OrderService.deleteOrderByProductId(id);
 }
 
 module.exports = {

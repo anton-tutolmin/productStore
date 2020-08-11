@@ -3,7 +3,7 @@ const ProductController = require('../src/controllers/productController');
 
 const url = require('./config').url;
 
-describe('Product operations test', () => {
+describe('Product tests:', () => {
 
   beforeAll(async () => {
     await mongoose.connect(url, {
