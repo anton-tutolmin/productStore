@@ -1,21 +1,42 @@
 const KoaRouter = require('koa-router');
+const ProductController = require('../controllers/productController');
 
 const router = new KoaRouter();
 
 router
-  //get all available products
-  .get('/products')
+  // Add new products
+  .post('/products', async (ctx, next) => {
+    await ProductController.create(ctx.request.body.product);
 
-  //add new products
-  .post('/products')
+    ctx.response.body = {message: 'Product created'}
+  })
 
-  //get information about products
-  .get('/products:id')
+  // Get all available products
+  .get('/products', async (ctx, next) => {
+    const products = await ProductController.getAll();
+    ctx.response.body = {products};
+  })
 
-  //update products
-  .put('/products:id')
+  // Get information about products
+  .get('/products:id', async (ctx, next) => {
+    const product =
+      await ProductController.getById(ctx.params.id);
 
-  //remove products
-  .delete('/products:id')
+    ctx.response.body = {product};
+  })
+
+  // Update products
+  .put('/products:id', async (ctx, next) => {
+    await ProductController
+      .updateById(ctx.params.id, ctx.request.body);
+
+    ctx.response.body = {message: 'Product updated'}
+  })
+
+  // Remove product
+  .delete('/products:id', async (ctx, next) => {
+    await ProductController.deleteById(ctx.params.id);
+    ctx.response.body = {message: 'Product deleted'};
+  })
 
 module.exports = router;

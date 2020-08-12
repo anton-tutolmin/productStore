@@ -6,44 +6,36 @@ async function validateLoginBody(ctx, next) {
   await next();
 }
 
-async function validateCreateBody(ctx, next) {
-  const body = {...ctx.request.body};
+function validateCreateBody(body) {
   validateUsername(body.username);
   validatePassword(body.password);
   validateEmail(body.email);
   validatePhone(body.phone);
-  validateStatus(body.status);
-  await next()
+  validateType(body.type);
 }
 
-async function validateUpdateBody(ctx, next) {
-  const body = {...ctx.request.body};
-  for (let param of Object.keys(body)) {
+function validateUpdateBody(params) {
+  for (let param of Object.keys(params)) {
     if (param === 'username') {
-      validateUsername(body[param]);
+      validateUsername(params[param]);
     }
 
     if (param === 'email') {
-      validateEmail(body[param]);
+      validateEmail(params[param]);
     }
 
     if (param === 'phone') {
-      validatePhone(body[param]);
+      validatePhone(params[param]);
     }
 
-    if (param === 'status') {
-      validateStatus(body[param]);
+    if (param === 'type') {
+      validateType(params[param]);
     }
   }
-  await next();
 }
 
 function validatePassword(password) {
-  if (
-    !password ||
-    password.length < 5 ||
-    password.match(/[^A-Za-z0-9]/g)
-  ) {
+  if (!password || password.length === 0) {
     throw new Error('Password is not correct');
   }
 }
@@ -75,14 +67,13 @@ function validateEmail(email) {
   }
 }
 
-function validateStatus(status) {
+function validateType(type) {
   if (
-    !status ||
-    status !== 'client' &&
-    status !== 'curier' &&
-    status !== 'clientcurier'
+    !type ||
+    type !== 1 &&
+    type !== 2
   ) {
-    throw new Error('Status is not correct');
+    throw new Error('Type is not correct');
   }
 }
 

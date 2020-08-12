@@ -1,33 +1,33 @@
 const UserService = require('../sevices/userService');
 
-async function createUser(body) {
-  const user = await UserService.createUser(body);
+async function create(body) {
+  const user = await UserService.create(body);
   return user;
 }
 
-async function getAllUsers() {
-  const users = await UserService.getAllUsers();
+async function getAll() {
+  const users = await UserService.getAll();
   return users;
 }
 
-async function getUserById(id) {
-  const user = await UserService.getUserById(id);
+async function getById(id) {
+  const user = await UserService.getById(id);
   return user;
 }
 
-async function updateUserById(id, params) {
-  const user = await UserService.updateUserById(id, params);
+async function updateById(id, params) {
+  const user = await UserService.updateById(id, params);
   return user;
 }
 
-async function deleteUserById(id) {
-  await UserService.deleteUserById(id);
+async function deleteById(id) {
+  await UserService.deleteById(id);
 }
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUserById,
-  deleteUserById,
+  getAll,
+  getById,
+  create,
+  updateById,
+  deleteById,
 };

@@ -1,33 +1,33 @@
 const OrderService = require('../sevices/orderService');
 
-async function createOrder(body) {
-  const order = await OrderService.createOrder(body);
+async function create(body) {
+  const order = await OrderService.create(body);
   return order;
 }
 
-async function getAllOrders() {
-  const orders = await OrderService.getAllOrders();
+async function getAll() {
+  const orders = await OrderService.getAll();
   return orders;
 }
 
-async function getOrderById(id) {
-  const order = await OrderService.getOrderById(id);
+async function getById(id) {
+  const order = await OrderService.getById(id);
   return order;
 }
 
-async function updateOrderById(id, params) {
-  const order = await OrderService.updateOrderById(id, params);
+async function updateById(id, params) {
+  const order = await OrderService.updateById(id, params);
   return order
 }
 
-async function deleteOrderById(id) {
-  await OrderService.deleteOrderById(id);
+async function deleteById(id) {
+  await OrderService.deleteById(id);
 }
 
 module.exports = {
-  createOrder,
-  getAllOrders,
-  getOrderById,
-  updateOrderById,
-  deleteOrderById
+  create,
+  getAll,
+  getById,
+  updateById,
+  deleteById
 }

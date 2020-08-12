@@ -1,34 +1,34 @@
 const User = require('../models/User');
 const { Types } = require('mongoose');
 
-async function createUser(body) {
+async function create(body) {
   const user = await User.create({...body});
   return user;
 }
 
-async function getAllUsers() {
+async function getAll() {
   const users = await User.find({});
   return users;
 }
 
-async function getUserById(id) {
+async function getById(id) {
   validateId(id);
   
   const user = await User.findOne({_id: id});
   return user;
 }
 
-async function getUserByUsername(username) {
+async function getByUsername(username) {
   const user = await User.findOne({username});
   return user;
 }
 
-async function updateUserById(id, params) {
+async function updateById(id, params) {
   validateId(id);
   await User.updateOne({_id: id}, {...params});
 }
 
-async function deleteUserById(id) {
+async function deleteById(id) {
   validateId(id);
   await User.deleteOne({_id: id});
 }
@@ -40,10 +40,10 @@ function validateId(id) {
 }
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  getUserByUsername,
-  createUser,
-  updateUserById,
-  deleteUserById
+  getAll,
+  getById,
+  getByUsername,
+  create,
+  updateById,
+  deleteById
 };

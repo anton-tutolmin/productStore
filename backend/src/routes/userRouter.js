@@ -1,27 +1,29 @@
 const KoaRouter = require('koa-router');
-const validator = require('../sevices/validatorService/user');
-
 const UserController = require('../controllers/userController');
 const router = new KoaRouter();
 
 router
+  // Get all users
   .get('/api/users', async (ctx, next) => {
-    const users = await UserController.getAllUsers();
+    const users = await UserController.getAll();
     ctx.response.body = {users};
   })
 
+  // Get user by id
   .get('/api/users/:id', async (ctx, next) => {
-    const user = await UserController.getUserById(ctx.params.id);
+    const user = await UserController.getById(ctx.params.id);
     ctx.response.body = {user};
   })
 
-  .put('/api/users/:id', validator.validateUpdateBody, async (ctx, next) => {
-    const user = await UserController.updateUserById(ctx.params.id, ctx.request.body);
+  // Update user by id
+  .put('/api/users/:id', async (ctx, next) => {
+    const user = await UserController.updateById(ctx.params.id, ctx.request.body);
     ctx.response.body = {user}
   })
 
+  // Delete user by id
   .delete('/api/users/:id', async (ctx, next) => {
-    await UserController.deleteUserById(ctx.params.id);
+    await UserController.deleteById(ctx.params.id);
     ctx.response.body = {message: 'User deleted'};
   })
 

@@ -1,32 +1,32 @@
 const Product = require('../models/Product');
 
-async function createProduct(body) {
+async function create(body) {
   const product = await Product.create(body);
   return product;
 }
 
-async function getAllProducts() {
+async function getAll() {
   const products = await Product.find({});
   return products;
 }
 
-async function getProductById(id, params) {
+async function getById(id, params) {
   const product = await Product.findOne({_id: id});
   return product;
 }
 
-async function updateProductById(id, params) {
+async function updateById(id, params) {
   await Product.updateOne({_id: id}, {...params});
 }
 
-async function deleteProductById(id) {
+async function deleteById(id) {
   await Product.deleteOne({_id: id});
 }
 
 module.exports = {
-  createProduct,
-  getAllProducts,
-  getProductById,
-  updateProductById,
-  deleteProductById
+  create,
+  getAll,
+  getById,
+  updateById,
+  deleteById
 }

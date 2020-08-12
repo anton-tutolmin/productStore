@@ -2,27 +2,28 @@ const UserResource = require('../resources/userResource');
 const OrderService = require('./orderService');
 const userValidator = require('./validatorService/user');
 
-async function createUser(body) {
-  const user = await UserResource.createUser(body);
+async function create(body) {
+  userValidator.validateCreateBody(body);
+  const user = await UserResource.create(body);
   return user;
 }
 
-async function getAllUsers() {
-  const users = await UserResource.getAllUsers();
+async function getAll() {
+  const users = await UserResource.getAll();
   return users;
 }
 
-async function getUserById(id) {
-  const user = UserResource.getUserById(id);
+async function getById(id) {
+  const user = UserResource.getById(id);
   return user;
 }
 
-async function getUserByUsername(username) {
-  const user = await UserResource.getUserByUsername(username);
+async function getByUsername(username) {
+  const user = await UserResource.getByUsername(username);
   return user;
 }
 
-async function updateUserById(id, body) {
+async function updateById(id, body) {
   const params = {};
   for (let param of Object.keys(body)) {
     if (param === 'username') params.username = body[param];
@@ -31,21 +32,23 @@ async function updateUserById(id, body) {
     if (param === 'type') params.type = body[param];
   }
 
-  await UserResource.updateUserById(id, params);
-  const user = await UserResource.getUserById(id);
+  userValidator.validateUpdateBody(params);
+
+  await UserResource.updateById(id, params);
+  const user = await UserResource.getById(id);
   return user;
 }
 
-async function deleteUserById(id) {
-  await UserResource.deleteUserById(id);
-  await OrderService.deleteOrderByAuthorId(id);
+async function deleteById(id) {
+  await UserResource.deleteById(id);
+  await OrderService.deleteByAuthorId(id);
 }
 
 module.exports = {
-  getAllUsers,
-  getUserById,
-  getUserByUsername,
-  createUser,
-  updateUserById,
-  deleteUserById
+  getAll,
+  getById,
+  getByUsername,
+  create,
+  updateById,
+  deleteById
 };

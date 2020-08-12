@@ -1,54 +1,54 @@
 const Order = require('../models/Order');
 
-async function createOrder(body) {
+async function create(body) {
   const order = await Order.create(body);
   return order;
 }
 
-async function getAllOrders() {
+async function getAll() {
   const orders = await Order.find({});
   return orders;
 }
 
-async function getOrderById(id) {
+async function getById(id) {
   const order = await Order.findOne({_id: id});
   return order;
 }
 
-async function getOrderByAuthorId(authorId) {
-  const order = await Order.findOne({authorId});
-  return order;
+async function getByAuthorId(authorId) {
+  const orders = await Order.find({authorId});
+  return orders;
 }
 
-async function getOrderByProductId(productId) {
-  const order = await Order.findOne({productId});
-  return order;
+async function getByProductId(productId) {
+  const orders = await Order.find({productId});
+  return orders;
 }
 
-async function updateOrderById(id, params) {
+async function updateById(id, params) {
   await Order.updateOne({_id: id}, {...params});
 }
 
-async function deleteOrderById(id) {
+async function deleteById(id) {
   await Order.deleteOne({_id: id});
 }
 
-async function deleteOrderByAuthorId(authorId) {
-  await Order.deleteOne({authorId});
+async function deleteByAuthorId(authorId) {
+  await Order.delete({authorId});
 }
 
-async function deleteOrderByProductId(productId) {
-  await Order.deleteOne({productId});
+async function deleteByProductId(productId) {
+  await Order.delete({productId});
 }
 
 module.exports = {
-  createOrder,
-  getAllOrders,
-  getOrderById,
-  getOrderByAuthorId,
-  getOrderByProductId,
-  updateOrderById,
-  deleteOrderById,
-  deleteOrderByAuthorId,
-  deleteOrderByProductId
+  create,
+  getAll,
+  getById,
+  getByAuthorId,
+  getByProductId, 
+  updateById,
+  deleteById,
+  deleteByAuthorId,
+  deleteByProductId
 }

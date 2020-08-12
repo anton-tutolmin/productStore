@@ -1,33 +1,33 @@
 const ProductService = require('../sevices/productService');
 
-async function createProduct(body) {
-  const product = await ProductService.createProduct(body);
+async function create(body) {
+  const product = await ProductService.create(body);
   return product;
 }
 
-async function getAllProducts() {
-  const products = await ProductService.getAllProducts();
+async function getAll() {
+  const products = await ProductService.getAll();
   return products;
 }
 
-async function getProductById(id) {
-  const product = await ProductService.getProductById(id);
+async function getById(id) {
+  const product = await ProductService.getById(id);
   return product;
 }
 
-async function updateProductById(id, params) {
-  const product = await ProductService.updateProductById(id, params);
+async function updateById(id, params) {
+  const product = await ProductService.updateById(id, params);
   return product;
 }
 
-async function deleteProductById(id) {
-  await ProductService.deleteProductById(id);
+async function deleteById(id) {
+  await ProductService.deleteById(id);
 }
 
 module.exports = {
-  createProduct,
-  getAllProducts,
-  getProductById,
-  updateProductById,
-  deleteProductById
+  create,
+  getAll,
+  getById,
+  updateById,
+  deleteById
 }

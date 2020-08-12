@@ -23,7 +23,7 @@ describe('User tests:', () => {
     let createdUser;
 
     test('Creating user:', async () => {
-      const user = await UserController.createUser({
+      const user = await UserController.create({
         username: 'anton',
         password: 'anton',
         email: 'anton@gmail.com',
@@ -41,13 +41,13 @@ describe('User tests:', () => {
     });
 
     test('Getting all user:', async () => {
-      const users = await UserController.getAllUsers();
+      const users = await UserController.getAll();
 
       expect(users.length).toBe(1);
     });
 
     test('Getting user by id:', async () => {
-      const user = await UserController.getUserById(createdUser._id);
+      const user = await UserController.getById(createdUser._id);
 
       expect(user.username).toBe(createdUser.username);
       expect(user.email).toBe(createdUser.email);
@@ -56,19 +56,19 @@ describe('User tests:', () => {
     });
 
     test('Updating user by id:', async () => {
-      const user1 = await UserController.updateUserById(createdUser._id, {
+      const user1 = await UserController.updateById(createdUser._id, {
         username: 'irina'
       });
 
-      const user2 = await UserController.updateUserById(createdUser._id, {
+      const user2 = await UserController.updateById(createdUser._id, {
         email: 'irina@gmail.com'
       });
 
-      const user3 = await UserController.updateUserById(createdUser._id, {
+      const user3 = await UserController.updateById(createdUser._id, {
         phone: '22222222222'
       });
 
-      const user4 = await UserController.updateUserById(createdUser._id, {
+      const user4 = await UserController.updateById(createdUser._id, {
         type: 2
       });
 
@@ -79,8 +79,8 @@ describe('User tests:', () => {
     });
 
     test('Deleting user by id:', async () => {
-      await UserController.deleteUserById(createdUser._id);
-      const users = await UserController.getAllUsers();
+      await UserController.deleteById(createdUser._id);
+      const users = await UserController.getAll();
 
       expect(users.length).toBe(0);
     });

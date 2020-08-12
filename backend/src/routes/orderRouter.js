@@ -1,4 +1,5 @@
 const KoaRouter = require('koa-router');
+const OrderController = require('../controllers/ordersController');
 
 const router = new KoaRouter();
 
@@ -6,7 +7,7 @@ router
 
   // for clients - create new order
   .post('/orders', async (ctx, next) => {
-
+    await OrderController.create();
   })
 
   // get information about order

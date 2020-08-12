@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 const url = require('./config').url;
 
-describe('Order operations test', () => {
+describe('Order tests:', () => {
 
   beforeAll(async () => {
     await mongoose.connect(url, {
@@ -27,22 +27,22 @@ describe('Order operations test', () => {
     let createdOrder;
 
     test('Creating order:', async () => {
-      const user = await UserController.createUser({
+      const user = await UserController.create({
         username: 'orderop',
         password: 'orderop',
         email: 'orderop@gmail.com',
         phone: '11111111111',
-        status: 'client'
+        type: 1
       });
 
-      const product = await ProductController.createProduct({
+      const product = await ProductController.create({
         productname: '',
         description: '',
         coast: '',
         img: '',
       });
 
-      const order = await OrdersController.createOrder({
+      const order = await OrdersController.create({
         status: 'created',
         authorId: user._id.toString(),
         productId: product._id.toString()
@@ -56,14 +56,14 @@ describe('Order operations test', () => {
     });
   
     test('Getting all orders:', async () => {
-      const orders = await OrdersController.getAllOrders();
+      const orders = await OrdersController.getAll();
 
       expect(orders.length).toBe(1);
     });
   
     test('Getting order by id:', async () => {
       const order =
-        await OrdersController.getOrderById(createdOrder._id);
+        await OrdersController.getById(createdOrder._id);
 
       expect(order.status).toBe(createdOrder.status);
       expect(order.authorId).toBe(createdOrder.authorId);
@@ -72,17 +72,17 @@ describe('Order operations test', () => {
   
     test('Updating order by id:', async () => {
       const order1 =
-        await OrdersController.updateOrderById(createdOrder._id, {
+        await OrdersController.updateById(createdOrder._id, {
             status: 'delivering'
         });
 
       const order2 =
-        await OrdersController.updateOrderById(createdOrder._id, {
+        await OrdersController.updateById(createdOrder._id, {
             status: 'delivered'
         });
 
       const order3 =
-        await OrdersController.updateOrderById(createdOrder._id, {
+        await OrdersController.updateById(createdOrder._id, {
             status: 'done'
         });
 
@@ -92,9 +92,9 @@ describe('Order operations test', () => {
     });
   
     test('Deleting order by id', async () => {
-      await OrdersController.deleteOrderById(createdOrder._id);
+      await OrdersController.deleteById(createdOrder._id);
 
-      const orders = await OrdersController.getAllOrders();
+      const orders = await OrdersController.getAll();
       expect(orders.length).toBe(0);
     });
 

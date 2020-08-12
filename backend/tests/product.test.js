@@ -23,7 +23,7 @@ describe('Product tests:', () => {
     let createdProduct;
 
     test('Creating product:', async () => {
-      const product = await ProductController.createProduct({
+      const product = await ProductController.create({
         productname: 'lipton',
         description: 'really cheap tea',
         coast: '40',
@@ -38,14 +38,14 @@ describe('Product tests:', () => {
     });
   
     test('Getting all products:', async () => {
-      const products = await ProductController.getAllProducts();
+      const products = await ProductController.getAll();
 
       expect(products.length).toBe(1);
     });
   
     test('Getting products by id:', async () => {
       const product =
-        await ProductController.getProductById(createdProduct._id);
+        await ProductController.getById(createdProduct._id);
 
       expect(product.productname).toBe(createdProduct.productname);
       expect(product.description).toBe(createdProduct.description);
@@ -56,25 +56,25 @@ describe('Product tests:', () => {
     test('Updating products by id:', async () => {
       const product1 =
         await ProductController
-          .updateProductById(createdProduct._id, {
+          .updateById(createdProduct._id, {
             productname: 'greenfield'
       });
 
       const product2 =
         await ProductController
-          .updateProductById(createdProduct._id, {
+          .updateById(createdProduct._id, {
             description: 'really bad tea'
       });
 
       const product3 =
         await ProductController
-          .updateProductById(createdProduct._id, {
+          .updateById(createdProduct._id, {
             coast: '45'
       });
 
       const product4 =
         await ProductController
-          .updateProductById(createdProduct._id, {
+          .updateById(createdProduct._id, {
             img: 'greenfield.jpg'
       });
 
@@ -85,8 +85,8 @@ describe('Product tests:', () => {
     });
   
     test('Deleting products by id:', async () => {
-      await ProductController.deleteProductById(createdProduct._id);
-      const products = await ProductController.getAllProducts();
+      await ProductController.deleteById(createdProduct._id);
+      const products = await ProductController.getAll();
       expect(products.length).toBe(0);
     });
 

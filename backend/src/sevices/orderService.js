@@ -1,56 +1,82 @@
 const OrderResource = require('../resources/orderResource');
+const UserService = require('./userService');
+const ProductService = require('./productService');
+const validator = require('./validatorService/order');
 
-async function createOrder(body) {
-  const order = await OrderResource.createOrder(body);
+async function create(body) {
+  const user = await UserService.getById(body.authorId);
+  if (!user) throw new Error('No such user');
+
+  const product = await ProductService.getById(body.productId);
+  if (!product) throw new Error('No such product');
+
+  if (user.balance < product.coast)
+    throw new Error('Not enough money');
+
+  const newBalance = user.balance - product.coast;
+
+  await UserService.updateById(user._id, {balance: newBalance});
+
+  const createBody = {
+    status: 'created',
+    authorId: body.authorId,
+    productId: body.productId
+  }
+
+  const order = await OrderResource.create(createBody);
   return order;
 }
 
-async function getAllOrders() {
-  const orders = await OrderResource.getAllOrders();
+async function getAll() {
+  const orders = await OrderResource.getAll();
   return orders;
 }
 
-async function getOrderById(id) {
-  const order = await OrderResource.getOrderById(id);
+async function getById(id) {
+  const order = await OrderResource.getById(id);
   return order;
 }
 
-async function getOrderByAuthorId(authorId) {
-  const order = await OrderResource.getOrderByAuthorId(authorId);
+async function getByAuthorId(authorId) {
+  const orders = await OrderResource.getByAuthorId(authorId);
+  return orders;
+}
+
+async function getByProductId(productId) {
+  const orders = await OrderResource.getByProductId(productId);
+  return orders;
+}
+
+async function updateById(id, params) {
+  const order = await OrderResource.getById(id);
+
+  validator.validateUpdateBody(params.status, order.status);
+
+  await OrderResource.updateById(id, params);
+  const order = OrderResource.getById(id);
   return order;
 }
 
-async function getOrderByProductId(productId) {
-  const order = await OrderResource.getOrderByProductId(productId);
-  return order;
+async function deleteById(id) {
+  await OrderResource.deleteById(id);
 }
 
-async function updateOrderById(id, params) {
-  await OrderResource.updateOrderById(id, params);
-  const order = OrderResource.getOrderById(id);
-  return order;
+async function deleteByAuthorId(authorId) {
+  await OrderResource.deleteByAuthorId(authorId);
 }
 
-async function deleteOrderById(id) {
-  await OrderResource.deleteOrderById(id);
-}
-
-async function deleteOrderByAuthorId(authorId) {
-  await OrderResource.deleteOrderByAuthorId(authorId);
-}
-
-async function deleteOrderByProductId(productId) {
-  await OrderResource.deleteOrderByAuthorId(productId);
+async function deleteByProductId(productId) {
+  await OrderResource.deleteByAuthorId(productId);
 }
 
 module.exports = {
-  createOrder,
-  getAllOrders,
-  getOrderById,
-  getOrderByAuthorId,
-  getOrderByProductId,
-  updateOrderById,
-  deleteOrderById,
-  deleteOrderByAuthorId,
-  deleteOrderByProductId,
+  create,
+  getAll,
+  getById,
+  getByAuthorId,
+  getByProductId,
+  updateById,
+  deleteById,
+  deleteByAuthorId,
+  deleteByProductId,
 }

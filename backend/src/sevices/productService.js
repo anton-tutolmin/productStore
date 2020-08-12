@@ -1,36 +1,39 @@
 const ProductResource = require('../resources/productResource');
 const OrderService = require('./orderService');
+const validator = require('./validatorService/product')
 
-async function createProduct(body) {
-  const product = await ProductResource.createProduct(body);
+async function create(body) {
+  validator.validateCreateBody(body);
+  const product = await ProductResource.create(body);
   return product;
 }
 
-async function getAllProducts() {
-  const products = await ProductResource.getAllProducts();
+async function getAll() {
+  const products = await ProductResource.getAll();
   return products;
 }
 
-async function getProductById(id) {
-  const product = await ProductResource.getProductById(id);
+async function getById(id) {
+  const product = await ProductResource.getById(id);
   return product;
 }
 
-async function updateProductById(id, params) {
-  await ProductResource.updateProductById(id, params);
-  const product = await ProductResource.getProductById(id);
+async function updateById(id, params) {
+  validator.validateUpdateBody(params);
+  await ProductResource.updateById(id, params);
+  const product = await ProductResource.getById(id);
   return product;
 }
 
-async function deleteProductById(id) {
-  await ProductResource.deleteProductById(id);
-  await OrderService.deleteOrderByProductId(id);
+async function deleteById(id) {
+  await ProductResource.deleteById(id);
+  await OrderService.deleteByProductId(id);
 }
 
 module.exports = {
-  createProduct,
-  getAllProducts,
-  getProductById,
-  updateProductById,
-  deleteProductById
+  create,
+  getAll,
+  getById,
+  updateById,
+  deleteById
 };
