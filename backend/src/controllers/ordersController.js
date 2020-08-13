@@ -24,10 +24,20 @@ async function deleteById(id) {
   await OrderService.deleteById(id);
 }
 
+async function deleteByClientId(clientId) {
+  await OrderService.deleteByClientId(clientId);
+}
+
+async function deleteByProductId(productId) {
+  await OrderService.deleteByProductId(productId);
+}
+
 module.exports = {
   create,
   getAll,
   getById,
   updateById,
-  deleteById
+  deleteById,
+  deleteByClientId,
+  deleteByProductId
 }

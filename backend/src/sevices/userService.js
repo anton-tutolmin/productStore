@@ -1,5 +1,4 @@
 const UserResource = require('../resources/userResource');
-const OrderService = require('./orderService');
 const userValidator = require('./validatorService/user');
 
 async function create(body) {
@@ -41,7 +40,18 @@ async function updateById(id, body) {
 
 async function deleteById(id) {
   await UserResource.deleteById(id);
-  await OrderService.deleteByAuthorId(id);
+}
+
+async function addBalance(id, coast) {
+  const user = await UserResource.getById(id);
+  const balance = user.balance + coast;
+  await UserResource.updateById(id, {balance});
+}
+
+async function reduceBalance(id, coast) {
+  const user = await UserResource.getById(id);
+  const balance = user.balance - coast;
+  await UserResource.updateById(id, {balance});
 }
 
 module.exports = {
@@ -50,5 +60,7 @@ module.exports = {
   getByUsername,
   create,
   updateById,
-  deleteById
+  deleteById,
+  addBalance,
+  reduceBalance
 };

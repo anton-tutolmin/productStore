@@ -33,12 +33,12 @@ async function deleteById(id) {
   await Order.deleteOne({_id: id});
 }
 
-async function deleteByAuthorId(authorId) {
-  await Order.delete({authorId});
+async function deleteByClientId(clientId) {
+  await Order.deleteMany({clientId})
 }
 
 async function deleteByProductId(productId) {
-  await Order.delete({productId});
+  await Order.deleteMany({productId});
 }
 
 module.exports = {
@@ -49,6 +49,6 @@ module.exports = {
   getByProductId, 
   updateById,
   deleteById,
-  deleteByAuthorId,
+  deleteByClientId,
   deleteByProductId
 }

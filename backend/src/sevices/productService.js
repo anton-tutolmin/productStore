@@ -1,5 +1,4 @@
 const ProductResource = require('../resources/productResource');
-const OrderService = require('./orderService');
 const validator = require('./validatorService/product')
 
 async function create(body) {
@@ -27,7 +26,6 @@ async function updateById(id, params) {
 
 async function deleteById(id) {
   await ProductResource.deleteById(id);
-  await OrderService.deleteByProductId(id);
 }
 
 module.exports = {

@@ -25,14 +25,14 @@ function validateDescription(description) {
   if (
     !description ||
     description.length < 5 ||
-    description.match(/[^\w]/g
+    description.match(/[^\w|\s]/g
   )) {
     throw new Error('Not correct description');
   }
 }
 
 function validateCoast(coast) {
-  if (!coast || typeof coast !== 'Number' || coast === 0) {
+  if (!coast || typeof coast !== 'number' || coast === 0) {
     throw new Error('Not correct coast');
   }
 }
@@ -40,7 +40,7 @@ function validateCoast(coast) {
 function validateImg(imgString) {
   if (
     !imgString ||
-    typeof imgString !== 'String' ||
+    typeof imgString !== 'string' ||
     imgString.length < 5
   ) {
     throw new Error();

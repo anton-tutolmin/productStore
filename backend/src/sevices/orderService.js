@@ -13,9 +13,7 @@ async function create(body) {
   if (user.balance < product.coast)
     throw new Error('Not enough money');
 
-  const newBalance = user.balance - product.coast;
-
-  await UserService.updateById(user._id, {balance: newBalance});
+  await UserService.reduceBalance(user._id, product.coast);
 
   const createBody = {
     status: 'created',
@@ -47,13 +45,27 @@ async function getByProductId(productId) {
   return orders;
 }
 
-async function updateById(id, params) {
+async function updateById(id, params, user) {
   const order = await OrderResource.getById(id);
 
-  validator.validateUpdateBody(params.status, order.status);
+  isAllowed(order, user);
 
-  await OrderResource.updateById(id, params);
-  const order = OrderResource.getById(id);
+  validator.validateUpdateBody(
+    params.status,
+    order.status,
+    user.type
+  );
+
+  const updatesFunc = {
+    done: done,
+    canceled: cancel,
+    delivering: takeDelivery,
+    delivered: setDelivered
+  }
+
+  updatesFunc[params.status](order, user);
+
+  const updatedOrder = OrderResource.getById(id);
   return order;
 }
 
@@ -61,12 +73,70 @@ async function deleteById(id) {
   await OrderResource.deleteById(id);
 }
 
-async function deleteByAuthorId(authorId) {
-  await OrderResource.deleteByAuthorId(authorId);
+async function deleteByClientId(clientId) {
+  await OrderResource.deleteByClientId(clientId);
 }
 
 async function deleteByProductId(productId) {
-  await OrderResource.deleteByAuthorId(productId);
+  await OrderResource.deleteByProductId(productId);
+}
+
+
+
+// Client admit order delivered
+// Need to set order status on "done"
+// and add balance to curier(5% order coast)
+async function done(order) {
+  const coast = await getCoast(order);
+  const payoff = Number.parseFloat(coast * 0.05).toFixed(2);;
+  await UserService.addBalance(order.curierId, payoff);
+
+  await OrderResource.updateById(order._id, {status: 'done'});
+}
+
+// Curier cancel order delivery
+// Need set order status on "created"
+async function reset(order) {
+  await OrderResource.updateById(order._id, {
+    curierId: 'none',
+    status: 'created'
+  });
+}
+
+// Client cancel his own order
+// Need return money to client
+async function cancel(order) {
+  const coast = await getCoast(order);
+  await UserService.addBalance(order.clientId, coast);
+
+  await OrderResource.updateById(order, {status: 'canceled'});
+}
+
+async function takeDelivery(order, user) {
+  await OrderResource.updateById(order._id, {
+    curierId: user._id,
+    status: 'delivering'
+  });
+}
+
+async function setDelivered(order) {
+  await OrderResource.updateById(order._id, {status: 'delivered'});
+}
+
+async function getCoast(order) {
+  const product = await ProductService.getById(order.productId);
+  return product.coast;
+}
+
+// If user not client, curier or admin not allow update order
+function isAllowed(order, user) {
+  if (
+    order.clientId !== user._id &&
+    order.curierId !== user._id &&
+    user.type !== 3
+  ) {
+    throw new Error('Not allowed interrupt');
+  }
 }
 
 module.exports = {
@@ -77,6 +147,6 @@ module.exports = {
   getByProductId,
   updateById,
   deleteById,
-  deleteByAuthorId,
+  deleteByClientId,
   deleteByProductId,
 }

@@ -1,6 +1,9 @@
 const allowedStatus = ['created', 'delivering', 'delivered', 'done', 'canceled'];
 
 function validateUpdateBody(newStatus, oldStatus, userType) {
+  if (!allowedStatus.includes(newStatus)) {
+    throw new Error('Not allowed order status');
+  }
   if (userType === 1) {
     validateClientUpdate(newStatus, oldStatus);
   } else if (userType === 2) {
@@ -14,11 +17,14 @@ function validateUpdateBody(newStatus, oldStatus, userType) {
 
 // For case when client changes order status
 function validateClientUpdate(newStatus, oldStatus) {
-  if (newStatus !== 'done') {
+  if (newStatus !== 'done' && newStatus !== 'cancel') {
+    throw new Error('Not allowed order status');
+  }
+  if (newStatus === 'done' && oldStatus !== 'delivered') {
     throw new Error('Client may set order status only done');
   }
-  if (oldStatus !== 'delivered') {
-    throw new Error('Order is not delivered');
+  if (newStatus === 'canceled' && oldStatus === 'done') {
+    throw new Error('Cant cancel order that is done');
   }
 }
 
