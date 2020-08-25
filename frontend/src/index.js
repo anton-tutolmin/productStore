@@ -6,6 +6,7 @@ import { App } from './App/index.jsx'
 render(
   <div>
     <App />
+    Hello world
   </div>,
   document.getElementById('app')
 );

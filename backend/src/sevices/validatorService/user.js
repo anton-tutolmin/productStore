@@ -7,6 +7,7 @@ async function validateLoginBody(ctx, next) {
 }
 
 function validateCreateBody(body) {
+  // console.log(body);
   validateUsername(body.username);
   validatePassword(body.password);
   validateEmail(body.email);
@@ -16,21 +17,11 @@ function validateCreateBody(body) {
 
 function validateUpdateBody(params) {
   for (let param of Object.keys(params)) {
-    if (param === 'username') {
-      validateUsername(params[param]);
-    }
-
-    if (param === 'email') {
-      validateEmail(params[param]);
-    }
-
-    if (param === 'phone') {
-      validatePhone(params[param]);
-    }
-
-    if (param === 'type') {
-      validateType(params[param]);
-    }
+    if (param === 'username') validateUsername(params[param]);
+    if (param === 'email') validateEmail(params[param]);
+    if (param === 'phone') validatePhone(params[param]);
+    if (param === 'type') validateType(params[param]);
+    if (param === 'balance') validateBalance(params[param]);
   }
 }
 
@@ -74,6 +65,16 @@ function validateType(type) {
     type !== 2
   ) {
     throw new Error('Type is not correct');
+  }
+}
+
+function validateBalance(balance) {
+  if (
+    !balance ||
+    typeof balance !== 'number' ||
+    balance < 0
+  ) {
+    throw new Error('Balance is not correct');
   }
 }
 

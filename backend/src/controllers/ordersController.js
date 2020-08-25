@@ -15,9 +15,8 @@ async function getById(id) {
   return order;
 }
 
-async function updateById(id, params) {
-  const order = await OrderService.updateById(id, params);
-  return order
+async function updateById(id, params, user) {
+  await OrderService.updateById(id, params, user);
 }
 
 async function deleteById(id) {

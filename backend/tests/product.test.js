@@ -90,6 +90,148 @@ describe('Product tests:', () => {
       expect(products.length).toBe(0);
     });
 
-  })
+  });
+
+
+
+  describe('Product errors tests:', () => {
+
+    test('Create with wrong params', async () => {
+      const product = {
+        productname: 'testerror',
+        description: 'testerror',
+        coast: 100,
+        img: 'testerror.jpg'
+      };
+
+      try {
+        await ProductController.create({
+          ...product,
+          productname: '!@#$%^$^'
+        });
+      } catch(e) {
+        expect(e.message).toBe('Not correct productname');
+      }
+
+      try {
+        await ProductController.create({
+          ...product,
+          productname: 'aa'
+        });
+      } catch(e) {
+        expect(e.message).toBe('Not correct productname');
+      }
+
+      try {
+        await ProductController.create({
+          ...product,
+          description: '!@#$%$^$'
+        });
+      } catch(e) {
+        expect(e.message).toBe('Not correct description');
+      }
+
+      try {
+        await ProductController.create({
+          ...product,
+          description: 'aa'
+        });
+      } catch(e) {
+        expect(e.message).toBe('Not correct description');
+      }
+
+      try {
+        await ProductController.create({
+          ...product,
+          coast: 0
+        });
+      } catch(e) {
+        expect(e.message).toBe('Not correct coast');
+      }
+
+      try {
+        await ProductController.create({
+          ...product,
+          img: '!@#.jpg'
+        });
+      } catch(e) {
+        expect(e.message).toBe('Not correct image');
+      }
+    });
+
+    test('Get with wrong id', async () => {
+      try {
+        await ProductController.getById('wrongid');
+      } catch(e) {
+        expect(e.message).toBe('Not valid id');
+      }
+    });
+
+    test('Delete with wrong id', async () => {
+      try {
+        await ProductController.deleteById('wrongid');
+      } catch(e) {
+        expect(e.message).toBe('Not valid id');
+      }
+    });
+
+    describe('Updating with wrong:', () => {
+      let product;
+
+      beforeAll(async () => {
+        product = await ProductController.create({
+          productname: 'updateerrortest',
+          description: 'updateerrortest',
+          coast: 100,
+          img: 'updateerrortest.jpg'
+        });
+      });
+
+      test('Productname', async () => {
+        try {
+          await ProductController.updateById(product._id, {
+            ...product,
+            productname: '!@#wrong!@#'
+          });
+        } catch (e) {
+          expect(e.message).toBe('Not correct productname');
+        }
+      });
+
+      test('Description', async () => {
+        try {
+          await ProductController.updateById(product._id, {
+            ...product,
+            description: '!@#wrong!@#'
+          });
+        } catch(e) {
+          expect(e.message).toBe('Not correct description');
+        }
+      });
+
+      test('Coast', async () => {
+        try {
+          await ProductController.updateById(product._id, {
+            ...product,
+            coast: -1
+          });
+        } catch(e) {
+          expect(e.message).toBe('Not correct coast');
+        }
+      });
+
+      test('Image', async () => {
+        try {
+          await ProductController.updateById(product._id, {
+            ...product,
+            img: '!@#wrong!@#'
+          });
+        } catch(e) {
+          expect(e.message).toBe('Not correct image');
+        }
+      });
+
+    });
+  });
 
 });

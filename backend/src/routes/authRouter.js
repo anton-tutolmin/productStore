@@ -1,6 +1,5 @@
 const KoaRouter = require('koa-router');
 const AuthController = require('../controllers/authController');
-const validator = require('../sevices/validatorService/user');
 
 const router = new KoaRouter();
 
@@ -9,11 +8,11 @@ router
     await AuthController.profile(ctx, next);
   })
   
-  .post('/api/login', validator.validateLoginBody, async (ctx , next) => {
+  .post('/api/login', async (ctx , next) => {
     await AuthController.login(ctx, next);
   })
   
-  .post('/api/register', validator.validateCreateBody, async (ctx, next) => {
+  .post('/api/register', async (ctx, next) => {
     await AuthController.register(ctx, next);
   })
 

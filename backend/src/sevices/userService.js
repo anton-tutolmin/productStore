@@ -2,40 +2,48 @@ const UserResource = require('../resources/userResource');
 const userValidator = require('./validatorService/user');
 
 async function create(body) {
-  userValidator.validateCreateBody(body);
-  const user = await UserResource.create(body);
+  const createBody = {
+    username: body.username,
+    password: body.password,
+    email: body.email,
+    phone: body.phone,
+    type: body.type,
+    balance: 0
+  }
+
+  userValidator.validateCreateBody(createBody);
+  const user = await UserResource.create(createBody);
   return user;
 }
 
 async function getAll() {
-  const users = await UserResource.getAll();
+  let users = await UserResource.getAll();
   return users;
 }
 
 async function getById(id) {
-  const user = UserResource.getById(id);
+  let user = await UserResource.getById(id);
   return user;
 }
 
 async function getByUsername(username) {
-  const user = await UserResource.getByUsername(username);
+  let user = await UserResource.getByUsername(username);
   return user;
 }
 
 async function updateById(id, body) {
   const params = {};
+
   for (let param of Object.keys(body)) {
     if (param === 'username') params.username = body[param];
     if (param === 'email') params.email = body[param];
     if (param === 'phone') params.phone = body[param];
     if (param === 'type') params.type = body[param];
+    if (param === 'balance') params.balance = body[param];
   }
 
   userValidator.validateUpdateBody(params);
-
   await UserResource.updateById(id, params);
-  const user = await UserResource.getById(id);
-  return user;
 }
 
 async function deleteById(id) {

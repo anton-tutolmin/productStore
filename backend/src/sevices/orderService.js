@@ -4,7 +4,7 @@ const ProductService = require('./productService');
 const validator = require('./validatorService/order');
 
 async function create(body) {
-  const user = await UserService.getById(body.authorId);
+  const user = await UserService.getById(body.clientId);
   if (!user) throw new Error('No such user');
 
   const product = await ProductService.getById(body.productId);
@@ -17,7 +17,8 @@ async function create(body) {
 
   const createBody = {
     status: 'created',
-    authorId: body.authorId,
+    clientId: body.clientId,
+    curierId: 'none',
     productId: body.productId
   }
 
@@ -56,17 +57,15 @@ async function updateById(id, params, user) {
     user.type
   );
 
-  const updatesFunc = {
+  const updates = {
     done: done,
     canceled: cancel,
     delivering: takeDelivery,
-    delivered: setDelivered
+    delivered: setDelivered,
+    reset: reset
   }
 
-  updatesFunc[params.status](order, user);
-
-  const updatedOrder = OrderResource.getById(id);
-  return order;
+  await updates[params.status](order, user);
 }
 
 async function deleteById(id) {
@@ -81,8 +80,6 @@ async function deleteByProductId(productId) {
   await OrderResource.deleteByProductId(productId);
 }
 
-
-
 // Client admit order delivered
 // Need to set order status on "done"
 // and add balance to curier(5% order coast)
@@ -90,7 +87,6 @@ async function done(order) {
   const coast = await getCoast(order);
   const payoff = Number.parseFloat(coast * 0.05).toFixed(2);;
   await UserService.addBalance(order.curierId, payoff);
-
   await OrderResource.updateById(order._id, {status: 'done'});
 }
 
@@ -108,8 +104,7 @@ async function reset(order) {
 async function cancel(order) {
   const coast = await getCoast(order);
   await UserService.addBalance(order.clientId, coast);
-
-  await OrderResource.updateById(order, {status: 'canceled'});
+  await OrderResource.updateById(order._id, {status: 'canceled'});
 }
 
 async function takeDelivery(order, user) {
@@ -131,8 +126,9 @@ async function getCoast(order) {
 // If user not client, curier or admin not allow update order
 function isAllowed(order, user) {
   if (
-    order.clientId !== user._id &&
-    order.curierId !== user._id &&
+    order.clientId !== user._id.toString() &&
+    order.curierId !== user._id.toString() &&
+    order.curierId !== 'none' &&
     user.type !== 3
   ) {
     throw new Error('Not allowed interrupt');

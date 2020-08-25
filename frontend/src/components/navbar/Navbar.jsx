@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import './navbar.sass';
 
 export const Navbar = (props) => {
   return (
-    <div className="app__navbar__layout">
-      
+    <div className="navbar">
+      Navbar
     </div>
   );
 }

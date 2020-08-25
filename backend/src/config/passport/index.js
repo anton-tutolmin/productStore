@@ -23,7 +23,7 @@ const LocalOptions = {
 passport.use('register', new LocalStrategy(
   LocalOptions,
   async (username, password, done) => {
-    const user = await UserService.getUserByUsername(username);
+    const user = await UserService.getByUsername(username);
     if (user) {
       done(null, false, {message: 'This username already been taken'});
     } else {
@@ -36,7 +36,7 @@ passport.use('register', new LocalStrategy(
 passport.use('login', new LocalStrategy(
   LocalOptions,
   async (username, password, done) => {
-    const user = await UserService.getUserByUsername(username);
+    const user = await UserService.getByUsername(username);
 
     if (!user) {
       done(null, false, {message: 'There is no user with this username'});
@@ -53,7 +53,7 @@ passport.use('login', new LocalStrategy(
 ));
 
 passport.use('jwt', new JwtStrategy(JwtOptions, async (data, done) => {
-  const user = await UserService.getUserById(data.id);
+  const user = await UserService.getById(data.id);
   if (!user) {
     done(null, false, {message: 'There is no such user'});
   }

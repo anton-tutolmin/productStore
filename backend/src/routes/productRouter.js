@@ -1,7 +1,9 @@
 const KoaRouter = require('koa-router');
+const passport = require('../config/passport');
 const ProductController = require('../controllers/productController');
 const OrderController = require('../controllers/ordersController');
-const passport = require('../config/passport');
+
+const isAllowed = require('./allow');
 
 const router = new KoaRouter();
 
@@ -10,14 +12,7 @@ router
   .post('/products', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
-        if (err) throw new Error(err);
-
-        if (msg) throw new Error(msg.message);
-
-        if (user.type !== 3) {
-          throw new Error('Create a product allowed only admin');
-        }
-
+        isAllowed(err, user, msg);
         await ProductController.create(ctx.request.body.product);
         ctx.response.body = {message: 'Product created'};
       })(ctx, next);
@@ -37,17 +32,13 @@ router
 
   .put('/products:id', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
-      (err, user, msg) => {
-        if (err) throw new Error(err);
+      async (err, user, msg) => {
+        isAllowed(err, user, msg);
 
-        if (msg) throw new Error(msg.message);
-
-        if (user.type !== 3) {
-          throw new Error('Update product allowed only admin');
-        }
-
-        await ProductController
-          .updateById(ctx.params.id, ctx.request.body);
+        await ProductController.updateById(
+          ctx.params.id,
+          ctx.request.body
+        );
 
         ctx.response.body = {message: 'Product updated'};
       }
@@ -56,15 +47,8 @@ router
 
   .delete('/products:id', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
-      (err, user, msg) => {
-        if (err) throw new Error(err);
-
-        if (msg) throw new Error(msg.message);
-
-        if (user.type !== 3) {
-          throw new Error('Delete product allowed only admin');
-        }
-
+      async (err, user, msg) => {
+        isAllowed(err, user, msg);
         await ProductController.deleteById(ctx.params.id);
         await OrderController.deleteByProductId(ctx.params.id);
         ctx.response.body = {message: 'Product deleted'};

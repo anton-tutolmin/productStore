@@ -1,4 +1,4 @@
-const allowedStatus = ['created', 'delivering', 'delivered', 'done', 'canceled'];
+const allowedStatus = ['created', 'delivering', 'delivered', 'done', 'canceled', 'reset'];
 
 function validateUpdateBody(newStatus, oldStatus, userType) {
   if (!allowedStatus.includes(newStatus)) {
@@ -17,7 +17,7 @@ function validateUpdateBody(newStatus, oldStatus, userType) {
 
 // For case when client changes order status
 function validateClientUpdate(newStatus, oldStatus) {
-  if (newStatus !== 'done' && newStatus !== 'cancel') {
+  if (newStatus !== 'done' && newStatus !== 'canceled') {
     throw new Error('Not allowed order status');
   }
   if (newStatus === 'done' && oldStatus !== 'delivered') {

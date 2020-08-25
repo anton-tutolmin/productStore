@@ -19,13 +19,9 @@ router
   .put('/api/orders:id', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
-        if (err) {
-          throw new Error(err);
-        }
+        if (err) throw new Error(err);
 
-        if (!user) {
-          throw new Error(msg.message);
-        }
+        if (msg) throw new Error(msg.message);
 
         await OrderController.updateById(
           ctx.params.id,
