@@ -1,0 +1,18 @@
+@import '../../constants/colors.sass'
+
+.navbar__menu-btn
+  display: none
+  margin: 5px
+  color: $text_color
+  font-size: 2rem
+  cursor: pointer
+  background-color: $navbar_bgn
+  border: none
+  transition: all 0.3s ease 0s
+  padding: 5px
+  &:hover
+    background-color: $text_hover_color
+  &:focus
+    outline: none
+  @media screen and ( max-width: 767px )
+    display: block

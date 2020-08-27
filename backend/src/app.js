@@ -29,7 +29,7 @@ app.use(router.routes());
 
 app.use(serve(staticDir));
 
-app.use(async (ctx) => {
+app.use(async ctx => {
   await send(ctx, 'index.html', { root: staticDir })
 });
 

@@ -6,21 +6,20 @@ const PATHS = {
   src: path.join(__dirname, '../src'),
   dist: path.join(__dirname, '../public'),
   postcssConfig: path.join(__dirname, '../src', 'config', 'postcss.config.js'),
-  assets: 'static/'
-}
+  assets: 'static/',
+};
 
 module.exports = {
-
   externals: {
-    paths: PATHS
+    paths: PATHS,
   },
 
   entry: {
-    app: `${PATHS.src}/index.js`
+    app: `${PATHS.src}/index.jsx`,
   },
 
   output: {
-    filename: `${PATHS.assets}js/[name].[hash].js`,
+    filename: `${PATHS.assets}js/[name].js`,
     path: PATHS.dist,
     publicPath: '/',
   },
@@ -32,10 +31,10 @@ module.exports = {
           name: 'vendors',
           test: /node_modules/,
           chunks: 'all',
-          enforce: true
-        }
-      }
-    }
+          enforce: true,
+        },
+      },
+    },
   },
 
   module: {
@@ -43,7 +42,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         loader: 'babel-loader',
-        exclude: '/node_modules/'
+        exclude: '/node_modules/',
       },
 
       {
@@ -53,30 +52,29 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: { sourceMap: true }
-          }, {
+            options: { sourceMap: true },
+          },
+          {
             loader: 'postcss-loader',
-            options: { sourceMap: true, config: { path: PATHS.postcssConfig } }
-          }, {
+            options: { sourceMap: true, config: { path: PATHS.postcssConfig } },
+          },
+          {
             loader: 'sass-loader',
-            options: { sourceMap: true }
-          }
-        ]
+            options: { sourceMap: true },
+          },
+        ],
       },
-      
     ],
   },
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `${PATHS.assets}css/[name].[hash].css`
+      filename: `${PATHS.assets}css/[name].css`,
     }),
     new HtmlWebpackPlugin({
       hash: false,
       template: `${PATHS.src}/index.html`,
-      filename: './index.html'
-    })
+      filename: './index.html',
+    }),
   ],
-
-
-}
+};

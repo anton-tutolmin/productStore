@@ -1,2 +1,34 @@
+@import '../../constants/colors.sass'
+
+.logo
+  color: $text_color
+  font-weight: bold
+  font-family: Arial, Helvetica, sans-serif
+  margin-right: auto
+  cursor: pointer
+
 .navbar
-  color: #444
+  z-index: 50
+  display: flex
+  justify-content: flex-end
+  align-items: center
+  background-color: $navbar_bgn
+  padding: 10px 20px
+  li, a
+    text-decoration: none
+    color: $text_color
+    font-weight: 500
+    font-size: 1rem
+    transition: all 0.3s ease 0s
+  li, a:hover
+    color: $text_hover_color
+  li
+    display: inline-block
+    padding: 0 20px
+    list-style: none
+    @media screen and ( max-width: 767px )
+      display: none
+
+  @media screen and ( max-width: 767px )
+    justify-content: flex-end
+    padding: 0 20px
