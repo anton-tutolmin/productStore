@@ -1,0 +1,16 @@
+@import '../../constants/colors'
+
+.navbar__button
+  border: none
+  background-color: $button_color
+  padding: 5px 10px
+  &:hover
+    background-color: $button_hover_color
+  &:focus
+    outline: none
+  a:hover
+    color: $text_color
+  &.active
+    background-color: $button_hover_color
+  @media screen and ( max-width: 767px )
+    display: none

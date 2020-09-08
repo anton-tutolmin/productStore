@@ -1,0 +1,20 @@
+@import '../../constants/colors.sass'
+@import '../../constants/templates.sass'
+@import '../../constants/mixins.sass'
+
+.requestcard
+  @extend %cardStyle
+  margin: auto
+  border-radius: 3px
+
+.requestcard__img
+  +cropImg(180px, 150px)
+  margin: auto 0
+  padding: 0 5px
+
+.requestcard__text
+  @extend %cardText
+
+.requestcard__info
+  font-size: 1rem
+  color: #777

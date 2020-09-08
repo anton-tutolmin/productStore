@@ -6,10 +6,10 @@ import './navbar.sass';
 export const Navbar = (props) => {
   const [open, setOpen] = useState(false);
 
-  const toggleDropdown = (e) => {
-    e.preventDefault();
+  const toggleDropdown = () => {
     setOpen(!open);
   };
+
   return (
     <header>
       <div className="navbar">
@@ -19,7 +19,7 @@ export const Navbar = (props) => {
         </nav>
         <MenuButton toggleDropdown={toggleDropdown} />
       </div>
-      {open ? <Dropdown /> : null}
+      {open ? <Dropdown toggleDropdown={toggleDropdown} /> : null}
     </header>
   );
 };

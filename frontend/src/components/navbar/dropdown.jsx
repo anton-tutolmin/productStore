@@ -3,16 +3,56 @@ import { Link } from 'react-router-dom';
 import Paths from '../../constants/paths';
 import './dropdown.sass';
 
-export const Dropdown = () => {
+export const Dropdown = (props) => {
+  const { toggleDropdown, user = { auth: false } } = props;
   return (
     <div className="menu">
       <ul>
-        <DropdownItem path={Paths.product} label="Products" />
-        <DropdownItem path={Paths.order} label="Orders" />
-        <DropdownItem path={Paths.delivery} label="Delivery" />
-        <DropdownItem path={Paths.request} label="Requests" />
-        <LoginItem path={Paths.login} />
-        <RegisterItem path={Paths.register} />
+        <DropdownItem
+          path={Paths.product}
+          label="Products"
+          toggleDropdown={toggleDropdown}
+        />
+        <DropdownItem
+          path={Paths.order}
+          label="Orders"
+          toggleDropdown={toggleDropdown}
+        />
+        <DropdownItem
+          path={Paths.delivery}
+          label="Delivery"
+          toggleDropdown={toggleDropdown}
+        />
+        <DropdownItem
+          path={Paths.request}
+          label="Requests"
+          toggleDropdown={toggleDropdown}
+        />
+        {user.auth ? (
+          <>
+            <DropdownItem
+              path={Paths.profile}
+              label="Profile"
+              toggleDropdown={toggleDropdown}
+            />
+            <DropdownItem
+              path={Paths.cart}
+              label="Cart"
+              toggleDropdown={toggleDropdown}
+            />
+          </>
+        ) : (
+          <>
+            <LoginItem
+              path={Paths.login}
+              toggleDropdown={toggleDropdown}
+            />
+            <RegisterItem
+              path={Paths.register}
+              toggleDropdown={toggleDropdown}
+            />
+          </>
+        )}
       </ul>
     </div>
   );
@@ -21,7 +61,9 @@ export const Dropdown = () => {
 export const DropdownItem = (props) => {
   return (
     <li className="menu__links">
-      <Link to={props.path}>{props.label}</Link>
+      <Link to={props.path} onClick={props.toggleDropdown}>
+        {props.label}
+      </Link>
     </li>
   );
 };
@@ -29,7 +71,9 @@ export const DropdownItem = (props) => {
 export const LoginItem = (props) => {
   return (
     <li className="menu__links menu__links-login">
-      <Link to={props.path}>login</Link>
+      <Link to={props.path} onClick={props.toggleDropdown}>
+        login
+      </Link>
     </li>
   );
 };
@@ -37,7 +81,9 @@ export const LoginItem = (props) => {
 export const RegisterItem = (props) => {
   return (
     <li className="menu__links menu__links-register">
-      <Link to={props.path}>register</Link>
+      <Link to={props.path} onClick={props.toggleDropdown}>
+        register
+      </Link>
     </li>
   );
 };

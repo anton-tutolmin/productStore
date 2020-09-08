@@ -16,5 +16,6 @@ module.exports = {
     'import/extensions': 'off',
     'react/prop-types': 'off',
     'react/destructuring-assignment': 'off',
+    'import/prefer-default-export': 'off',
   },
 };

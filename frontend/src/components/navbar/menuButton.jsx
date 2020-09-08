@@ -5,7 +5,11 @@ import './menuButton.sass';
 
 export const MenuButton = (props) => {
   return (
-    <button type="button" className="navbar__menu-btn" onClick={props.toggleDropdown}>
+    <button
+      type="button"
+      className="navbar__menu-btn"
+      onClick={props.toggleDropdown}
+    >
       <FontAwesomeIcon icon={faBars} />
     </button>
   );

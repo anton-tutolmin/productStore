@@ -1,0 +1,16 @@
+@import '../../constants/colors'
+
+.navbar__cart-btn
+  background-color: $navbar_bgn
+  border: none
+  padding: 5px
+  color: $text_color
+  font-size: 1.5rem
+  cursor: pointer
+  &:focus
+    outline: none
+  &:hover, &.active
+    background-color: $button_hover_color
+    color: $text_color
+  @media screen and ( max-width: 767px )
+    display: none

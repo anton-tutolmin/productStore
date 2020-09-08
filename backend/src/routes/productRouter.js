@@ -9,7 +9,7 @@ const router = new KoaRouter();
 
 router
 
-  .post('/products', async (ctx, next) => {
+  .post('/api/products', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
         isAllowed(err, user, msg);
@@ -18,19 +18,19 @@ router
       })(ctx, next);
   })
 
-  .get('/products', async (ctx, next) => {
+  .get('/api/products', async (ctx, next) => {
     const products = await ProductController.getAll();
     ctx.response.body = {products};
   })
 
-  .get('/products:id', async (ctx, next) => {
+  .get('/api/products:id', async (ctx, next) => {
     const product =
       await ProductController.getById(ctx.params.id);
 
     ctx.response.body = {product};
   })
 
-  .put('/products:id', async (ctx, next) => {
+  .put('/api/products:id', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
         isAllowed(err, user, msg);
@@ -45,7 +45,7 @@ router
     )(ctx, next);
   })
 
-  .delete('/products:id', async (ctx, next) => {
+  .delete('/api/products:id', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
         isAllowed(err, user, msg);

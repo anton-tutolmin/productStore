@@ -1,27 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../store';
-
-import { Navbar } from '../components/navbar/navbar.jsx';
-import { NavbarItem } from '../components/navbar/navbarItem.jsx';
+import { connect } from 'react-redux';
+import Scenes from '../scenes/index.jsx';
 import './App.sass';
 
-export const App = () => {
+const App = (props) => {
   return (
     <div className="app">
-      <Provider store={store}>
-        <Router>
-          <Navbar>
-            <NavbarItem path="/products" label="Products" />
-            <NavbarItem path="/order" label="Order" />
-            <NavbarItem path="/delivery" label="Delivery" />
-            <NavbarItem path="/request" label="Request" />
-          </Navbar>
-        </Router>
-      </Provider>
+      <Router>
+        <Scenes auth={props.auth} />
+      </Router>
     </div>
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  auth: state.auth.auth,
+});
+
+export default connect(mapStateToProps, null)(App);

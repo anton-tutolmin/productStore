@@ -1,11 +1,6 @@
-export default function user(state, action) {
-  switch (action.type) {
-    case 'USER_LOADED':
-      return {
-        ...state,
-        user: action.payload,
-      };
-    default:
-      return state;
-  }
-}
+import { combineReducers } from 'redux';
+import auth from './auth';
+import products from './products';
+import cart from './cart';
+
+export default combineReducers({ auth, products, cart });

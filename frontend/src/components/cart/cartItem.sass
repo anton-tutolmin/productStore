@@ -1,0 +1,53 @@
+@import '../../constants/colors.sass'
+@import '../../constants/templates.sass'
+@import '../../constants/mixins.sass'
+
+.cart__item
+  position: relative
+  display: flex
+  justify-content: space-around
+  width: 360px
+  height: 160px
+  margin: 5px 0
+  border-radius: 10px
+  background-color: $navbar_bgn
+  button, button:focus
+    outline: none
+    border: none
+    cursor: pointer
+    color: $text_color
+    border-radius: 2px
+
+.cart__img
+  +cropImg(110px, 110px)
+  margin: auto
+
+.cart__text
+  width: 210px
+  height: 140px
+  margin: auto
+  padding: 20px 0
+  li
+    list-style: none
+    margin: 0 0 10px 0
+    color: #777
+    font-size: 1.3rem
+    font-family: Arial, Helvetica, sans-serif
+
+.cart__delete
+  position: absolute
+  top: 10px
+  right: 10px
+  width: 30px
+  height: 30px
+  background-color: #F44
+  &:hover
+    background-color: #D00
+
+.cart__order
+  width: 100px
+  height: 25px
+  background-color: $button_color
+  font-family: Arial, Helvetica, sans-serif
+  &:hover
+    background-color: $button_hover_color

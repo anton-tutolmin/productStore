@@ -1,0 +1,16 @@
+@import '../../constants/colors'
+
+.cart
+  z-index: 70
+  position: absolute
+  display: block
+  top: 4rem
+  right: 0
+  width: 370px
+  overflow: scroll
+  padding: 5px
+  background-color: $text_color
+  box-shadow: 0 0 8px $navbar_bgn
+  border-radius: 4px 0 0 4px
+  @media screen and ( max-width: 767px )
+    display: none

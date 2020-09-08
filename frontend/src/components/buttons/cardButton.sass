@@ -1,0 +1,18 @@
+@import '../../constants/colors.sass'
+@import '../../constants/templates.sass'
+@import '../../constants/mixins.sass'
+
+.card__btn
+  width: 100px
+  height: 25px
+  border: none
+  cursor: pointer
+  background-color: $button_color
+  color: $text_color
+  &:hover
+    background-color: $button_hover_color
+  &:focus
+    outline: none
+  &:disabled
+    background-color: $button_hover_color
+    cursor: not-allowed

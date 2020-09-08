@@ -1,0 +1,17 @@
+@import '../../constants/colors.sass'
+@import '../../constants/templates.sass'
+@import '../../constants/mixins.sass'
+
+.ordercard
+  @extend %cardStyle
+  border-radius: 3px
+
+.ordrcard__img
+  +cropImg(170px, 150px)
+  margin: auto 0
+  padding: 0 5px
+
+.ordercard__text
+  @extend %cardText
+  .ordercard__status
+    color: #777
