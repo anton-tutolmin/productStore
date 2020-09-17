@@ -1,5 +1,5 @@
 const initialState = {
-  auth: false,
+  auth: true,
 };
 
 export default (state = initialState, action) => {

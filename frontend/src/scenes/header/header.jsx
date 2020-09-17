@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Navbar } from '../components/navbar/navbar.jsx';
-import { NavbarItem } from '../components/navbar/navbarItem.jsx';
-import { NavbarButton } from '../components/navbar/navbarButton.jsx';
-import { ProfileButton } from '../components/navbar/profileButton.jsx';
-import { CartButton } from '../components/navbar/cartButton.jsx';
-import Cart from '../components/cart/cart.jsx';
-import Paths from '../constants/paths';
+import { connect } from 'react-redux';
+import { Navbar } from '../../components/navbar/navbar.jsx';
+import { NavbarItem } from '../../components/navbar/navbarItem.jsx';
+import { NavbarButton } from '../../components/navbar/navbarButton.jsx';
+import { ProfileButton } from '../../components/navbar/profileButton.jsx';
+import CartButton from '../../components/navbar/cartButton.jsx';
+import Cart from '../../components/cart/cart.jsx';
+import Paths from '../../constants/paths';
 
-export const Header = (props) => {
-  const { user = { auth: true } } = props;
+const Header = (props) => {
+  const { auth } = props;
 
   const [active, setActive] = useState(
     `/${document.URL.split('/')[3]}`,
@@ -47,7 +48,7 @@ export const Header = (props) => {
           active={active}
           setActive={setActive}
         />
-        {user.auth ? (
+        {auth ? (
           <>
             <ProfileButton active={active} setActive={setActive} />
             <CartButton show={show} toggleShow={toggleShow} />
@@ -73,3 +74,9 @@ export const Header = (props) => {
     </>
   );
 };
+
+const mapStateToProps = (state) => ({
+  auth: state.auth.auth,
+});
+
+export default connect(mapStateToProps, null)(Header);

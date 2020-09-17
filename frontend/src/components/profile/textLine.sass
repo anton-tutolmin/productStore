@@ -1,0 +1,18 @@
+@import '../../constants/colors'
+
+.textline
+  display: flex
+  justify-content: space-between
+  width: 400px
+  margin-bottom: 5px
+  padding: 10px
+  color: $text_color
+  background-color: $navbar_bgn
+  border-radius: 5px
+  font-family: Arial, Helvetica, sans-serif
+  span
+    color: $text_hover_color
+  @media screen and ( max-width: 767px )
+    width: 100%
+    border-radius: 0
+    margin: 0

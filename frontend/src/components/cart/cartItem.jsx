@@ -32,7 +32,7 @@ export const CartItem = (props) => {
             <button
               type="button"
               className="cart__order"
-              onClikc={onOrder}
+              onClick={onOrder}
             >
               Order
             </button>

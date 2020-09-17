@@ -1,20 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CartItem } from './cartItem.jsx';
+import { removeFromCart, addNotification } from '../../store/actions';
 import './cart.sass';
 
 const Cart = (props) => {
-  const { cart, removeFromCart } = props;
+  const { cart, remove } = props;
 
   return (
     <div className="cart">
       {cart.map((c, i) => (
-        <CartItem
-          product={c}
-          removeFromCart={removeFromCart}
-          key={i}
-        />
+        <CartItem product={c} removeFromCart={remove} key={i} />
       ))}
+      {cart.length === 0 ? 'Empty' : null}
     </div>
   );
 };
@@ -24,8 +22,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  removeFromCart: (payload) =>
-    dispatch({ type: 'REMOVE_FROM_CART', payload }),
+  remove: (payload) => dispatch(removeFromCart(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

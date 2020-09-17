@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LoginForm } from '../components/forms/login/loginForm.jsx';
+import { LoginForm } from '../../components/forms/login/loginForm.jsx';
 
 export const Login = () => {
   const [username, setUsername] = useState('');

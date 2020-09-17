@@ -1,0 +1,34 @@
+@import '../../constants/colors'
+
+.modal__backlock
+  z-index: 20
+  position: absolute
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  background-color: rgba(44, 44, 44, .8)
+
+.modal
+  position: relative
+  z-index: 100
+  background-color: $navbar_bgn
+  padding: 20px
+  border-radius: 5px
+  form
+    display: flex
+    justify-content: space-between
+    color: $text_color
+
+.modal__subnit-btn
+  width: 100px
+  height: 40px
+  background-color: $button_color
+  color: $text_color
+  border: none
+  margin: auto 0
+  &:hover
+    background-color: $button_hover_color
+    cursor: pointer
+  &:focus
+    outline: none

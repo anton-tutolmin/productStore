@@ -1,0 +1,18 @@
+@import '../../constants/colors'
+
+.navbar__cartcounter
+  position: absolute
+  bottom: 0
+  right: 0
+  display: flex
+  width: 20px
+  height: 20px
+  border-radius: 50%
+  color: $text_color
+  background-color: red
+  pointer-events: none
+  div
+    margin: auto
+    font-size: 1rem
+  @media screen and ( max-width: 767px )
+    display: none

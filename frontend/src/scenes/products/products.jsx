@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ProductItem } from '../components/product/productItem.jsx';
+import { ProductItem } from '../../components/product/productItem.jsx';
+import { addToCart, addNotification } from '../../store/actions';
 import './products.sass';
 
 const Products = (props) => {
@@ -22,7 +23,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addToCart: (payload) => dispatch({ type: 'ADD_TO_CART', payload }),
+  addToCart: (payload) => {
+    dispatch(addToCart(payload));
+    dispatch(addNotification('Added to cart'));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Products);

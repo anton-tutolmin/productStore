@@ -1,6 +1,6 @@
 import React from 'react';
-import { OrderItem } from '../components/order/orderItem.jsx';
-import { products } from '../constants/mock';
+import { OrderItem } from '../../components/order/orderItem.jsx';
+import { products } from '../../constants/mock';
 import './orders.sass';
 
 export const Orders = () => {

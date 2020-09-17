@@ -1,15 +1,16 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Paths from '../constants/paths';
-import { Header } from './header.jsx';
-import Products from './products.jsx';
-import { Orders } from './orders.jsx';
-import { Delivery } from './delivery.jsx';
-import { Request } from './requests.jsx';
-import { Register } from './register.jsx';
-import { Login } from './login.jsx';
-import { Main } from './main.jsx';
-import { Profile } from './profile.jsx';
+import Header from './header/header.jsx';
+import Products from './products/products.jsx';
+import { Orders } from './orders/orders.jsx';
+import { Delivery } from './delivery/delivery.jsx';
+import { Request } from './requests/requests.jsx';
+import { Register } from './register/register.jsx';
+import { Login } from './login/login.jsx';
+import { Main } from './main/main.jsx';
+import Profile from './profile/profile.jsx';
+import Notifications from './notification/notifications.jsx';
 
 export default function Scenes(props) {
   const { auth } = props;
@@ -27,11 +28,12 @@ export default function Scenes(props) {
           <>
             <Route path={Paths.register} component={Register} />
             <Route path={Paths.login} component={Login} />
-            <Route path={Paths.profile} component={Profile} />
           </>
         ) : null}
-        <Route component={Main} />
+        <Route path={Paths.profile} component={Profile} />
+        <Redirect exact to="/" />
       </Switch>
+      <Notifications />
     </>
   );
 }

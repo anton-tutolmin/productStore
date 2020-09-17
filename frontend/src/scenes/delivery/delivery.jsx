@@ -1,6 +1,6 @@
 import React from 'react';
-import { DeliveryItem } from '../components/delivery/deliveryItem.jsx';
-import { products } from '../constants/mock';
+import { DeliveryItem } from '../../components/delivery/deliveryItem.jsx';
+import { products } from '../../constants/mock';
 import './delivery.sass';
 
 export const Delivery = () => {

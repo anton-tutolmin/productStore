@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { RegisterForm } from '../components/forms/register/registerForm.jsx';
+import { RegisterForm } from '../../components/forms/register/registerForm.jsx';
 
 const initialState = {
   username: '',
