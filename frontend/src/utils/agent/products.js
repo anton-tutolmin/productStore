@@ -1,3 +1,7 @@
-import axios from 'axios';
+import products from '../../store/actions/async/products';
 
-const load = () => {};
+const load = () => {
+  products.load();
+};
+
+export default { load };

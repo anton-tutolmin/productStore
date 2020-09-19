@@ -4,10 +4,10 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './cartItem.sass';
 
 export const CartItem = (props) => {
-  const { product, removeFromCart, toOrder } = props;
+  const { product, removeFromCart, toOrder, index } = props;
 
   const onDelete = () => {
-    removeFromCart(product.id);
+    removeFromCart(index);
   };
 
   const onOrder = () => {

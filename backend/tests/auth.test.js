@@ -26,8 +26,8 @@ describe('Auth test:', () => {
   });
 
   afterAll(async () => {
-    mongoose.connection.db.dropCollection('users');
-    mongoose.connection.close();
+    await mongoose.connection.db.dropCollection('users');
+    await mongoose.connection.close();
   });
 
   test('Register', async () => {

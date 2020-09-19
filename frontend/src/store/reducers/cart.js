@@ -10,7 +10,7 @@ export default function cart(state = initialState, action) {
       };
     case 'REMOVE_FROM_CART':
       return {
-        cart: state.cart.filter((o) => o.id !== action.payload),
+        cart: state.cart.filter((o, i) => i !== action.payload),
       };
     default:
       return state;

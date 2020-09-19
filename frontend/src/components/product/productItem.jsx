@@ -24,7 +24,7 @@ export const ProductItem = (props) => {
               {product.description}
             </div>
           </li>
-          <li>{product.coast}</li>
+          <li>${product.coast}</li>
           <li>
             <CardButton label="Add to cart" onClick={onClick} />
           </li>

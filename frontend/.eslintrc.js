@@ -17,5 +17,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/destructuring-assignment': 'off',
     'import/prefer-default-export': 'off',
+    'react/jsx-one-expression-per-line': 'off',
+    'no-plusplus': 'off',
   },
 };

@@ -5,7 +5,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PATHS = {
   src: path.join(__dirname, '../src'),
   dist: path.join(__dirname, '../public'),
-  postcssConfig: path.join(__dirname, '../src', 'config', 'postcss.config.js'),
+  postcssConfig: path.join(
+    __dirname,
+    '../src',
+    'config',
+    'postcss.config.js',
+  ),
   assets: 'static/',
 };
 
@@ -56,7 +61,10 @@ module.exports = {
           },
           {
             loader: 'postcss-loader',
-            options: { sourceMap: true, config: { path: PATHS.postcssConfig } },
+            options: {
+              sourceMap: true,
+              config: { path: PATHS.postcssConfig },
+            },
           },
           {
             loader: 'sass-loader',

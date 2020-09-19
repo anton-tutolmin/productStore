@@ -10,7 +10,12 @@ const Cart = (props) => {
   return (
     <div className="cart">
       {cart.map((c, i) => (
-        <CartItem product={c} removeFromCart={remove} key={i} />
+        <CartItem
+          product={c}
+          removeFromCart={remove}
+          index={i}
+          key={Math.random()}
+        />
       ))}
       {cart.length === 0 ? 'Empty' : null}
     </div>
