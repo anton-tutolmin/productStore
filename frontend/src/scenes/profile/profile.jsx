@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   faEdit,
   faCreditCard,
@@ -8,8 +9,14 @@ import {
 
 import { TextLine } from '../../components/profile/textLine.jsx';
 import { ProfileModal } from '../../components/modals/profileModal.jsx';
+import { CardButton } from '../../components/buttons/cardButton.jsx';
 import userValidator from '../../utils/validator/user';
-import { addNotification } from '../../store/actions/index';
+
+import {
+  addNotification,
+  requireAuth,
+} from '../../store/actions/index';
+
 import './profile.sass';
 
 const Profile = (props) => {
@@ -50,6 +57,11 @@ const Profile = (props) => {
     } else {
       showError('Balance must be number greater 0');
     }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    props.unauth();
   };
 
   const modals = [
@@ -106,6 +118,7 @@ const Profile = (props) => {
         />
       </TextLine>
       {shownModal}
+      <CardButton label="Log out" onClick={logout} />
     </div>
   );
 };
@@ -116,6 +129,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   showError: (payload) => dispatch(addNotification(payload)),
+  unauth: () => dispatch(requireAuth()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

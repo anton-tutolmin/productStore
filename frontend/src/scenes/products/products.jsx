@@ -7,7 +7,9 @@ import './products.sass';
 
 const Products = (props) => {
   const { products, add, loading } = props;
-
+  // addEventListener('scroll', (e) => {
+  //   console.log(e);
+  // });
   return (
     <div className="products">
       {loading ? (

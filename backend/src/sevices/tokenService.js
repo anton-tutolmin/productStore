@@ -17,7 +17,6 @@ async function login(ctx, next) {
       ctx.response.body = {
         auth: true,
         token: token,
-        message: 'User logined'
       };
     }
   })(ctx, next);
@@ -40,11 +39,11 @@ async function register(ctx, next) {
       };
       
       const createdUser = await UserService.create(hashedUser);
+      console.log(createdUser)
       const token = jwt.sign({id: createdUser._id}, key);
       ctx.response.body = {
         auth: true,
         token: token,
-        message: 'User registered'
       };
     }
   })(ctx, next);
@@ -63,7 +62,8 @@ async function profile(ctx, next) {
         id: user._id,
         username: user.username,
         email: user.email,
-        phone: user.phone
+        phone: user.phone,
+        balance: user.balance
       };
     }
   })(ctx, next);

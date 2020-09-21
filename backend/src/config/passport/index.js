@@ -40,14 +40,13 @@ passport.use('login', new LocalStrategy(
 
     if (!user) {
       done(null, false, {message: 'There is no user with this username'});
-    }
-
-    const isValidPassword = await Bcrypt.validatePassword(password, user.password);
-
-    if (!isValidPassword) {
-      done(null, false, {message: 'Wrong password'});
     } else {
-      done(null, user);
+      const isValidPassword = await Bcrypt.validatePassword(password, user.password);
+      if (!isValidPassword) {
+        done(null, false, {message: 'Wrong password'});
+      } else {
+        done(null, user);
+      }
     }
   }
 ));

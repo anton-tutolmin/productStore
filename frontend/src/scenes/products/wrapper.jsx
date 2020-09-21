@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
-import agent from '../../utils/agent/products';
+import { connect } from 'react-redux';
+import { doLoadProducts } from '../../store/actions/async/products';
 import Products from './products.jsx';
 
-export default () => {
+const Wrapper = (props) => {
   useEffect(() => {
-    agent.load();
+    props.load();
   });
 
   return <Products />;
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  load: () => dispatch(doLoadProducts()),
+});
+
+export default connect(null, mapDispatchToProps)(Wrapper);

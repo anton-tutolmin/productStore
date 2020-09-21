@@ -6,8 +6,8 @@ import Products from './products/wrapper.jsx';
 import { Orders } from './orders/orders.jsx';
 import { Delivery } from './delivery/delivery.jsx';
 import { Request } from './requests/requests.jsx';
-import { Register } from './register/register.jsx';
-import { Login } from './login/login.jsx';
+import Register from './register/register.jsx';
+import Login from './login/login.jsx';
 import { Main } from './main/main.jsx';
 import Profile from './profile/profile.jsx';
 import Notifications from './notification/notifications.jsx';
@@ -24,12 +24,8 @@ export default function Scenes(props) {
         <Route path={Paths.order} component={Orders} />
         <Route path={Paths.delivery} component={Delivery} />
         <Route path={Paths.request} component={Request} />
-        {!auth ? (
-          <>
-            <Route path={Paths.register} component={Register} />
-            <Route path={Paths.login} component={Login} />
-          </>
-        ) : null}
+        {!auth ? <UnauthRoutes /> : null}
+
         <Route path={Paths.profile} component={Profile} />
         <Redirect exact to="/" />
       </Switch>
@@ -37,3 +33,12 @@ export default function Scenes(props) {
     </>
   );
 }
+
+const UnauthRoutes = () => {
+  return (
+    <>
+      <Route path={Paths.register} component={Register} />
+      <Route path={Paths.login} component={Login} />
+    </>
+  );
+};

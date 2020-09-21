@@ -1,30 +1,21 @@
-import { bindActionCreators } from 'redux';
-import axios from 'axios';
-import store from '../..';
 import { addNotification } from '../index';
+import agent from '../../../utils/agent/products';
 
 const showLoading = () => ({ type: 'SHOW_PRODUCT_LOADING' });
 const hideLoading = () => ({ type: 'HIDE_PRODUCT_LOADING' });
 const load = (payload) => ({ type: 'PRODUCT_LOAD', payload });
 
-const doProductsLoad = () => {
+export const doLoadProducts = () => {
   return async (dispatch) => {
     dispatch(showLoading());
-    try {
-      const res = await axios({
-        method: 'GET',
-        url: '/api/products/',
-        headers: { Authorization: 'Bearer token' },
-      });
-      dispatch(hideLoading());
-      dispatch(load(res.data.products));
-    } catch (e) {
-      dispatch(addNotification(e.message));
+    const response = await agent.load();
+    dispatch(hideLoading());
+    if (response.error) {
+      dispatch(addNotification(response.error.message));
+    } else if (response.message) {
+      dispatch(addNotification(response.message));
+    } else {
+      dispatch(load(response.products));
     }
   };
 };
-
-export default bindActionCreators(
-  { load: doProductsLoad },
-  store.dispatch,
-);

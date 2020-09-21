@@ -1,5 +1,9 @@
 import React, { useReducer } from 'react';
+import { connect } from 'react-redux';
 import { RegisterForm } from '../../components/forms/register/registerForm.jsx';
+import { doRegister } from '../../store/actions/async/auth.js';
+import { addNotification } from '../../store/actions/index.js';
+import validator from '../../utils/validator/user';
 
 const initialState = {
   username: '',
@@ -24,7 +28,7 @@ const reducer = (state, action) => {
   }
 };
 
-export const Register = () => {
+const Register = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const onUsernameChange = (e) => {
@@ -47,8 +51,18 @@ export const Register = () => {
     dispatch({ type: 'CHANGE_PHONE', payload: e.target.value });
   };
 
-  const onChange = (action) => {
-    dispatch(action);
+  const isValid = () => {
+    return (
+      validator.isValidUsername(state.username) &&
+      validator.isValidPassword(state.password) &&
+      validator.isValidEmail(state.email) &&
+      validator.isValidPhone(state.phone)
+    );
+  };
+
+  const submit = () => {
+    if (!isValid()) props.showError('Wrong filled fields');
+    else props.submit({ ...state });
   };
 
   return (
@@ -61,7 +75,14 @@ export const Register = () => {
       onPasswordChange={onPasswordChange}
       onEmailChange={onEmailChange}
       onPhoneChange={onPhoneChange}
-      onChange={onChange}
+      submit={submit}
     />
   );
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  submit: (user) => dispatch(doRegister(user)),
+  showError: (payload) => dispatch(addNotification(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Register);

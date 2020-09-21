@@ -1,5 +1,6 @@
 const initialState = {
-  auth: true,
+  auth: false,
+  needAuth: true,
 };
 
 export default (state = initialState, action) => {
@@ -7,10 +8,17 @@ export default (state = initialState, action) => {
     case 'AUTH':
       return {
         auth: true,
+        needAuth: false,
       };
-    case 'UNAUTH':
+    case 'NEED_AUTH':
       return {
         auth: false,
+        needAuth: true,
+      };
+    case 'NEED_NO_AUTH':
+      return {
+        auth: false,
+        needAuth: false,
       };
     default:
       return state;

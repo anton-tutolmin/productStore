@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { CardButton } from '../../buttons/cardButton.jsx';
 import { Input } from '../../inputs/input.jsx';
 import './registerForm.sass';
@@ -13,11 +13,8 @@ export const RegisterForm = (props) => {
     onPasswordChange,
     onEmailChange,
     onPhoneChange,
+    submit,
   } = props;
-
-  const submit = () => {
-    console.log(username, password, email, phone);
-  };
 
   return (
     <div className="registerform">

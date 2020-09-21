@@ -1,7 +1,12 @@
-import products from '../../store/actions/async/products';
+import axios from 'axios';
 
-const load = () => {
-  products.load();
+const load = async () => {
+  try {
+    const response = await axios.get('/api/products/');
+    return response.data;
+  } catch (error) {
+    return { error };
+  }
 };
 
 export default { load };

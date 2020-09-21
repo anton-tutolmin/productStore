@@ -9,13 +9,8 @@ export const LoginForm = (props) => {
     password,
     onUsernameChange,
     onPasswordChange,
-    isInvalid,
+    submit,
   } = props;
-
-  const submit = () => {
-    if (isInvalid()) console.log('Empy fields');
-    else console.log('login', username, password);
-  };
 
   return (
     <div className="loginform">

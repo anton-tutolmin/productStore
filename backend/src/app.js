@@ -20,7 +20,8 @@ app.use(async (ctx, next) => {
   try {
     await next();
   } catch (e) {
-    ctx.response.status = 404;
+    console.log(e.message)
+    ctx.response.status = 200;
     ctx.response.body = {error: e.message};
   }
 });

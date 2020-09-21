@@ -17,3 +17,13 @@ export const removeNotification = (payload) => ({
   type: 'REMOVE_NOTIFICATION',
   payload,
 });
+
+export const authorize = () => ({ type: 'AUTH' });
+
+export const unauthorize = () => ({ type: 'UNAUTH' });
+
+export const requireAuth = () => ({ type: 'NEED_AUTH' });
+
+export const unrequireAuth = () => ({ type: 'NEED_NO_AUTH' });
+
+export const loadUser = (payload) => ({ type: 'USER_LOAD', payload });
