@@ -33,7 +33,6 @@ async function getByUsername(username) {
 
 async function updateById(id, body) {
   const params = {};
-
   for (let param of Object.keys(body)) {
     if (param === 'username') params.username = body[param];
     if (param === 'email') params.email = body[param];
@@ -41,7 +40,6 @@ async function updateById(id, body) {
     if (param === 'type') params.type = body[param];
     if (param === 'balance') params.balance = body[param];
   }
-
   userValidator.validateUpdateBody(params);
   await UserResource.updateById(id, params);
 }

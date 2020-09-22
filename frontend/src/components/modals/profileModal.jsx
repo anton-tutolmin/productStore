@@ -26,7 +26,7 @@ export const ProfileModal = (props) => {
             className="modal__subnit-btn"
             onClick={(e) => {
               e.preventDefault();
-              onSubmit(value);
+              onSubmit(value, props.label);
             }}
           >
             Update

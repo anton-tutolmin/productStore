@@ -18,9 +18,9 @@ app.use(passport.initialize());
 
 app.use(async (ctx, next) => {
   try {
+    console.log(ctx.request.body)
     await next();
   } catch (e) {
-    console.log(e.message)
     ctx.response.status = 200;
     ctx.response.body = {error: e.message};
   }

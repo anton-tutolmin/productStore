@@ -10,12 +10,14 @@ import {
 import { TextLine } from '../../components/profile/textLine.jsx';
 import { ProfileModal } from '../../components/modals/profileModal.jsx';
 import { CardButton } from '../../components/buttons/cardButton.jsx';
-import userValidator from '../../utils/validator/user';
+import validator from '../../utils/validator/user';
 
 import {
   addNotification,
   requireAuth,
 } from '../../store/actions/index';
+
+import { doUpdateUser } from '../../store/actions/async/user';
 
 import './profile.sass';
 
@@ -23,40 +25,25 @@ const Profile = (props) => {
   const { user, showError } = props;
   const [shownModal, setShownModal] = useState(null);
 
-  const updateUsername = (value) => {
-    if (userValidator.isValidUsername(value)) {
-      setShownModal(null);
-      console.log('update username', value);
-    } else {
-      showError('Too short username');
+  const update = (value, label) => {
+    const param = {};
+    if (label === 'Username') {
+      if (validator.isValidUsername(value)) param.username = value;
+      else showError('Too short username');
     }
-  };
-
-  const updateEmail = (value) => {
-    if (userValidator.isValidEmail(value)) {
-      setShownModal(null);
-      console.log('update email', value);
-    } else {
-      showError('Too short email');
+    if (label === 'Email') {
+      if (validator.isValidEmail(value)) param.email = value;
+      else showError('Too short email');
     }
-  };
-
-  const updatePhone = (value) => {
-    if (userValidator.isValidPhone(value)) {
-      setShownModal(null);
-      console.log('update phone', value);
-    } else {
-      showError('Phone length must be 12');
+    if (label === 'Phone') {
+      if (validator.isValidPhone(value)) param.phone = value;
+      else showError('Phone length must be 11');
     }
-  };
-
-  const updateBalance = (value) => {
-    if (userValidator.isValidBalance(value)) {
-      setShownModal(null);
-      console.log('update balance', value);
-    } else {
-      showError('Balance must be number greater 0');
+    if (label === 'Fill balance') {
+      if (validator.isValidBalance(value)) param.balance = +value;
+      else showError('Balance must be number greater 0');
     }
+    if (Object.keys(param).length) props.update(param, user.id);
   };
 
   const logout = () => {
@@ -69,25 +56,25 @@ const Profile = (props) => {
       label="Username"
       type="text"
       onToggle={() => setShownModal(null)}
-      onSubmit={updateUsername}
+      onSubmit={update}
     />,
     <ProfileModal
       label="Email"
       type="email"
       onToggle={() => setShownModal(null)}
-      onSubmit={updateEmail}
+      onSubmit={update}
     />,
     <ProfileModal
       label="Phone"
       type="text"
       onToggle={() => setShownModal(null)}
-      onSubmit={updatePhone}
+      onSubmit={update}
     />,
     <ProfileModal
       label="Fill balance"
       type="text"
       onToggle={() => setShownModal(null)}
-      onSubmit={updateBalance}
+      onSubmit={update}
     />,
   ];
 
@@ -130,6 +117,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   showError: (payload) => dispatch(addNotification(payload)),
   unauth: () => dispatch(requireAuth()),
+  update: (param, id) => dispatch(doUpdateUser(param, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

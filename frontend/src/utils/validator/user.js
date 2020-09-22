@@ -11,16 +11,11 @@ function isValidEmail(email) {
 }
 
 function isValidPhone(phone) {
-  return phone && phone.length === 12;
+  return phone && phone.length === 11;
 }
 
 function isValidBalance(balance) {
   return balance && typeof +balance === 'number' && +balance > 0;
-}
-
-function isValid(params) {
-  Object.keys(params).forEach((v) => false);
-  return true;
 }
 
 export default {
