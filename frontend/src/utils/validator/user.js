@@ -18,10 +18,15 @@ function isValidBalance(balance) {
   return balance && typeof +balance === 'number' && +balance > 0;
 }
 
+function isValidType(type) {
+  return type === 'client' || type === 'curier';
+}
+
 export default {
   isValidUsername,
   isValidPassword,
   isValidEmail,
   isValidPhone,
   isValidBalance,
+  isValidType,
 };

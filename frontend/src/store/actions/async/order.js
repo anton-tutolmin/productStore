@@ -1,4 +1,4 @@
-import agent from '../../../utils/agent/order';
+import agent from '../../../utils/agent/orders';
 import {
   addNotification,
   removeFromCart,
@@ -17,3 +17,7 @@ export const doOrderProduct = (product, indexInCart) => {
     }
   };
 };
+
+// export const doLoadOrders = (userId) => {
+//   return async (dispatch) => {};
+// };

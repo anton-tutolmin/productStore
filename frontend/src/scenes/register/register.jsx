@@ -10,7 +10,7 @@ const initialState = {
   password: '',
   email: '',
   phone: '',
-  type: 1,
+  type: 'client',
 };
 
 const reducer = (state, action) => {
@@ -23,6 +23,8 @@ const reducer = (state, action) => {
       return { ...state, email: action.payload };
     case 'CHANGE_PHONE':
       return { ...state, phone: action.payload };
+    case 'CHANGE_TYPE':
+      return { ...state, type: action.payload };
     default:
       return state;
   }
@@ -51,18 +53,30 @@ const Register = (props) => {
     dispatch({ type: 'CHANGE_PHONE', payload: e.target.value });
   };
 
+  const onTypeChange = (e) => {
+    e.preventDefault();
+    dispatch({ type: 'CHANGE_TYPE', payload: e.target.value });
+  };
+
   const isValid = () => {
     return (
       validator.isValidUsername(state.username) &&
       validator.isValidPassword(state.password) &&
       validator.isValidEmail(state.email) &&
-      validator.isValidPhone(state.phone)
+      validator.isValidPhone(state.phone) &&
+      validator.isValidType(state.type)
     );
   };
 
   const submit = () => {
-    if (!isValid()) props.showError('Wrong filled fields');
-    else props.submit({ ...state });
+    if (!isValid()) {
+      props.showError('Wrong filled fields');
+    } else {
+      props.submit({
+        ...state,
+        type: state.type === 'client' ? 1 : 2,
+      });
+    }
   };
 
   return (
@@ -75,7 +89,9 @@ const Register = (props) => {
       onPasswordChange={onPasswordChange}
       onEmailChange={onEmailChange}
       onPhoneChange={onPhoneChange}
+      onTypeChange={onTypeChange}
       submit={submit}
+      userType={state.type}
     />
   );
 };
