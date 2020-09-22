@@ -15,9 +15,8 @@ async function getById(id) {
   return user;
 }
 
-async function updateById(id, params) {
-  const user = await UserService.updateById(id, params);
-  return user;
+async function updateById(id, params, user) {
+  await UserService.updateById(id, params, user);
 }
 
 async function deleteById(id) {

@@ -7,8 +7,16 @@ const router = new KoaRouter();
 router
 
   .post('/api/orders', async (ctx, next) => {
-    await OrderController.create(ctx.request.body);
-    ctx.response.body = {message: 'Order created'};
+    await passport.authenticate('jwt', {session: false},
+      async (err, user, msg) => {
+        if (err) throw new Error(err);
+
+        if (msg) throw new Error(msg.message);
+
+        await OrderController.create(ctx.request.body, user);
+
+        ctx.response.body = {message: 'Order created'};
+    })(ctx, next);
   })
 
   .get('/api/orders:id', async (ctx, next) => {

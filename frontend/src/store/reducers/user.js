@@ -11,6 +11,8 @@ export default function reducer(state = initialState, action) {
       return {
         ...action.payload,
       };
+    case 'REDUCE_BALANCE':
+      return { ...state, balance: state.balance - action.payload };
     default:
       return state;
   }

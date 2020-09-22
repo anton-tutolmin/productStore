@@ -3,11 +3,9 @@ const UserService = require('./userService');
 const ProductService = require('./productService');
 const validator = require('./validatorService/order');
 
-async function create(body) {
-  const user = await UserService.getById(body.clientId);
-  if (!user) throw new Error('No such user');
-
+async function create(body, user) {
   const product = await ProductService.getById(body.productId);
+
   if (!product) throw new Error('No such product');
 
   if (user.balance < product.coast)
@@ -17,12 +15,13 @@ async function create(body) {
 
   const createBody = {
     status: 'created',
-    clientId: body.clientId,
+    clientId: user._id,
     curierId: 'none',
     productId: body.productId
   }
 
   const order = await OrderResource.create(createBody);
+  console.log(order);
   return order;
 }
 

@@ -1,21 +1,21 @@
-export const addToCart = (payload) => ({
+export const addToCart = (product) => ({
   type: 'ADD_TO_CART',
-  payload,
+  payload: product,
 });
 
-export const removeFromCart = (payload) => ({
+export const removeFromCart = (id) => ({
   type: 'REMOVE_FROM_CART',
-  payload,
+  payload: id,
 });
 
-export const addNotification = (payload) => ({
+export const addNotification = (text) => ({
   type: 'ADD_NOTIFICATION',
-  payload,
+  payload: text,
 });
 
-export const removeNotification = (payload) => ({
+export const removeNotification = (id) => ({
   type: 'REMOVE_NOTIFICATION',
-  payload,
+  payload: id,
 });
 
 export const authorize = () => ({ type: 'AUTH' });
@@ -26,4 +26,12 @@ export const requireAuth = () => ({ type: 'NEED_AUTH' });
 
 export const unrequireAuth = () => ({ type: 'NEED_NO_AUTH' });
 
-export const loadUser = (payload) => ({ type: 'USER_LOAD', payload });
+export const loadUser = (user) => ({
+  type: 'USER_LOAD',
+  payload: user,
+});
+
+export const reduceBalance = (subtrahend) => ({
+  type: 'REDUCE_BALANCE',
+  payload: subtrahend,
+});

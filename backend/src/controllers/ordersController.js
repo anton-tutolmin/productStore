@@ -1,7 +1,7 @@
 const OrderService = require('../sevices/orderService');
 
-async function create(body) {
-  const order = await OrderService.create(body);
+async function create(body, user) {
+  const order = await OrderService.create(body, user);
   return order;
 }
 

@@ -5,10 +5,10 @@ import { removeNotification } from '../../store/actions';
 import './notifications.sass';
 
 const Notifications = (props) => {
-  const { notifications, removeNotification } = props;
+  const { notifications, remove } = props;
 
   const onRemove = (id) => {
-    removeNotification(id);
+    remove(id);
   };
 
   return (
@@ -29,8 +29,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  removeNotification: (payload) =>
-    dispatch(removeNotification(payload)),
+  remove: (id) => dispatch(removeNotification(id)),
 });
 
 export default connect(

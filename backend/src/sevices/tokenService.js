@@ -39,7 +39,6 @@ async function register(ctx, next) {
       };
       
       const createdUser = await UserService.create(hashedUser);
-      console.log(createdUser)
       const token = jwt.sign({id: createdUser._id}, key);
       ctx.response.body = {
         auth: true,

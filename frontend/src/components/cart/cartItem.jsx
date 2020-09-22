@@ -4,14 +4,14 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './cartItem.sass';
 
 export const CartItem = (props) => {
-  const { product, removeFromCart, toOrder, index } = props;
+  const { product, removeFromCart, order, index } = props;
 
   const onDelete = () => {
     removeFromCart(index);
   };
 
   const onOrder = () => {
-    toOrder(product.id);
+    order(product, index);
   };
 
   return (
@@ -26,8 +26,8 @@ export const CartItem = (props) => {
       <img src={product.img} alt="" className="cart__img" />
       <div className="cart__text">
         <ul>
-          <li>Pizza 4 chesse</li>
-          <li>$120</li>
+          <li>{product.productname}</li>
+          <li>${product.coast}</li>
           <li>
             <button
               type="button"
