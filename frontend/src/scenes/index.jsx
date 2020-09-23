@@ -5,7 +5,7 @@ import Header from './header/header.jsx';
 import Products from './products/wrapper.jsx';
 import Orders from './orders/wrapper.jsx';
 import { Delivery } from './delivery/delivery.jsx';
-import { Request } from './requests/requests.jsx';
+import Request from './requests/wrapper.jsx';
 import Register from './register/register.jsx';
 import Login from './login/login.jsx';
 import { Main } from './main/main.jsx';
@@ -25,7 +25,6 @@ export default function Scenes(props) {
         <Route path={Paths.delivery} component={Delivery} />
         <Route path={Paths.request} component={Request} />
         {!auth ? <UnauthRoutes /> : null}
-
         <Route path={Paths.profile} component={Profile} />
         <Redirect exact to="/" />
       </Switch>

@@ -5,10 +5,12 @@ const validator = require('./validatorService/order');
 
 async function create(body, user) {
   const product = await ProductService.getById(body.productId);
-
+  console.log(user);
   if (!product) throw new Error('No such product');
 
   if (!user) throw new Error('No such user');
+
+  if (user.type === 2) throw new Error('Curier cant create order');
 
   if (user.balance < product.coast)
     throw new Error('Not enough money');

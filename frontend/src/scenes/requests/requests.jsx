@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { RequestItem } from '../../components/request/requestItem.jsx';
 import { products } from '../../constants/mock';
 import './request.sass';
 
-export const Request = () => {
+const Requests = (props) => {
+  console.log(props.requests);
   return (
     <div className="requests">
       {products.map((p) => (
@@ -14,3 +16,9 @@ export const Request = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  requests: state.requests.requests,
+});
+
+export default connect(mapStateToProps, null)(Requests);
