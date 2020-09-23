@@ -2,9 +2,6 @@ const OrdersController = require('../src/controllers/ordersController');
 const ProductController = require('../src/controllers/productController');
 const UserController = require('../src/controllers/userController');
 const mongoose = require('mongoose');
-const User = require('../src/models/User');
-const Order = require('../src/models/Order');
-const product = require('../src/sevices/validatorService/product');
 
 const url = require('./config').url;
 
@@ -30,7 +27,7 @@ describe('Order tests:', () => {
     let createdOrder;
 
     test('Creating order:', async () => {
-      const user = await UserController.create({
+      let user = await UserController.create({
         username: 'orderop',
         password: 'orderop',
         email: 'orderop@gmail.com',
@@ -46,12 +43,13 @@ describe('Order tests:', () => {
       });
 
       await UserController.updateById(user._id, {balance: 1000});
+      user = await UserController.getById(user._id)
 
       const order = await OrdersController.create({
         status: 'created',
         clientId: user._id.toString(),
         productId: product._id.toString()
-      });
+      }, user);
 
       expect(order.status).toBe('created');
       expect(order.clientId).toBe(user._id.toString());
@@ -109,6 +107,7 @@ describe('Order tests:', () => {
       });
 
       await UserController.updateById(client._id, {balance: 1000});
+      client = await UserController.getById(client._id);
 
       curier = await UserController.create({
         username: 'curiertest',
@@ -133,7 +132,7 @@ describe('Order tests:', () => {
         clientId: client._id,
         productId: product._id,
         status: 'created'
-      });
+      }, client);
       
       expect(order.status).toBe('created');
 
@@ -188,7 +187,7 @@ describe('Order tests:', () => {
         clientId: client._id,
         productId: product._id,
         status: 'created'
-      });
+      }, client);
 
       await OrdersController.updateById(
         order._id,
@@ -206,7 +205,7 @@ describe('Order tests:', () => {
         clientId: client._id,
         productId: product._id,
         status: 'created'
-      });
+      }, client);
 
       await OrdersController.updateById(
         order._id,
@@ -252,7 +251,7 @@ describe('Order tests:', () => {
         await OrdersController.create({
           clientId: client._id,
           productId: product._id
-        })
+        }, null)
       } catch(e) {
         expect(e.message).toBe('No such user');
       }
@@ -282,7 +281,7 @@ describe('Order tests:', () => {
         await OrdersController.create({
           clientId: client._id,
           productId: product._id
-        });
+        }, client);
       } catch(e) {
         expect(e.message).toBe('No such product');
       }
@@ -321,6 +320,7 @@ describe('Order tests:', () => {
         await UserController.updateById(client._id, {
           balance: 1000
         });
+        client = await UserController.getById(client._id);
 
         let product = await ProductController.create({
           productname: 'testordererrorupdate',
@@ -333,7 +333,7 @@ describe('Order tests:', () => {
           clientId: client._id,
           productId: product._id,
           status: 'created'
-        });
+        }, client);
       });
 
       test('curierId', async () => {

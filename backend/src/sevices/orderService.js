@@ -8,6 +8,8 @@ async function create(body, user) {
 
   if (!product) throw new Error('No such product');
 
+  if (!user) throw new Error('No such user');
+
   if (user.balance < product.coast)
     throw new Error('Not enough money');
 
@@ -21,7 +23,6 @@ async function create(body, user) {
   }
 
   const order = await OrderResource.create(createBody);
-  console.log(order);
   return order;
 }
 

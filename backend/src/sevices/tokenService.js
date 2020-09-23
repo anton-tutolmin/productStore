@@ -57,7 +57,6 @@ async function profile(ctx, next) {
       ctx.response.body = {...info};
     } else {
       ctx.response.body = {
-        auth: true,
         id: user._id,
         username: user.username,
         email: user.email,

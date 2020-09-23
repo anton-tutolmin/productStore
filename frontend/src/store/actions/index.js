@@ -35,3 +35,8 @@ export const reduceBalance = (subtrahend) => ({
   type: 'REDUCE_BALANCE',
   payload: subtrahend,
 });
+
+export const loadOrder = (orders) => ({
+  type: 'ORDER_LOAD',
+  payload: orders,
+});

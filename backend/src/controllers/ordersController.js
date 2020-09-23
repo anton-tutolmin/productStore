@@ -1,4 +1,5 @@
 const OrderService = require('../sevices/orderService');
+const userService = require('../sevices/userService');
 
 async function create(body, user) {
   const order = await OrderService.create(body, user);
@@ -31,6 +32,11 @@ async function deleteByProductId(productId) {
   await OrderService.deleteByProductId(productId);
 }
 
+async function getByUserId(userId) {
+  const orders = await userService.getByUserId(userId);
+  return orders;
+}
+
 module.exports = {
   create,
   getAll,
@@ -38,5 +44,6 @@ module.exports = {
   updateById,
   deleteById,
   deleteByClientId,
-  deleteByProductId
+  deleteByProductId,
+  getByUserId
 }

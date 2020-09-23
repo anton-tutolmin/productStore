@@ -1,12 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { OrderItem } from '../../components/order/orderItem.jsx';
-import { products } from '../../constants/mock';
 import './orders.sass';
 
-export const Orders = () => {
+const Orders = (props) => {
+  const { orders } = props;
   return (
     <div className="orders">
-      {products.map((p) => (
+      {orders.map((p) => (
         <div className="orders__container" key={p.id}>
           <OrderItem order={p} />
         </div>
@@ -14,3 +15,9 @@ export const Orders = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  orders: state.orders.orders,
+});
+
+export default connect(mapStateToProps, null)(Orders);

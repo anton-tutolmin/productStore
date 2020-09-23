@@ -4,6 +4,7 @@ import products from './products';
 import cart from './cart';
 import notifications from './notifications';
 import user from './user';
+import orders from './orders';
 
 export default combineReducers({
   auth,
@@ -11,4 +12,5 @@ export default combineReducers({
   cart,
   notifications,
   user,
+  orders,
 });

@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Paths from '../constants/paths';
 import Header from './header/header.jsx';
 import Products from './products/wrapper.jsx';
-import { Orders } from './orders/orders.jsx';
+import Orders from './orders/wrapper.jsx';
 import { Delivery } from './delivery/delivery.jsx';
 import { Request } from './requests/requests.jsx';
 import Register from './register/register.jsx';

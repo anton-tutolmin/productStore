@@ -3,6 +3,7 @@ import {
   addNotification,
   removeFromCart,
   reduceBalance,
+  loadOrder,
 } from '../index';
 
 export const doOrderProduct = (product, indexInCart) => {
@@ -18,6 +19,13 @@ export const doOrderProduct = (product, indexInCart) => {
   };
 };
 
-// export const doLoadOrders = (userId) => {
-//   return async (dispatch) => {};
-// };
+export const doLoadOrders = (userId) => {
+  return async (dispatch) => {
+    const response = await agent.load(userId);
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(loadOrder(response.orders));
+    }
+  };
+};

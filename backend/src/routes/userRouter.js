@@ -34,8 +34,7 @@ router
         
         await UserController.updateById(
           ctx.params.id,
-          ctx.request.body,
-          user
+          ctx.request.body
         );
 
         ctx.response.body = {message: 'User updated'};

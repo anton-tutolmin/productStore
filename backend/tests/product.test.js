@@ -39,7 +39,6 @@ describe('Product tests:', () => {
   
     test('Getting all products:', async () => {
       const products = await ProductController.getAll();
-
       expect(products.length).toBe(1);
     });
   

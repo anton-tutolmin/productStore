@@ -31,14 +31,17 @@ async function getByUsername(username) {
   return user;
 }
 
-async function updateById(id, body, user) {
+async function updateById(id, body) {
   const params = {};
   for (let param of Object.keys(body)) {
     if (param === 'username') params.username = body[param];
     if (param === 'email') params.email = body[param];
     if (param === 'phone') params.phone = body[param];
     if (param === 'type') params.type = body[param];
-    if (param === 'balance') params.balance = user.balance + body[param];
+    if (param === 'balance') {
+      const user = await UserResource.getById(id);
+      params.balance = user.balance + body[param];
+    }
   }
 
   userValidator.validateUpdateBody(params);
