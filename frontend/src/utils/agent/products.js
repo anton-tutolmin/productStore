@@ -9,4 +9,13 @@ const load = async () => {
   }
 };
 
-export default { load };
+const loadById = async (productId) => {
+  try {
+    const response = await axios.get(`/api/products:${productId}`);
+    return response;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export default { load, loadById };

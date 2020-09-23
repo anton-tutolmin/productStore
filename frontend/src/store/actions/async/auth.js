@@ -17,6 +17,7 @@ export const doAuth = () => {
       } else if (user.message) {
         dispatch(addNotification(user.message));
       } else {
+        dispatch(authorize());
         dispatch(
           loadUser({
             id: user.id,
@@ -26,7 +27,6 @@ export const doAuth = () => {
             balance: user.balance,
           }),
         );
-        dispatch(authorize());
       }
     } else {
       dispatch(unrequireAuth());

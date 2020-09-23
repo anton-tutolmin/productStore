@@ -14,7 +14,6 @@ const order = async (productId) => {
 
 const load = async (userId) => {
   const response = await axios.get(`/api/users/${userId}/orders`);
-  console.log(response.data);
   return response.data;
 };
 

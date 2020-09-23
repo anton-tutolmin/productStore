@@ -36,9 +36,14 @@ async function getById(id) {
   return order;
 }
 
-async function getByAuthorId(authorId) {
-  const orders = await OrderResource.getByAuthorId(authorId);
-  return orders;
+async function getByClientId(clientId) {
+  const order = await OrderResource.getByClientId(clientId);
+  return order;
+}
+
+async function getByCurierId(curierId) {
+  const order = OrderResource.getByCurierId(curierId);
+  return order;
 }
 
 async function getByProductId(productId) {
@@ -139,7 +144,8 @@ module.exports = {
   create,
   getAll,
   getById,
-  getByAuthorId,
+  getByClientId,
+  getByCurierId,
   getByProductId,
   updateById,
   deleteById,

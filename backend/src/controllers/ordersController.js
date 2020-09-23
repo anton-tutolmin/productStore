@@ -1,5 +1,5 @@
 const OrderService = require('../sevices/orderService');
-const userService = require('../sevices/userService');
+const ProductService = require('../sevices/productService');
 
 async function create(body, user) {
   const order = await OrderService.create(body, user);
@@ -14,6 +14,27 @@ async function getAll() {
 async function getById(id) {
   const order = await OrderService.getById(id);
   return order;
+}
+
+async function getByClientId(clientId) {
+  let orders = await OrderService.getByClientId(clientId);
+  let response = [];
+
+  for (let order of orders) {
+    response.push({
+      id: order._id,
+      productId: order.productId,
+      clientId: order.clientId,
+      curierId: order.curierId,
+      product: await ProductService.getById(order.productId)
+    });
+  }
+
+  return response;
+}
+
+async function getByCurierId(curierId) {
+  const orders = await OrderService.getByCurierId(curierId)
 }
 
 async function updateById(id, params, user) {
@@ -32,18 +53,14 @@ async function deleteByProductId(productId) {
   await OrderService.deleteByProductId(productId);
 }
 
-async function getByUserId(userId) {
-  const orders = await userService.getByUserId(userId);
-  return orders;
-}
-
 module.exports = {
   create,
   getAll,
   getById,
+  getByClientId,
+  getByCurierId,
   updateById,
   deleteById,
   deleteByClientId,
   deleteByProductId,
-  getByUserId
 }

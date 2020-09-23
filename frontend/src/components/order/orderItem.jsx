@@ -1,5 +1,6 @@
 import React from 'react';
 import { CardButton } from '../buttons/cardButton.jsx';
+import agent from '../../utils/agent/products';
 import './orderItem.sass';
 
 export const OrderItem = (props) => {

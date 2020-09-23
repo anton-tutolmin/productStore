@@ -43,7 +43,8 @@ router
 
   .get('/api/users/:id/orders', async (ctx, next) => {
     const orders =
-      await OrderController.getOrderByUserId(ctx.params.id);
+      await OrderController.getByClientId(ctx.params.id);
+    ctx.response.body = {orders}
   })
 
 module.exports = router;

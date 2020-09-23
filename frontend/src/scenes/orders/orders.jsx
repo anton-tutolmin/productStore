@@ -9,7 +9,7 @@ const Orders = (props) => {
     <div className="orders">
       {orders.map((p) => (
         <div className="orders__container" key={p.id}>
-          <OrderItem order={p} />
+          <OrderItem order={p.product} />
         </div>
       ))}
     </div>

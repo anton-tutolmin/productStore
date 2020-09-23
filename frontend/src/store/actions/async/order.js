@@ -21,6 +21,10 @@ export const doOrderProduct = (product, indexInCart) => {
 
 export const doLoadOrders = (userId) => {
   return async (dispatch) => {
+    if (!userId) {
+      return;
+    }
+
     const response = await agent.load(userId);
     if (response.error) {
       dispatch(addNotification(response.error));

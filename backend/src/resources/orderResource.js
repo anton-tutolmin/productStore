@@ -17,10 +17,16 @@ async function getById(id) {
   return order;
 }
 
-async function getByAuthorId(authorId) {
-  validateId(authorId);
-  const orders = await Order.find({authorId});
-  return orders;
+async function getByClientId(clientId) {
+  validateId(clientId);
+  const order = await Order.find({clientId});
+  return order;
+}
+
+async function getByCurierId(curierId) {
+  validateId(curierId);
+  const order = await Order.find({curierId});
+  return order;
 }
 
 async function getByProductId(productId) {
@@ -59,7 +65,8 @@ module.exports = {
   create,
   getAll,
   getById,
-  getByAuthorId,
+  getByClientId,
+  getByCurierId,
   getByProductId, 
   updateById,
   deleteById,
