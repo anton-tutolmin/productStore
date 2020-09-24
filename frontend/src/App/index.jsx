@@ -15,14 +15,13 @@ const App = (props) => {
   return (
     <div className="app">
       <Router>
-        <Scenes auth={props.auth} />
+        <Scenes />
       </Router>
     </div>
   );
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth.auth,
   needAuth: state.auth.needAuth,
 });
 

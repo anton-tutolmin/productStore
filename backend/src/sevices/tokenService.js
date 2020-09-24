@@ -61,7 +61,8 @@ async function profile(ctx, next) {
         username: user.username,
         email: user.email,
         phone: user.phone,
-        balance: user.balance
+        balance: user.balance,
+        type: user.type
       };
     }
   })(ctx, next);

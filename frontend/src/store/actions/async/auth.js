@@ -25,6 +25,7 @@ export const doAuth = () => {
             email: user.email,
             phone: user.phone,
             balance: user.balance,
+            type: user.type,
           }),
         );
       }

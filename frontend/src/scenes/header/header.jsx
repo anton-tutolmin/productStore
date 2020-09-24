@@ -8,9 +8,69 @@ import CartButton from '../../components/navbar/cartButton.jsx';
 import Cart from '../../components/cart/cart.jsx';
 import Paths from '../../constants/paths';
 
-const Header = (props) => {
-  const { auth } = props;
+const ClientNavbarItems = (props) => {
+  return (
+    <NavbarItem
+      path={Paths.order}
+      label="Order"
+      active={props.active}
+      setActive={props.setActive}
+    />
+  );
+};
 
+const CurierNavbarItems = (props) => {
+  return (
+    <>
+      <NavbarItem
+        path={Paths.delivery}
+        label="Delivery"
+        active={props.active}
+        setActive={props.setActive}
+      />
+      <NavbarItem
+        path={Paths.request}
+        label="Request"
+        active={props.active}
+        setActive={props.setActive}
+      />
+    </>
+  );
+};
+
+const AuthNavbarItems = (props) => {
+  return (
+    <>
+      <ProfileButton
+        active={props.active}
+        setActive={props.setActive}
+      />
+      <CartButton show={props.show} toggleShow={props.toggleShow} />
+    </>
+  );
+};
+
+const UnauthNavbarItems = (props) => {
+  return (
+    <>
+      <NavbarButton
+        path={Paths.login}
+        label="Login"
+        active={props.active}
+        setActive={props.setActive}
+      />
+      <NavbarButton
+        path={Paths.register}
+        label="Register"
+        active={props.active}
+        setActive={props.setActive}
+      />
+    </>
+  );
+};
+
+const Header = (props) => {
+  const { auth, userType } = props;
   const [active, setActive] = useState(
     `/${document.URL.split('/')[3]}`,
   );
@@ -30,44 +90,21 @@ const Header = (props) => {
           active={active}
           setActive={setActive}
         />
-        <NavbarItem
-          path={Paths.order}
-          label="Order"
-          active={active}
-          setActive={setActive}
-        />
-        <NavbarItem
-          path={Paths.delivery}
-          label="Delivery"
-          active={active}
-          setActive={setActive}
-        />
-        <NavbarItem
-          path={Paths.request}
-          label="Request"
-          active={active}
-          setActive={setActive}
-        />
+        {userType === 1 ? (
+          <ClientNavbarItems active={active} setActive={setActive} />
+        ) : null}
+        {userType === 2 ? (
+          <CurierNavbarItems active={active} setActive={setActive} />
+        ) : null}
         {auth ? (
-          <>
-            <ProfileButton active={active} setActive={setActive} />
-            <CartButton show={show} toggleShow={toggleShow} />
-          </>
+          <AuthNavbarItems
+            active={active}
+            setActive={setActive}
+            show={show}
+            toggleShow={toggleShow}
+          />
         ) : (
-          <>
-            <NavbarButton
-              path={Paths.login}
-              label="Login"
-              active={active}
-              setActive={setActive}
-            />
-            <NavbarButton
-              path={Paths.register}
-              label="Register"
-              active={active}
-              setActive={setActive}
-            />
-          </>
+          <UnauthNavbarItems active={active} setActive={setActive} />
         )}
       </Navbar>
       {show ? <Cart /> : null}
@@ -77,6 +114,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth.auth,
+  userType: state.user.type,
 });
 
 export default connect(mapStateToProps, null)(Header);
