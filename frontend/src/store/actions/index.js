@@ -40,3 +40,8 @@ export const loadOrder = (orders) => ({
   type: 'ORDER_LOAD',
   payload: orders,
 });
+
+export const loadDelivery = (delivery) => ({
+  type: 'DELIVERY_LOAD',
+  payload: delivery,
+});

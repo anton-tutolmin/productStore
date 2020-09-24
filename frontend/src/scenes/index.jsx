@@ -5,7 +5,7 @@ import Paths from '../constants/paths';
 import Header from './header/header.jsx';
 import Products from './products/wrapper.jsx';
 import Orders from './orders/wrapper.jsx';
-import { Delivery } from './delivery/delivery.jsx';
+import Delivery from './delivery/wrapper.jsx';
 import Request from './requests/wrapper.jsx';
 import Register from './register/register.jsx';
 import Login from './login/login.jsx';

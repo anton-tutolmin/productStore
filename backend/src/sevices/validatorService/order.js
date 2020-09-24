@@ -23,7 +23,7 @@ function validateClientUpdate(newStatus, oldStatus) {
   if (newStatus === 'done' && oldStatus !== 'delivered') {
     throw new Error('Client may set order status only done');
   }
-  if (newStatus === 'canceled' && oldStatus === 'done') {
+  if (newStatus === 'canceled' && oldStatus !== 'created') {
     throw new Error('Cant cancel order that is done');
   }
 }

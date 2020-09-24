@@ -35,6 +35,11 @@ async function getByProductId(productId) {
   return orders;
 }
 
+async function getDelivery() {
+  const orders = await Order.find({curierId: 'none', status: 'created'});
+  return orders;
+}
+
 async function updateById(id, params) {
   validateId(id);
   await Order.updateOne({_id: id}, {...params});
@@ -68,6 +73,7 @@ module.exports = {
   getByClientId,
   getByCurierId,
   getByProductId, 
+  getDelivery,
   updateById,
   deleteById,
   deleteByClientId,

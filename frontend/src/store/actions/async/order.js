@@ -4,6 +4,7 @@ import {
   removeFromCart,
   reduceBalance,
   loadOrder,
+  loadDelivery,
 } from '../index';
 
 export const doOrderProduct = (product, indexInCart) => {
@@ -30,6 +31,39 @@ export const doLoadOrders = (userId) => {
       dispatch(addNotification(response.error));
     } else {
       dispatch(loadOrder(response.orders));
+    }
+  };
+};
+
+export const doUpdateOrder = (orderId, status) => {
+  return async (dispatch) => {
+    const response = await agent.update(orderId, status);
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(addNotification(response.message));
+    }
+  };
+};
+
+export const doLoadDelivery = () => {
+  return async (dispatch) => {
+    const response = await agent.loadDelivery();
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(loadDelivery(response.delivery));
+    }
+  };
+};
+
+export const doTakeDelivery = () => {
+  return async (dispatch) => {
+    const response = await agent.takeDelivery();
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(addNotification('response.message'));
     }
   };
 };

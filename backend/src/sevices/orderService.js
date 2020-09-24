@@ -38,6 +38,16 @@ async function getById(id) {
   return order;
 }
 
+async function getByUserId(userId) {
+  const user = await UserService.getById(userId);
+
+  if (user.type === 1) {
+    return await getByClientId(userId);
+  } else {
+    return await getByCurierId(userId);
+  }
+}
+
 async function getByClientId(clientId) {
   const order = await OrderResource.getByClientId(clientId);
   return order;
@@ -50,6 +60,11 @@ async function getByCurierId(curierId) {
 
 async function getByProductId(productId) {
   const orders = await OrderResource.getByProductId(productId);
+  return orders;
+}
+
+async function getDelivery() {
+  const orders = await OrderResource.getDelivery();
   return orders;
 }
 
@@ -146,9 +161,9 @@ module.exports = {
   create,
   getAll,
   getById,
-  getByClientId,
-  getByCurierId,
+  getByUserId,
   getByProductId,
+  getDelivery,
   updateById,
   deleteById,
   deleteByClientId,

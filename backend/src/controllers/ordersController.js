@@ -1,5 +1,6 @@
 const OrderService = require('../sevices/orderService');
 const ProductService = require('../sevices/productService');
+const UserService = require('../sevices/userService');
 
 async function create(body, user) {
   const order = await OrderService.create(body, user);
@@ -16,8 +17,8 @@ async function getById(id) {
   return order;
 }
 
-async function getByClientId(clientId) {
-  let orders = await OrderService.getByClientId(clientId);
+async function getByUserId(userId) {
+  let orders = await OrderService.getByUserId(userId);
   let response = [];
 
   for (let order of orders) {
@@ -26,6 +27,7 @@ async function getByClientId(clientId) {
       productId: order.productId,
       clientId: order.clientId,
       curierId: order.curierId,
+      status: order.status,
       product: await ProductService.getById(order.productId)
     });
   }
@@ -33,8 +35,32 @@ async function getByClientId(clientId) {
   return response;
 }
 
-async function getByCurierId(curierId) {
-  const orders = await OrderService.getByCurierId(curierId)
+async function getDelivery() {
+  const orders = await OrderService.getDelivery();
+  const response = [];
+
+  for (let order of orders) {
+    const user = await UserService.getById(order.clientId);
+    const product = await ProductService.getById(order.productId);
+
+    response.push({
+      id: order._id,
+      productId: order.productId,
+      clientId: order.clientId,
+      curierId: order.curierId,
+      status: order.status,
+      product: {
+        productname: product.productname,
+        coast: product.coast
+      },
+      client: {
+        username: user.username,
+        phone: user.phone
+      }
+    });
+  }
+
+  return response;
 }
 
 async function updateById(id, params, user) {
@@ -57,8 +83,8 @@ module.exports = {
   create,
   getAll,
   getById,
-  getByClientId,
-  getByCurierId,
+  getByUserId,
+  getDelivery,
   updateById,
   deleteById,
   deleteByClientId,

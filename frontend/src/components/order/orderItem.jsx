@@ -3,28 +3,27 @@ import { CardButton } from '../buttons/cardButton.jsx';
 import './orderItem.sass';
 
 export const OrderItem = (props) => {
-  const { order } = props;
-  order.status = 'delivering';
+  const { product, cancelOrder, doneOrder, orderId, status } = props;
 
   return (
     <div className="ordercard">
-      <img className="ordrcard__img" src={order.img} alt="pizza" />
+      <img className="ordrcard__img" src={product.img} alt="pizza" />
       <div className="ordercard__text">
         <ul>
-          <li>{order.productname}</li>
+          <li>{product.productname}</li>
           <li>
-            <span className="ordercard__status">{order.status}</span>
+            <span className="ordercard__status">{status}</span>
           </li>
           <li>
             <CardButton
               label="Done"
-              onClick={() => console.log('done')}
-              disabled={order.status !== 'delivered'}
+              onClick={() => doneOrder(orderId)}
+              disabled={status !== 'delivered'}
             />
             <CardButton
               label="Cancel"
-              onClick={() => console.log('cancel')}
-              isabled={order.status === 'delivered'}
+              onClick={() => cancelOrder(orderId)}
+              disabled={status !== 'created'}
             />
           </li>
         </ul>

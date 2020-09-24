@@ -19,12 +19,12 @@ router
     })(ctx, next);
   })
 
-  .get('/api/orders:id', async (ctx, next) => {
+  .get('/api/orders/:id', async (ctx, next) => {
     const order = await OrderController.getById(ctx.params.id);
     ctx.response.body = {order};
   })
 
-  .put('/api/orders:id', async (ctx, next) => {
+  .put('/api/orders/:id', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
         if (err) throw new Error(err);
@@ -43,8 +43,24 @@ router
 
   .get('/api/users/:id/orders', async (ctx, next) => {
     const orders =
-      await OrderController.getByClientId(ctx.params.id);
+      await OrderController.getByUserId(ctx.params.id);
     ctx.response.body = {orders}
+  })
+
+  .get('/api/delivery', async (ctx, next) => {
+    await passport.authenticate('jwt', {session: false},
+      async (err, user, msg) => {
+        if (err) throw new Error(err);
+
+        if (msg) throw new Error(msg.message);
+
+        if (user.type !== 2) throw new Error('Must be curier');
+
+        const delivery = await OrderController.getDelivery();
+
+        ctx.response.body = {delivery};
+      }  
+    )(ctx, next);
   })
 
 module.exports = router;
