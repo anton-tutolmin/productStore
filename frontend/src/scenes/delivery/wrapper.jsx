@@ -5,14 +5,18 @@ import { doLoadOrders } from '../../store/actions/async/order';
 
 const Wrapper = (props) => {
   useEffect(() => {
-    props.load();
+    props.load(props.userId);
   });
 
   return <Delivery />;
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  load: () => dispatch(doLoadOrders()),
+const mapStateToProps = (state) => ({
+  userId: state.user.id,
 });
 
-export default connect(null, mapDispatchToProps)(Wrapper);
+const mapDispatchToProps = (dispatch) => ({
+  load: (userId) => dispatch(doLoadOrders(userId)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wrapper);

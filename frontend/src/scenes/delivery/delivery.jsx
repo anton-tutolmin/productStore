@@ -6,7 +6,6 @@ import './delivery.sass';
 
 const Delivery = (props) => {
   const { delivery, delivere } = props;
-  console.log(delivery);
 
   const onDelivere = (orderId) => {
     delivere(orderId, 'delivered');

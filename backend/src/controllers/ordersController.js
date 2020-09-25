@@ -22,13 +22,24 @@ async function getByUserId(userId) {
   let response = [];
 
   for (let order of orders) {
+    const user = await UserService.getById(order.clientId);
+    const product = await ProductService.getById(order.productId);
+
     response.push({
       id: order._id,
       productId: order.productId,
       clientId: order.clientId,
       curierId: order.curierId,
       status: order.status,
-      product: await ProductService.getById(order.productId)
+      product: {
+        productname: product.productname,
+        coast: product.coast,
+        img: product.img
+      },
+      client: {
+        username: user.username,
+        phone: user.phone
+      }
     });
   }
 

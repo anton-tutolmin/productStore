@@ -45,3 +45,8 @@ export const loadRequests = (requests) => ({
   type: 'REQUEST_LOAD',
   payload: requests,
 });
+
+export const removeRequest = (orderId) => ({
+  type: 'REQUEST_REMOVE',
+  payload: orderId,
+});

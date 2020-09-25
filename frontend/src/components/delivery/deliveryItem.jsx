@@ -15,13 +15,11 @@ export const DeliveryItem = (props) => {
       <div className="deliverycard__text">
         <ul>
           <li>{product.productname}</li>
+          <li>${product.coast}</li>
           <li>
             <span className="deliverycard__info">
-              {client.username}
+              {client.username} {client.phone}
             </span>
-          </li>
-          <li>
-            <span className="deliverycard__info">{client.phone}</span>
           </li>
           <li>
             <CardButton

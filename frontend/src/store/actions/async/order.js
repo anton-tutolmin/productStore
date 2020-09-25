@@ -5,6 +5,7 @@ import {
   reduceBalance,
   loadOrder,
   loadRequests,
+  removeRequest,
 } from '../index';
 
 export const doOrderProduct = (product, indexInCart) => {
@@ -57,13 +58,14 @@ export const doLoadRequests = () => {
   };
 };
 
-export const doTakeRequest = () => {
+export const doTakeRequest = (orderId) => {
   return async (dispatch) => {
-    const response = await agent.takeRequest();
+    const response = await agent.update(orderId, 'delivering');
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
       dispatch(addNotification(response.message));
+      dispatch(removeRequest(orderId));
     }
   };
 };

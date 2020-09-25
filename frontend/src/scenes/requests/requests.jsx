@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RequestItem } from '../../components/request/requestItem.jsx';
-import { doUpdateOrder } from '../../store/actions/async/order';
+import { doTakeRequest } from '../../store/actions/async/order';
 import { Loader } from '../../components/loader/loader.jsx';
 import './requests.sass';
 
@@ -9,7 +9,7 @@ const Requests = (props) => {
   const { requests, loading, takeRequest } = props;
 
   const onTakeRequest = (orderId) => {
-    takeRequest(orderId, 'delivering');
+    takeRequest(orderId);
   };
 
   return (
@@ -38,8 +38,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  takeRequest: (orderId, status) =>
-    dispatch(doUpdateOrder(orderId, status)),
+  takeRequest: (orderId) => dispatch(doTakeRequest(orderId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);
