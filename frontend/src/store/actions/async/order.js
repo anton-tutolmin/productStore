@@ -6,6 +6,7 @@ import {
   loadOrder,
   loadRequests,
   removeRequest,
+  deliverDelivery,
 } from '../index';
 
 export const doOrderProduct = (product, indexInCart) => {
@@ -66,6 +67,19 @@ export const doTakeRequest = (orderId) => {
     } else {
       dispatch(addNotification(response.message));
       dispatch(removeRequest(orderId));
+    }
+  };
+};
+
+export const doDeliverDelivery = (orderId) => {
+  return async (dispatch) => {
+    const response = await agent.update(orderId, 'delivered');
+    console.log(response);
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(addNotification(response.message));
+      dispatch(deliverDelivery(orderId));
     }
   };
 };

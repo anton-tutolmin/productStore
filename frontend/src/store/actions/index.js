@@ -50,3 +50,8 @@ export const removeRequest = (orderId) => ({
   type: 'REQUEST_REMOVE',
   payload: orderId,
 });
+
+export const deliverDelivery = (orderId) => ({
+  type: 'DELIVER_ORDER',
+  payload: orderId,
+});
