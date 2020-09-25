@@ -58,19 +58,4 @@ const loadRequests = async () => {
   }
 };
 
-const takeDelivery = async (orderId) => {
-  try {
-    const response = await axios({
-      method: 'PUT',
-      url: `/api/orders/${orderId}`,
-      headers: {
-        authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    return { error };
-  }
-};
-
-export default { order, load, update, loadRequests, takeDelivery };
+export default { order, load, update, loadRequests };

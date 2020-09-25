@@ -3,7 +3,7 @@ import { CardButton } from '../buttons/cardButton.jsx';
 import './requestItem.sass';
 
 export const RequestItem = (props) => {
-  const { product, client, orderId } = props;
+  const { product, client, orderId, take } = props;
 
   return (
     <div className="requestcard">
@@ -22,10 +22,7 @@ export const RequestItem = (props) => {
             </span>
           </li>
           <li>
-            <CardButton
-              label="Take"
-              onClick={() => console.log(`Take ${orderId}`)}
-            />
+            <CardButton label="Take" onClick={() => take(orderId)} />
           </li>
         </ul>
       </div>

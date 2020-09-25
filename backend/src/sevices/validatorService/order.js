@@ -4,6 +4,7 @@ function validateUpdateBody(newStatus, oldStatus, userType) {
   if (!allowedStatus.includes(newStatus)) {
     throw new Error('Not allowed order status');
   }
+
   if (userType === 1) {
     validateClientUpdate(newStatus, oldStatus);
   } else if (userType === 2) {
@@ -42,16 +43,11 @@ function validateCurierUpdate(newStatus, oldStatus) {
   if (newStatus === 'created' && (oldStatus !== 'delivering' && oldStatus !== 'delivered')) {
     throw new Error('Cant reset not delivering order')
   }
-  if (!allowedStatus.includes(newStatus)) {
-    throw new Error('Not correct status');
-  }
 }
 
 // For case when admin change order status
 function validateAdminUpdate(newStatus) {
-  if (!allowedStatus.includes(newStatus)) {
-    throw new Error('Not correct status');
-  }
+  //TODO
 }
 
 module.exports = {

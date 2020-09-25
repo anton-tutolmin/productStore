@@ -1,10 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RequestItem } from '../../components/request/requestItem.jsx';
+import { doUpdateOrder } from '../../store/actions/async/order';
 import './requests.sass';
 
 const Requests = (props) => {
-  const { requests } = props;
+  const { requests, takeRequest } = props;
+
+  const onTakeRequest = (orderId) => {
+    takeRequest(orderId, 'delivering');
+  };
+
   return (
     <div className="requests">
       {requests.map((r) => (
@@ -13,6 +19,7 @@ const Requests = (props) => {
             product={r.product}
             client={r.client}
             orderId={r.id}
+            take={onTakeRequest}
           />
         </div>
       ))}
@@ -24,4 +31,9 @@ const mapStateToProps = (state) => ({
   requests: state.requests.requests,
 });
 
-export default connect(mapStateToProps, null)(Requests);
+const mapDispatchToProps = (dispatch) => ({
+  takeRequest: (orderId, status) =>
+    dispatch(doUpdateOrder(orderId, status)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Requests);
