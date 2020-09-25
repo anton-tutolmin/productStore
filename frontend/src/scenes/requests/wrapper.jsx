@@ -1,13 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { doLoadRequests } from '../../store/actions/async/order';
 import Requests from './requests.jsx';
 
-const Wrapper = () => {
+const Wrapper = (props) => {
+  useEffect(() => {
+    props.load();
+  });
+
   return <Requests />;
 };
 
-// const mapDispatchToProps = (dispatch) => ({
-//   load: () => dispatch(doLoadRequest()),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  load: () => dispatch(doLoadRequests()),
+});
 
-export default connect(null, null)(Wrapper);
+export default connect(null, mapDispatchToProps)(Wrapper);

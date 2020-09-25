@@ -4,7 +4,7 @@ import {
   removeFromCart,
   reduceBalance,
   loadOrder,
-  loadDelivery,
+  loadRequests,
 } from '../index';
 
 export const doOrderProduct = (product, indexInCart) => {
@@ -46,24 +46,24 @@ export const doUpdateOrder = (orderId, status) => {
   };
 };
 
-export const doLoadDelivery = () => {
+export const doLoadRequests = () => {
   return async (dispatch) => {
-    const response = await agent.loadDelivery();
+    const response = await agent.loadRequests();
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
-      dispatch(loadDelivery(response.delivery));
+      dispatch(loadRequests(response.requests));
     }
   };
 };
 
-export const doTakeDelivery = () => {
+export const doTakeRequest = () => {
   return async (dispatch) => {
-    const response = await agent.takeDelivery();
+    const response = await agent.takeRequest();
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
-      dispatch(addNotification('response.message'));
+      dispatch(addNotification(response.message));
     }
   };
 };

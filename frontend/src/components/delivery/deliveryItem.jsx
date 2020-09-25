@@ -3,7 +3,7 @@ import { CardButton } from '../buttons/cardButton.jsx';
 import './deliveryItem.sass';
 
 export const DeliveryItem = (props) => {
-  const { product } = props;
+  const { product, client, orderId, delivere } = props;
 
   return (
     <div className="deliverycard">
@@ -16,17 +16,17 @@ export const DeliveryItem = (props) => {
         <ul>
           <li>{product.productname}</li>
           <li>
-            <span className="deliverycard__info">Anton</span>
+            <span className="deliverycard__info">
+              {client.username}
+            </span>
           </li>
           <li>
-            <span className="deliverycard__info">
-              +7(950)794-8046
-            </span>
+            <span className="deliverycard__info">{client.phone}</span>
           </li>
           <li>
             <CardButton
               label="Delivere"
-              onClick={() => console.log('delivere')}
+              onClick={() => delivere(orderId)}
             />
           </li>
         </ul>

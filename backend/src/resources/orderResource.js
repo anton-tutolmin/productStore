@@ -35,7 +35,7 @@ async function getByProductId(productId) {
   return orders;
 }
 
-async function getDelivery() {
+async function getRequests() {
   const orders = await Order.find({curierId: 'none', status: 'created'});
   return orders;
 }
@@ -73,7 +73,7 @@ module.exports = {
   getByClientId,
   getByCurierId,
   getByProductId, 
-  getDelivery,
+  getRequests,
   updateById,
   deleteById,
   deleteByClientId,

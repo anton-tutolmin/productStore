@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Delivery from './delivery.jsx';
-import { doLoadDelivery } from '../../store/actions/async/order';
+import { doLoadOrders } from '../../store/actions/async/order';
 
 const Wrapper = (props) => {
   useEffect(() => {
@@ -12,7 +12,7 @@ const Wrapper = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  load: () => dispatch(doLoadDelivery()),
+  load: () => dispatch(doLoadOrders()),
 });
 
 export default connect(null, mapDispatchToProps)(Wrapper);

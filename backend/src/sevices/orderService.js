@@ -63,8 +63,8 @@ async function getByProductId(productId) {
   return orders;
 }
 
-async function getDelivery() {
-  const orders = await OrderResource.getDelivery();
+async function getRequests() {
+  const orders = await OrderResource.getRequests();
   return orders;
 }
 
@@ -163,7 +163,7 @@ module.exports = {
   getById,
   getByUserId,
   getByProductId,
-  getDelivery,
+  getRequests,
   updateById,
   deleteById,
   deleteByClientId,

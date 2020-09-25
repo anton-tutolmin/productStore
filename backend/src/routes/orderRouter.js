@@ -47,7 +47,7 @@ router
     ctx.response.body = {orders}
   })
 
-  .get('/api/delivery', async (ctx, next) => {
+  .get('/api/requests', async (ctx, next) => {
     await passport.authenticate('jwt', {session: false},
       async (err, user, msg) => {
         if (err) throw new Error(err);
@@ -56,9 +56,9 @@ router
 
         if (user.type !== 2) throw new Error('Must be curier');
 
-        const delivery = await OrderController.getDelivery();
+        const requests = await OrderController.getRequests();
 
-        ctx.response.body = {delivery};
+        ctx.response.body = {requests};
       }  
     )(ctx, next);
   })

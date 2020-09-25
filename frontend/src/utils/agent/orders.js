@@ -43,16 +43,15 @@ const update = async (orderId, status) => {
   }
 };
 
-const loadDelivery = async () => {
+const loadRequests = async () => {
   try {
     const response = await axios({
       method: 'GET',
-      url: '/api/delivery',
+      url: '/api/requests',
       headers: {
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     return { error };
@@ -74,4 +73,4 @@ const takeDelivery = async (orderId) => {
   }
 };
 
-export default { order, load, update, loadDelivery, takeDelivery };
+export default { order, load, update, loadRequests, takeDelivery };

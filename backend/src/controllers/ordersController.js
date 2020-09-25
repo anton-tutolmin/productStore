@@ -35,8 +35,8 @@ async function getByUserId(userId) {
   return response;
 }
 
-async function getDelivery() {
-  const orders = await OrderService.getDelivery();
+async function getRequests() {
+  const orders = await OrderService.getRequests();
   const response = [];
 
   for (let order of orders) {
@@ -51,7 +51,8 @@ async function getDelivery() {
       status: order.status,
       product: {
         productname: product.productname,
-        coast: product.coast
+        coast: product.coast,
+        img: product.img
       },
       client: {
         username: user.username,
@@ -84,7 +85,7 @@ module.exports = {
   getAll,
   getById,
   getByUserId,
-  getDelivery,
+  getRequests,
   updateById,
   deleteById,
   deleteByClientId,
