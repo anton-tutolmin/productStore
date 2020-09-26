@@ -2,18 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { OrderItem } from '../../components/order/orderItem.jsx';
 import { Loader } from '../../components/loader/loader.jsx';
-import { doUpdateOrder } from '../../store/actions/async/order';
+import {
+  doDoneOrder,
+  doCancelOrder,
+} from '../../store/actions/async/order';
 import './orders.sass';
 
 const Orders = (props) => {
-  const { orders, loading, update } = props;
+  const { orders, loading, done, cancel } = props;
 
   const cancelOrder = (orderId) => {
-    update(orderId, 'canceled');
+    cancel(orderId);
   };
 
   const doneOrder = (orderId) => {
-    update(orderId, 'done');
+    done(orderId);
   };
 
   return (
@@ -43,8 +46,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  update: (orderId, status) =>
-    dispatch(doUpdateOrder(orderId, status)),
+  done: (orderId) => dispatch(doDoneOrder(orderId)),
+  cancel: (orderId) => dispatch(doCancelOrder(orderId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);

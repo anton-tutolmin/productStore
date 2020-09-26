@@ -55,3 +55,13 @@ export const deliverDelivery = (orderId) => ({
   type: 'DELIVER_ORDER',
   payload: orderId,
 });
+
+export const cancelOrder = (orderId) => ({
+  type: 'CANCEL_ORDER',
+  payload: orderId,
+});
+
+export const doneOrder = (orderId) => ({
+  type: 'DONE_ORDER',
+  payload: orderId,
+});

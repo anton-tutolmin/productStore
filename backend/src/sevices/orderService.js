@@ -109,6 +109,7 @@ async function done(order) {
   const coast = await getCoast(order);
   const payoff = Number.parseFloat(coast * 0.05).toFixed(2);;
   await UserService.addBalance(order.curierId, payoff);
+  console.log(payoff);
   await OrderResource.updateById(order._id, {status: 'done'});
 }
 

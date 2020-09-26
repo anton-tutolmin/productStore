@@ -7,6 +7,8 @@ import {
   loadRequests,
   removeRequest,
   deliverDelivery,
+  cancelOrder,
+  doneOrder,
 } from '../index';
 
 export const doOrderProduct = (product, indexInCart) => {
@@ -74,12 +76,35 @@ export const doTakeRequest = (orderId) => {
 export const doDeliverDelivery = (orderId) => {
   return async (dispatch) => {
     const response = await agent.update(orderId, 'delivered');
-    console.log(response);
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
       dispatch(addNotification(response.message));
       dispatch(deliverDelivery(orderId));
+    }
+  };
+};
+
+export const doDoneOrder = (orderId) => {
+  return async (dispatch) => {
+    const response = await agent.update(orderId, 'done');
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(addNotification(response.message));
+      dispatch(doneOrder(orderId));
+    }
+  };
+};
+
+export const doCancelOrder = (orderId) => {
+  return async (dispatch) => {
+    const response = await agent.update(orderId, 'canceled');
+    if (response.error) {
+      dispatch(addNotification(response.error));
+    } else {
+      dispatch(addNotification(response.message));
+      dispatch(cancelOrder(orderId));
     }
   };
 };
