@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { OrderItem } from '../../components/order/orderItem.jsx';
 import { Loader } from '../../components/loader/loader.jsx';
+import { Empty } from '../../components/empties/empty.jsx';
 import {
   doDoneOrder,
   doCancelOrder,
@@ -19,22 +20,61 @@ const Orders = (props) => {
     done(orderId);
   };
 
+  const getUnfinishedOrders = () => {
+    let result = orders.filter(
+      (o) => o.status !== 'canceled' && o.status !== 'done',
+    );
+    result = result.map((o) => {
+      return (
+        <div className="orders__container" key={o.id}>
+          <OrderItem
+            product={o.product}
+            cancelOrder={cancelOrder}
+            doneOrder={doneOrder}
+            orderId={o.id}
+            status={o.status}
+          />
+        </div>
+      );
+    });
+    return result.length ? result : <Empty />;
+  };
+
+  const getFinishedOrders = () => {
+    let result = orders.filter(
+      (o) => o.status === 'canceled' || o.status === 'done',
+    );
+    result = result.map((o) => {
+      return (
+        <div className="orders__container" key={o.id}>
+          <OrderItem
+            product={o.product}
+            cancelOrder={cancelOrder}
+            doneOrder={doneOrder}
+            orderId={o.id}
+            status={o.status}
+          />
+        </div>
+      );
+    });
+    return result.length ? result : <Empty />;
+  };
+
   return (
     <div className="orders">
       {loading ? (
         <Loader />
       ) : (
-        orders.map((o) => (
-          <div className="orders__container" key={o.id}>
-            <OrderItem
-              product={o.product}
-              cancelOrder={cancelOrder}
-              doneOrder={doneOrder}
-              orderId={o.id}
-              status={o.status}
-            />
+        <>
+          <div>
+            <div>ACTUAL</div>
+            {getUnfinishedOrders()}
           </div>
-        ))
+          <div>
+            <div>HISTORY</div>
+            {getFinishedOrders()}
+          </div>
+        </>
       )}
     </div>
   );

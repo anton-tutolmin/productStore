@@ -1,3 +1,9 @@
+import {
+  AUTH,
+  NEED_AUTH,
+  NEED_NO_AUTH,
+} from '../actions/actionTypes';
+
 const initialState = {
   auth: false,
   needAuth: true,
@@ -5,17 +11,17 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'AUTH':
+    case AUTH:
       return {
         auth: true,
         needAuth: false,
       };
-    case 'NEED_AUTH':
+    case NEED_AUTH:
       return {
         auth: false,
         needAuth: true,
       };
-    case 'NEED_NO_AUTH':
+    case NEED_NO_AUTH:
       return {
         auth: false,
         needAuth: false,

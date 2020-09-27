@@ -1,0 +1,16 @@
+export const AUTH = 'AUTH';
+export const NEED_AUTH = 'NEED_AUTH';
+export const NEED_NO_AUTH = 'NEED_NO_AUTH';
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
+export const REMOVE_NOTIFICATION = 'REMOVE_NOTIFICATION';
+export const LOAD_ORDER = 'LOAD_ORDER';
+export const DELIVER_ORDER = 'DELIVER_ORDER';
+export const CANCEL_ORDER = 'CANCEL_ORDER';
+export const DONE_ORDER = 'DONE_ORDER';
+export const LOAD_PRODUCT = 'LOAD_PRODUCT';
+export const LOAD_REQUEST = 'LOAD_REQUEST';
+export const REMOVE_REQUEST = 'REMOVE_REQUEST';
+export const LOAD_USER = 'LOAD_USER';
+export const REDUCE_BALANCE = 'REDUCE_BALANCE';

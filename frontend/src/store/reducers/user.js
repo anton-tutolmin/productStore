@@ -1,3 +1,5 @@
+import { LOAD_USER, REDUCE_BALANCE } from '../actions/actionTypes';
+
 const initialState = {
   id: null,
   username: '',
@@ -8,11 +10,11 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'USER_LOAD':
+    case LOAD_USER:
       return {
         ...action.payload,
       };
-    case 'REDUCE_BALANCE':
+    case REDUCE_BALANCE:
       return { ...state, balance: state.balance - action.payload };
     default:
       return state;

@@ -1,7 +1,5 @@
-import { addNotification } from '../index';
+import { addNotification, loadProducts } from '../index';
 import agent from '../../../utils/agent/products';
-
-const load = (payload) => ({ type: 'PRODUCT_LOAD', payload });
 
 export const doLoadProducts = () => {
   return async (dispatch) => {
@@ -11,7 +9,7 @@ export const doLoadProducts = () => {
     } else if (response.message) {
       dispatch(addNotification(response.message));
     } else {
-      dispatch(load(response.products));
+      dispatch(loadProducts(response.products));
     }
   };
 };

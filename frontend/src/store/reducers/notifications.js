@@ -1,3 +1,8 @@
+import {
+  ADD_NOTIFICATION,
+  REMOVE_NOTIFICATION,
+} from '../actions/actionTypes';
+
 const initialState = {
   notifications: [],
   lastId: 0,
@@ -5,7 +10,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_NOTIFICATION':
+    case ADD_NOTIFICATION:
       return {
         lastId: state.lastId + 1,
         notifications: state.notifications.concat({
@@ -13,7 +18,7 @@ export default function reducer(state = initialState, action) {
           data: action.payload,
         }),
       };
-    case 'REMOVE_NOTIFICATION':
+    case REMOVE_NOTIFICATION:
       return {
         ...state,
         notifications: state.notifications.filter(
