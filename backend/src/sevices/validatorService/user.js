@@ -1,3 +1,5 @@
+const { notCorrectPhone } = require('../../errors/errors');
+const errors = require('../../errors/errors');
 
 async function validateLoginBody(ctx, next) {
   const body = {...ctx.request.body};
@@ -7,7 +9,6 @@ async function validateLoginBody(ctx, next) {
 }
 
 function validateCreateBody(body) {
-  // console.log(body);
   validateUsername(body.username);
   validatePassword(body.password);
   validateEmail(body.email);
@@ -27,13 +28,13 @@ function validateUpdateBody(params) {
 
 function validatePassword(password) {
   if (!password || password.length === 0) {
-    throw new Error('Password is not correct');
+    throw new Error(errors.notCorrectPassword);
   }
 }
 
 function validateUsername(username) {
   if (!username || username.length < 5 || username.match(/[^\w]/g)) {
-    throw new Error('Username is not correct')
+    throw new Error(errors.notCorrectUsername);
   }
 }
 
@@ -44,7 +45,7 @@ function validatePhone(phone) {
     phone.length !== 11 ||
     phone.match(/[^0-9]/g)
   ) {
-    throw new Error('Phone is not correct');
+    throw new Error(notCorrectPhone);
   }
 }
 
@@ -54,7 +55,7 @@ function validateEmail(email) {
     typeof email !== 'string' ||
     !email.match(/\w{5,}@(gmail|yandex).(ru|com)/g)
   ) {
-    throw new Error('Email is not correct');
+    throw new Error(errors.notCorrectEmail);
   }
 }
 
@@ -64,7 +65,7 @@ function validateType(type) {
     type !== 1 &&
     type !== 2
   ) {
-    throw new Error('Type is not correct');
+    throw new Error(errors.notCorrectType);
   }
 }
 
@@ -74,7 +75,7 @@ function validateBalance(balance) {
     typeof balance !== 'number' ||
     balance < 0
   ) {
-    throw new Error('Balance is not correct');
+    throw new Error(errors.notCorrectBalance);
   }
 }
 

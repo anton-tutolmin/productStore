@@ -1,3 +1,4 @@
+const errors = require('../errors/errors');
 const passport = require('../config/passport');
 const jwt = require('jsonwebtoken');
 const UserService = require('./userService');
@@ -8,7 +9,7 @@ const key = require('../config/passport/keys').jwtKey;
 async function login(ctx, next) {
   await passport.authenticate('login', (err, user, info) => {
     if (err) {
-      throw new Error('Wrong authorized');
+      throw new Error(errors.wrongAuthorizaed);
     }
     if (info !== undefined) {
       ctx.response.body = {...info};
@@ -25,7 +26,7 @@ async function login(ctx, next) {
 async function register(ctx, next) {
   await passport.authenticate('register', async (err, user, info) => {
     if (err) {
-      throw new Error('Wrong authorized');
+      throw new Error(errors.wrongAuthorizaed);
     }
     if (info !== undefined) {
       ctx.response.body = {...info};
@@ -51,7 +52,7 @@ async function register(ctx, next) {
 async function profile(ctx, next) {
   await passport.authenticate('jwt', {session: false}, (err, user, info) => {
     if (err) {
-      throw new Error('Wrong authorized');
+      throw new Error(errors.wrongAuthorizaed);
     }
     if (info !== undefined) {
       ctx.response.body = {...info};

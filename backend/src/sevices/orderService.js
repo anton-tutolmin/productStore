@@ -2,6 +2,7 @@ const OrderResource = require('../resources/orderResource');
 const UserService = require('./userService');
 const ProductService = require('./productService');
 const validator = require('./validatorService/order');
+const errors = require('../errors/errors');
 
 async function create(body, user) {
   const product = await ProductService.getById(body.productId);
@@ -109,7 +110,6 @@ async function done(order) {
   const coast = await getCoast(order);
   const payoff = Number.parseFloat(coast * 0.05).toFixed(2);;
   await UserService.addBalance(order.curierId, payoff);
-  console.log(payoff);
   await OrderResource.updateById(order._id, {status: 'done'});
 }
 
@@ -154,7 +154,7 @@ function isAllowed(order, user) {
     order.curierId !== 'none' &&
     user.type !== 3
   ) {
-    throw new Error('Not allowed interrupt');
+    throw new Error(errors.notAllowedInterrupt);
   }
 }
 

@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const { Types } = require('mongoose');
+const errors = require('../errors/errors');
 
 async function create(body) {
   const product = await Product.create(body);
@@ -29,7 +30,7 @@ async function deleteById(id) {
 
 function validateId(id) {
   if (!Types.ObjectId.isValid(id)) {
-    throw new Error('Not valid id');
+    throw new Error(errors.notCorrectId);
   }
 }
 

@@ -1,4 +1,4 @@
-
+const errors = require('../../errors/errors');
 
 function validateCreateBody(body) {
   validateProductname(body.productname);
@@ -22,7 +22,7 @@ function validateProductname(productname) {
     productname.length < 5 ||
     productname.match(/[^\w]/g)
   ) {
-    throw new Error('Not correct productname');
+    throw new Error(errors.notCorrectProductname);
   }
 }
 
@@ -32,13 +32,13 @@ function validateDescription(description) {
     description.length < 5 ||
     description.match(/[^\w|\s]/g)
   ) {
-    throw new Error('Not correct description');
+    throw new Error(errors.notCorrectDescription);
   }
 }
 
 function validateCoast(coast) {
   if (!coast || typeof coast !== 'number' || coast <= 0) {
-    throw new Error('Not correct coast');
+    throw new Error(errors.notCorrectCoast);
   }
 }
 
@@ -48,7 +48,7 @@ function validateImg(imgString) {
     typeof imgString !== 'string' ||
     imgString.match(/[^\w|.]/g)
   ) {
-    throw new Error('Not correct image');
+    throw new Error(errors.notCorrectImg);
   } 
 }
 

@@ -1,6 +1,7 @@
 const KoaRouter = require('koa-router');
 const OrderController = require('../controllers/ordersController');
 const passport = require('../config/passport');
+const errors = require('../errors/errors');
 
 const router = new KoaRouter();
 
@@ -54,7 +55,7 @@ router
 
         if (msg) throw new Error(msg.message);
 
-        if (user.type !== 2) throw new Error('Must be curier');
+        if (user.type !== 2) throw new Error(errors.notCurier);
 
         const requests = await OrderController.getRequests();
 
