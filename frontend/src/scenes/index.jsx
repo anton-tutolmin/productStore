@@ -52,15 +52,15 @@ const authRoutes = () => {
 };
 
 const Scenes = (props) => {
-  const { userType, auth } = props;
+  const { auth } = props;
   return (
     <>
       <Header />
       <Switch>
         <Route exact path="/" component={Main} />
         <Route path={Paths.product} component={Products} />
-        {userType === 1 ? ClientRoutes() : null}
-        {userType === 2 ? CurierRoutes() : null}
+        {ClientRoutes()}
+        {CurierRoutes()}
         {!auth ? UnauthRoutes() : authRoutes()}
         <Redirect exact to="/products" />
       </Switch>
@@ -71,7 +71,6 @@ const Scenes = (props) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth.auth,
-  userType: state.user.type,
 });
 
 export default connect(mapStateToProps, null)(Scenes);
