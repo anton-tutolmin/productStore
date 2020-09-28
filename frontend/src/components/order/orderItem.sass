@@ -1,6 +1,7 @@
 @import '../../constants/colors.sass'
 @import '../../constants/templates.sass'
 @import '../../constants/mixins.sass'
+@import '../../constants/paddings.sass'
 
 .ordercard
   @extend %cardStyle
@@ -9,9 +10,9 @@
 .ordrcard__img
   +cropImg(170px, 150px)
   margin: auto 0
-  padding: 0 5px
+  padding: $cardtext_padding
 
 .ordercard__text
   @extend %cardText
   .ordercard__status
-    color: #777
+    color: $text_info_color

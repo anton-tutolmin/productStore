@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './axios';
 
 const update = async (param, id) => {
   const response = await axios({

@@ -1,6 +1,7 @@
 @import '../../constants/colors.sass'
 @import '../../constants/templates.sass'
 @import '../../constants/mixins.sass'
+@import '../../constants/paddings.sass'
 
 .deliverycard
   @extend %cardStyle
@@ -9,13 +10,13 @@
 .deliverycard__img
   +cropImg(180px, 150px)
   margin: auto 0
-  padding: 0 5px
+  padding: $cardtext_padding
 
 .deliverycard__text
   @extend %cardText
 
 .deliverycard__info
-  color: #777
+  color: $text_info_color
   font-size: 1rem
   @media screen and ( max-width: 767px )
     font-size: .8rem
