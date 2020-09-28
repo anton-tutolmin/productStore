@@ -1,8 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { DeliveryItem } from '../../components/delivery/deliveryItem.jsx';
+
+import {
+  DeliveryItem,
+  HistoryDeliveryItem,
+} from '../../components/delivery/deliveryItem.jsx';
+
 import { doDeliverDelivery } from '../../store/actions/async/order';
 import { Loader } from '../../components/loader/loader.jsx';
+import { Empty } from '../../components/empties/empty.jsx';
+import { OrderTitle } from '../../components/titles/order/orderTitle.jsx';
 import './delivery.sass';
 
 const Delivery = (props) => {
@@ -12,22 +19,56 @@ const Delivery = (props) => {
     deliver(orderId);
   };
 
+  const getUnfinished = () => {
+    let result = delivery.filter((d) => d.status !== 'done');
+    result = result.map((d) => {
+      return (
+        <div className="delivery__container" key={d.id}>
+          <DeliveryItem
+            product={d.product}
+            client={d.client}
+            orderId={d.id}
+            deliver={onDeliver}
+            status={d.status}
+          />
+        </div>
+      );
+    });
+    return result.length ? result : <Empty />;
+  };
+
+  const getFinished = () => {
+    let result = delivery.filter((d) => d.status === 'done');
+    result = result.map((d) => {
+      return (
+        <div className="delivery__container" key={d.id}>
+          <HistoryDeliveryItem
+            product={d.product}
+            client={d.client}
+            orderId={d.id}
+            status={d.status}
+          />
+        </div>
+      );
+    });
+    return result.length ? result : <Empty />;
+  };
+
   return (
     <div className="delivery">
       {loading ? (
         <Loader />
       ) : (
-        delivery.map((d) => (
-          <div className="delivery__container" key={d.id}>
-            <DeliveryItem
-              product={d.product}
-              client={d.client}
-              orderId={d.id}
-              deliver={onDeliver}
-              status={d.status}
-            />
+        <>
+          <div>
+            <OrderTitle>Current:</OrderTitle>
+            {getUnfinished()}
           </div>
-        ))
+          <div>
+            <OrderTitle>History:</OrderTitle>
+            {getFinished()}
+          </div>
+        </>
       )}
     </div>
   );

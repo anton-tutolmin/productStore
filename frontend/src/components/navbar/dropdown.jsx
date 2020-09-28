@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Paths from '../../constants/paths';
 import './dropdown.sass';
 
-export const Dropdown = (props) => {
-  const { toggleDropdown, user = { auth: false } } = props;
+const Dropdown = (props) => {
+  const { toggleDropdown, auth } = props;
+  console.log(auth);
   return (
     <div className="menu">
       <ul>
@@ -28,7 +30,7 @@ export const Dropdown = (props) => {
           label="Requests"
           toggleDropdown={toggleDropdown}
         />
-        {user.auth ? (
+        {auth ? (
           <>
             <DropdownItem
               path={Paths.profile}
@@ -88,4 +90,11 @@ export const RegisterItem = (props) => {
   );
 };
 
-export default Dropdown;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    auth: state.auth.auth,
+  };
+};
+
+export default connect(mapStateToProps, null)(Dropdown);

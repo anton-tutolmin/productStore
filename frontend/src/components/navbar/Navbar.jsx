@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { MenuButton } from './menuButton.jsx';
-import { Dropdown } from './dropdown.jsx';
+import Dropdown from './dropdown.jsx';
 import './navbar.sass';
 
 export const Navbar = (props) => {

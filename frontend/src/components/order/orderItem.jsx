@@ -31,3 +31,20 @@ export const OrderItem = (props) => {
     </div>
   );
 };
+
+export const HistoryOrderItem = (props) => {
+  const { product, status } = props;
+  return (
+    <div className="ordercard">
+      <img className="ordrcard__img" src={product.img} alt="pizza" />
+      <div className="ordercard__text history__text">
+        <ul>
+          <li>{product.productname}</li>
+          <li>
+            <span className="ordercard__status">{status}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};

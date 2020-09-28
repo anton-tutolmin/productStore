@@ -37,3 +37,32 @@ export const DeliveryItem = (props) => {
     </div>
   );
 };
+
+export const HistoryDeliveryItem = (props) => {
+  const { product, client, status } = props;
+
+  return (
+    <div className="deliverycard">
+      <img
+        className="deliverycard__img"
+        src={product.img}
+        alt="pizza"
+      />
+      <div className="deliverycard__text">
+        <ul>
+          <li>
+            {product.productname} ${product.coast}
+          </li>
+          <li>
+            <span className="deliverycard__info">{status}</span>
+          </li>
+          <li>
+            <span className="deliverycard__info">
+              {client.username} {client.phone}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};

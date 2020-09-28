@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { OrderItem } from '../../components/order/orderItem.jsx';
+import {
+  OrderItem,
+  HistoryOrderItem,
+} from '../../components/order/orderItem.jsx';
 import { Loader } from '../../components/loader/loader.jsx';
 import { Empty } from '../../components/empties/empty.jsx';
+import { OrderTitle } from '../../components/titles/order/orderTitle.jsx';
 import {
   doDoneOrder,
   doCancelOrder,
@@ -47,10 +51,8 @@ const Orders = (props) => {
     result = result.map((o) => {
       return (
         <div className="orders__container" key={o.id}>
-          <OrderItem
+          <HistoryOrderItem
             product={o.product}
-            cancelOrder={cancelOrder}
-            doneOrder={doneOrder}
             orderId={o.id}
             status={o.status}
           />
@@ -67,11 +69,11 @@ const Orders = (props) => {
       ) : (
         <>
           <div>
-            <div>ACTUAL</div>
+            <OrderTitle>Current:</OrderTitle>
             {getUnfinishedOrders()}
           </div>
           <div>
-            <div>HISTORY</div>
+            <OrderTitle>History:</OrderTitle>
             {getFinishedOrders()}
           </div>
         </>
