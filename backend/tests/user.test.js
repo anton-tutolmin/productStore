@@ -4,12 +4,11 @@ const UserController = require('../src/controllers/userController');
 const url = require('./config').url;
 
 describe('User tests:', () => {
-
   beforeAll(async () => {
     await mongoose.connect(url, {
       useFindAndModify: false,
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
   });
 
@@ -19,7 +18,6 @@ describe('User tests:', () => {
   });
 
   describe('User operations:', () => {
-
     let createdUser;
 
     test('Creating user', async () => {
@@ -28,7 +26,7 @@ describe('User tests:', () => {
         password: 'anton',
         email: 'anton@gmail.com',
         phone: '11111111111',
-        type: 1
+        type: 1,
       });
 
       expect(user.username).toBe('anton');
@@ -57,19 +55,19 @@ describe('User tests:', () => {
 
     test('Updating user by id', async () => {
       await UserController.updateById(createdUser._id, {
-        username: 'irina'
+        username: 'irina',
       });
 
       const user1 = await UserController.getById(createdUser._id);
 
       await UserController.updateById(createdUser._id, {
-        email: 'irina@gmail.com'
+        email: 'irina@gmail.com',
       });
 
       const user2 = await UserController.getById(createdUser._id);
 
       await UserController.updateById(createdUser._id, {
-        phone: '22222222222'
+        phone: '22222222222',
       });
 
       const user3 = await UserController.getById(createdUser._id);
@@ -87,26 +85,24 @@ describe('User tests:', () => {
 
       expect(users.length).toBe(0);
     });
-
   });
 
   describe('Users errors tests:', () => {
-    
     test('Create user with wrong params', async () => {
       const user = {
         username: 'testwrongcreate',
         password: 'testwrongcreate',
         email: 'testwrongcreate@gmail.com',
         phone: '11111111111',
-        type: 1
-      }
+        type: 1,
+      };
 
       try {
         await UserController.create({
           ...user,
           username: '@#$%^123$%^',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Username is not correct');
       }
 
@@ -115,7 +111,7 @@ describe('User tests:', () => {
           ...user,
           username: 'aa',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Username is not correct');
       }
 
@@ -124,8 +120,8 @@ describe('User tests:', () => {
           ...user,
           email: '@#$%^123$%^@gmail.com',
         });
-      } catch(e) {
-        expect(e.message).toBe('Email is not correct')
+      } catch (e) {
+        expect(e.message).toBe('Email is not correct');
       }
 
       try {
@@ -133,7 +129,7 @@ describe('User tests:', () => {
           ...user,
           email: 'anton@example.com',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Email is not correct');
       }
 
@@ -142,7 +138,7 @@ describe('User tests:', () => {
           ...user,
           phone: 'notcorrectnumber',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Phone is not correct');
       }
 
@@ -151,7 +147,7 @@ describe('User tests:', () => {
           ...user,
           phone: '1234567',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Phone is not correct');
       }
 
@@ -160,7 +156,7 @@ describe('User tests:', () => {
           ...user,
           type: 4,
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Type is not correct');
       }
     });
@@ -168,7 +164,7 @@ describe('User tests:', () => {
     test('Get user with wrong id', async () => {
       try {
         await UserController.getById('wrongid');
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not valid id');
       }
     });
@@ -176,7 +172,7 @@ describe('User tests:', () => {
     test('Delete user with wrong id', async () => {
       try {
         await UserController.deleteById('wrongid');
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not valid id');
       }
     });
@@ -190,24 +186,24 @@ describe('User tests:', () => {
           password: 'testwrongupdate',
           email: 'testwrongupdate@gmail.com',
           phone: '11111111111',
-          type: 1
+          type: 1,
         });
       });
 
       test('Username', async () => {
         try {
           await UserController.updateById(user._id, {
-            username: '!@#$%'
+            username: '!@#$%',
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Username is not correct');
         }
 
         try {
           await UserController.updateById(user._id, {
-            username: 'aa'
+            username: 'aa',
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Username is not correct');
         }
       });
@@ -215,9 +211,9 @@ describe('User tests:', () => {
       test('Email', async () => {
         try {
           await UserController.updateById(user._id, {
-            email: 'aa@example.com'
+            email: 'aa@example.com',
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Email is not correct');
         }
       });
@@ -225,9 +221,9 @@ describe('User tests:', () => {
       test('Phone', async () => {
         try {
           await UserController.updateById(user._id, {
-            phone: 'wrongnumber'
+            phone: 'wrongnumber',
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Phone is not correct');
         }
       });
@@ -235,9 +231,9 @@ describe('User tests:', () => {
       test('Type', async () => {
         try {
           await UserController.updateById(user._id, {
-            type: 4
+            type: 4,
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Type is not correct');
         }
       });
@@ -245,14 +241,12 @@ describe('User tests:', () => {
       test('Balance', async () => {
         try {
           await UserController.updateById(user._id, {
-            balance: -1
+            balance: -1,
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Balance is not correct');
         }
       });
     });
-
   });
-
 });

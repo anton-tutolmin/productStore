@@ -4,12 +4,11 @@ const ProductController = require('../src/controllers/productController');
 const url = require('./config').url;
 
 describe('Product tests:', () => {
-
   beforeAll(async () => {
     await mongoose.connect(url, {
       useFindAndModify: false,
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
   });
 
@@ -19,7 +18,6 @@ describe('Product tests:', () => {
   });
 
   describe('Product operations: ', () => {
-
     let createdProduct;
 
     test('Creating product:', async () => {
@@ -27,7 +25,7 @@ describe('Product tests:', () => {
         productname: 'lipton',
         description: 'really cheap tea',
         coast: 40,
-        img: 'lipton.jpg'
+        img: 'lipton.jpg',
       });
 
       expect(product.productname).toBe('lipton');
@@ -36,124 +34,125 @@ describe('Product tests:', () => {
       expect(product.img).toBe('lipton.jpg');
       createdProduct = product;
     });
-  
+
     test('Getting all products:', async () => {
       const products = await ProductController.getAll();
       expect(products.length).toBe(1);
     });
-  
+
     test('Getting products by id:', async () => {
-      const product =
-        await ProductController.getById(createdProduct._id);
+      const product = await ProductController.getById(
+        createdProduct._id,
+      );
 
       expect(product.productname).toBe(createdProduct.productname);
       expect(product.description).toBe(createdProduct.description);
       expect(product.coast).toBe(createdProduct.coast);
       expect(product.img).toBe(createdProduct.img);
     });
-  
+
     test('Updating products by id:', async () => {
-      const product1 =
-        await ProductController
-          .updateById(createdProduct._id, {
-            productname: 'greenfield'
-          });
+      const product1 = await ProductController.updateById(
+        createdProduct._id,
+        {
+          productname: 'greenfield',
+        },
+      );
 
-      const product2 =
-        await ProductController
-          .updateById(createdProduct._id, {
-            description: 'really bad tea'
-          });
+      const product2 = await ProductController.updateById(
+        createdProduct._id,
+        {
+          description: 'really bad tea',
+        },
+      );
 
-      const product3 =
-        await ProductController
-          .updateById(createdProduct._id, {
-            coast: 45
-          });
+      const product3 = await ProductController.updateById(
+        createdProduct._id,
+        {
+          coast: 45,
+        },
+      );
 
-      const product4 =
-        await ProductController
-          .updateById(createdProduct._id, {
-            img: 'greenfield.jpg'
-          });
+      const product4 = await ProductController.updateById(
+        createdProduct._id,
+        {
+          img: 'greenfield.jpg',
+        },
+      );
 
       expect(product1.productname).toBe('greenfield');
       expect(product2.description).toBe('really bad tea');
       expect(product3.coast).toBe(45);
       expect(product4.img).toBe('greenfield.jpg');
     });
-  
+
     test('Deleting products by id:', async () => {
       await ProductController.deleteById(createdProduct._id);
       const products = await ProductController.getAll();
       expect(products.length).toBe(0);
     });
-
   });
 
-
-
   describe('Product errors tests:', () => {
-
     test('Create with wrong params', async () => {
       const product = {
         productname: 'testerror',
         description: 'testerror',
         coast: 100,
-        img: 'testerror.jpg'
+        img: 'testerror.jpg',
       };
 
       try {
         await ProductController.create({
           ...product,
-          productname: '!@#$%^$^'
+          productname: '!@#$%^$^',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not correct productname');
       }
 
       try {
         await ProductController.create({
           ...product,
-          productname: 'aa'
+          productname: 'aa',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not correct productname');
       }
 
       try {
         await ProductController.create({
           ...product,
-          description: '!@#$%$^$'
+          description: '!@#$%$^$',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not correct description');
       }
 
       try {
         await ProductController.create({
           ...product,
-          description: 'aa'
+          description: 'aa',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not correct description');
       }
 
       try {
         await ProductController.create({
           ...product,
-          coast: 0
+          coast: 0,
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not correct coast');
       }
 
       try {
         await ProductController.create({
           ...product,
-          img: '!@#.jpg'
+          img: '!@#.jpg',
         });
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not correct image');
       }
     });
@@ -161,7 +160,7 @@ describe('Product tests:', () => {
     test('Get with wrong id', async () => {
       try {
         await ProductController.getById('wrongid');
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not valid id');
       }
     });
@@ -169,7 +168,7 @@ describe('Product tests:', () => {
     test('Delete with wrong id', async () => {
       try {
         await ProductController.deleteById('wrongid');
-      } catch(e) {
+      } catch (e) {
         expect(e.message).toBe('Not valid id');
       }
     });
@@ -182,7 +181,7 @@ describe('Product tests:', () => {
           productname: 'updateerrortest',
           description: 'updateerrortest',
           coast: 100,
-          img: 'updateerrortest.jpg'
+          img: 'updateerrortest.jpg',
         });
       });
 
@@ -190,7 +189,7 @@ describe('Product tests:', () => {
         try {
           await ProductController.updateById(product._id, {
             ...product,
-            productname: '!@#wrong!@#'
+            productname: '!@#wrong!@#',
           });
         } catch (e) {
           expect(e.message).toBe('Not correct productname');
@@ -201,9 +200,9 @@ describe('Product tests:', () => {
         try {
           await ProductController.updateById(product._id, {
             ...product,
-            description: '!@#wrong!@#'
+            description: '!@#wrong!@#',
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Not correct description');
         }
       });
@@ -212,9 +211,9 @@ describe('Product tests:', () => {
         try {
           await ProductController.updateById(product._id, {
             ...product,
-            coast: -1
+            coast: -1,
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Not correct coast');
         }
       });
@@ -223,14 +222,12 @@ describe('Product tests:', () => {
         try {
           await ProductController.updateById(product._id, {
             ...product,
-            img: '!@#wrong!@#'
+            img: '!@#wrong!@#',
           });
-        } catch(e) {
+        } catch (e) {
           expect(e.message).toBe('Not correct image');
         }
       });
-
     });
   });
-
 });

@@ -14,18 +14,18 @@ async function getAll() {
 
 async function getById(id) {
   validateId(id);
-  const product = await Product.findOne({_id: id});
+  const product = await Product.findOne({ _id: id });
   return product;
 }
 
 async function updateById(id, params) {
   validateId(id);
-  await Product.updateOne({_id: id}, {...params});
+  await Product.updateOne({ _id: id }, { ...params });
 }
 
 async function deleteById(id) {
   validateId(id);
-  await Product.deleteOne({_id: id});
+  await Product.deleteOne({ _id: id });
 }
 
 function validateId(id) {
@@ -39,5 +39,5 @@ module.exports = {
   getAll,
   getById,
   updateById,
-  deleteById
-}
+  deleteById,
+};

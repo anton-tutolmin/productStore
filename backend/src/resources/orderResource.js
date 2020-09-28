@@ -1,4 +1,4 @@
-const {Types} = require('mongoose');
+const { Types } = require('mongoose');
 const Order = require('../models/Order');
 const errors = require('../errors/errors');
 
@@ -14,51 +14,54 @@ async function getAll() {
 
 async function getById(id) {
   validateId(id);
-  const order = await Order.findOne({_id: id});
+  const order = await Order.findOne({ _id: id });
   return order;
 }
 
 async function getByClientId(clientId) {
   validateId(clientId);
-  const order = await Order.find({clientId});
+  const order = await Order.find({ clientId });
   return order;
 }
 
 async function getByCurierId(curierId) {
   validateId(curierId);
-  const order = await Order.find({curierId});
+  const order = await Order.find({ curierId });
   return order;
 }
 
 async function getByProductId(productId) {
   validateId(productId);
-  const orders = await Order.find({productId});
+  const orders = await Order.find({ productId });
   return orders;
 }
 
 async function getRequests() {
-  const orders = await Order.find({curierId: 'none', status: 'created'});
+  const orders = await Order.find({
+    curierId: 'none',
+    status: 'created',
+  });
   return orders;
 }
 
 async function updateById(id, params) {
   validateId(id);
-  await Order.updateOne({_id: id}, {...params});
+  await Order.updateOne({ _id: id }, { ...params });
 }
 
 async function deleteById(id) {
   validateId(id);
-  await Order.deleteOne({_id: id});
+  await Order.deleteOne({ _id: id });
 }
 
 async function deleteByClientId(clientId) {
-  validateId(id);
-  await Order.deleteMany({clientId})
+  validateId(clientId);
+  await Order.deleteMany({ clientId });
 }
 
 async function deleteByProductId(productId) {
-  validateId(id);
-  await Order.deleteMany({productId});
+  validateId(productId);
+  await Order.deleteMany({ productId });
 }
 
 function validateId(id) {
@@ -73,10 +76,10 @@ module.exports = {
   getById,
   getByClientId,
   getByCurierId,
-  getByProductId, 
+  getByProductId,
   getRequests,
   updateById,
   deleteById,
   deleteByClientId,
-  deleteByProductId
-}
+  deleteByProductId,
+};

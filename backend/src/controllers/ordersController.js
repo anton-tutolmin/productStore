@@ -18,10 +18,10 @@ async function getById(id) {
 }
 
 async function getByUserId(userId) {
-  let orders = await OrderService.getByUserId(userId);
-  let response = [];
+  const orders = await OrderService.getByUserId(userId);
+  const response = [];
 
-  for (let order of orders) {
+  for (const order of orders) {
     const user = await UserService.getById(order.clientId);
     const product = await ProductService.getById(order.productId);
 
@@ -34,12 +34,12 @@ async function getByUserId(userId) {
       product: {
         productname: product.productname,
         coast: product.coast,
-        img: product.img
+        img: product.img,
       },
       client: {
         username: user.username,
-        phone: user.phone
-      }
+        phone: user.phone,
+      },
     });
   }
 
@@ -50,7 +50,7 @@ async function getRequests() {
   const orders = await OrderService.getRequests();
   const response = [];
 
-  for (let order of orders) {
+  for (const order of orders) {
     const user = await UserService.getById(order.clientId);
     const product = await ProductService.getById(order.productId);
 
@@ -63,12 +63,12 @@ async function getRequests() {
       product: {
         productname: product.productname,
         coast: product.coast,
-        img: product.img
+        img: product.img,
       },
       client: {
         username: user.username,
-        phone: user.phone
-      }
+        phone: user.phone,
+      },
     });
   }
 
@@ -101,4 +101,4 @@ module.exports = {
   deleteById,
   deleteByClientId,
   deleteByProductId,
-}
+};

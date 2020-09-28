@@ -6,7 +6,6 @@ const AuthController = require('../src/controllers/authController');
 const url = require('./config').url;
 
 describe('Auth test:', () => {
-
   let token;
 
   const user = {
@@ -14,14 +13,14 @@ describe('Auth test:', () => {
     password: 'testauth',
     email: 'testapi@gmail.com',
     phone: '11111111111',
-    type: 1
-  }
+    type: 1,
+  };
 
   beforeAll(async () => {
     await mongoose.connect(url, {
       useFindAndModify: false,
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
   });
 
@@ -43,7 +42,7 @@ describe('Auth test:', () => {
       .post('/api/login')
       .send({
         username: user.username,
-        password: user.password
+        password: user.password,
       });
 
     expect(response.status).toBe(200);
@@ -56,11 +55,10 @@ describe('Auth test:', () => {
     const response = await request(app.callback())
       .get('/api/profile')
       .set('Authorization', 'Bearer ' + token);
-    
+
     const data = JSON.parse(response.text);
     expect(data.username).toBe(user.username);
     expect(data.email).toBe(user.email);
     expect(data.phone).toBe(user.phone);
   });
-
 });

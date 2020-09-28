@@ -2,10 +2,11 @@ const notAllowedOrderStatus = 'Not allowed order status';
 const notCorrectUserType = 'Not coerrect user type';
 const clientMayOnlyDone = 'Client may set order status only done';
 const cancelDoneOrder = 'Cant cancel order that is done';
-const alreadyDeliveringOrCancel = 'This order is already delivering or canceled';
+const alreadyDeliveringOrCancel =
+  'This order is already delivering or canceled';
 const notDelivering = 'Order was not delivering';
 const cancelMayOnlyClient = 'Cancel or done order may only client';
-const resetNotDelivering = 'Cant reset not delivering order'
+const resetNotDelivering = 'Cant reset not delivering order';
 const notCorrectProductname = 'Not correct productname';
 const notCorrectDescription = 'Not correct description';
 const notCorrectCoast = 'Not correct coast';
@@ -45,5 +46,5 @@ module.exports = {
   wrongAuthorizaed,
   notAllowedAdress,
   notCurier,
-  notCorrectId
-}
+  notCorrectId,
+};

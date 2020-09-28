@@ -1,5 +1,5 @@
 const ProductResource = require('../resources/productResource');
-const validator = require('./validatorService/product')
+const validator = require('./validatorService/product');
 
 async function create(body) {
   validator.validateCreateBody(body);
@@ -33,5 +33,5 @@ module.exports = {
   getAll,
   getById,
   updateById,
-  deleteById
+  deleteById,
 };

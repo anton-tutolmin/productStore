@@ -8,11 +8,11 @@ function validateCreateBody(body) {
 }
 
 function validateUpdateBody(params) {
-  for (param of Object.keys(params)) {
+  for (const param of Object.keys(params)) {
     if (param === 'productname') validateProductname(params[param]);
-    if (param === 'description') validateDescription(params[param]); 
-    if (param === 'coast') validateCoast(params[param]); 
-    if (param === 'img') validateImg(params[param]); 
+    if (param === 'description') validateDescription(params[param]);
+    if (param === 'coast') validateCoast(params[param]);
+    if (param === 'img') validateImg(params[param]);
   }
 }
 
@@ -49,10 +49,10 @@ function validateImg(imgString) {
     imgString.match(/[^\w|.]/g)
   ) {
     throw new Error(errors.notCorrectImg);
-  } 
+  }
 }
 
 module.exports = {
   validateCreateBody,
-  validateUpdateBody
-}
+  validateUpdateBody,
+};

@@ -6,4 +6,4 @@ module.exports = (err, user, msg, id) => {
   if (user.type !== 3 && (!id || id != user._id)) {
     throw new Error(errors.notAllowedAdress);
   }
-}
+};

@@ -11,8 +11,7 @@ router.use(
   UserRouter.routes(),
   AuthRouter.routes(),
   ProductRouter.routes(),
-  OrderRouter.routes()
+  OrderRouter.routes(),
 );
-
 
 module.exports = router;

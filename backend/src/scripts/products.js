@@ -40,7 +40,7 @@ module.exports = [
     img:
       'https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimg1.cookinglight.timeinc.net%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fmedium_2x%2Fpublic%2Fimage%2F2017%2F01%2Fmain%2Fdiner-style-scrambled-eggs.jpg%3Fitok%3DQ-A612IW&w=450&c=sc&poi=face&q=85',
   },
-  //---------------------------------------------------
+  // ---------------------------------------------------
   {
     productname: 'Lagman',
     description: 'most deliciuos',
@@ -73,7 +73,8 @@ module.exports = [
     productname: 'Pasta',
     description: 'Italian recipe',
     coast: 7,
-    img: 'https://www.indianhealthyrecipes.com/wp-content/uploads/2019/05/masala-pasta-500x375.jpg',
+    img:
+      'https://www.indianhealthyrecipes.com/wp-content/uploads/2019/05/masala-pasta-500x375.jpg',
   },
   {
     productname: 'gryphon meat',
@@ -82,7 +83,7 @@ module.exports = [
     img:
       'https://www.wow-petopia.com/images/skin_pix/gryphon_skin.jpg',
   },
-  //------------------------------------------------------
+  // ------------------------------------------------------
   {
     productname: 'Ramen',
     description: 'really spice',
@@ -115,7 +116,8 @@ module.exports = [
     productname: 'sashimi',
     description: 'gods sashimi',
     coast: 101,
-    img: 'https://images.immediate.co.uk/production/volatile/sites/30/2020/02/sashimi-c123df7.jpg?quality=90&resize=960,872',
+    img:
+      'https://images.immediate.co.uk/production/volatile/sites/30/2020/02/sashimi-c123df7.jpg?quality=90&resize=960,872',
   },
   {
     productname: 'shaurma',

@@ -8,7 +8,9 @@ const router = new KoaRouter();
 router
 
   .post('/api/orders', async (ctx, next) => {
-    await passport.authenticate('jwt', {session: false},
+    await passport.authenticate(
+      'jwt',
+      { session: false },
       async (err, user, msg) => {
         if (err) throw new Error(err);
 
@@ -16,17 +18,20 @@ router
 
         await OrderController.create(ctx.request.body, user);
 
-        ctx.response.body = {message: 'Order created'};
-    })(ctx, next);
+        ctx.response.body = { message: 'Order created' };
+      },
+    )(ctx, next);
   })
 
   .get('/api/orders/:id', async (ctx, next) => {
     const order = await OrderController.getById(ctx.params.id);
-    ctx.response.body = {order};
+    ctx.response.body = { order };
   })
 
   .put('/api/orders/:id', async (ctx, next) => {
-    await passport.authenticate('jwt', {session: false},
+    await passport.authenticate(
+      'jwt',
+      { session: false },
       async (err, user, msg) => {
         if (err) throw new Error(err);
 
@@ -35,21 +40,23 @@ router
         await OrderController.updateById(
           ctx.params.id,
           ctx.request.body,
-          user
+          user,
         );
 
-        ctx.response.body = {message: 'Order updated'};
-    })(ctx, next);
+        ctx.response.body = { message: 'Order updated' };
+      },
+    )(ctx, next);
   })
 
   .get('/api/users/:id/orders', async (ctx, next) => {
-    const orders =
-      await OrderController.getByUserId(ctx.params.id);
-    ctx.response.body = {orders}
+    const orders = await OrderController.getByUserId(ctx.params.id);
+    ctx.response.body = { orders };
   })
 
   .get('/api/requests', async (ctx, next) => {
-    await passport.authenticate('jwt', {session: false},
+    await passport.authenticate(
+      'jwt',
+      { session: false },
       async (err, user, msg) => {
         if (err) throw new Error(err);
 
@@ -59,9 +66,9 @@ router
 
         const requests = await OrderController.getRequests();
 
-        ctx.response.body = {requests};
-      }  
+        ctx.response.body = { requests };
+      },
     )(ctx, next);
-  })
+  });
 
 module.exports = router;

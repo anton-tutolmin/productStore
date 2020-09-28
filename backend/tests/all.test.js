@@ -1,6 +1,3 @@
-
-
-
 describe('All tests:', () => {
   require('./user.test');
   require('./product.test');

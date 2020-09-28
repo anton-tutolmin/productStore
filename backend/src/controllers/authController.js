@@ -15,5 +15,5 @@ async function profile(ctx, next) {
 module.exports = {
   login,
   register,
-  profile
+  profile,
 };

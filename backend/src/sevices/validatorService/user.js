@@ -2,7 +2,7 @@ const { notCorrectPhone } = require('../../errors/errors');
 const errors = require('../../errors/errors');
 
 async function validateLoginBody(ctx, next) {
-  const body = {...ctx.request.body};
+  const body = { ...ctx.request.body };
   validateUsername(body.username);
   validatePassword(body.password);
   await next();
@@ -17,7 +17,7 @@ function validateCreateBody(body) {
 }
 
 function validateUpdateBody(params) {
-  for (let param of Object.keys(params)) {
+  for (const param of Object.keys(params)) {
     if (param === 'username') validateUsername(params[param]);
     if (param === 'email') validateEmail(params[param]);
     if (param === 'phone') validatePhone(params[param]);
@@ -60,21 +60,13 @@ function validateEmail(email) {
 }
 
 function validateType(type) {
-  if (
-    !type ||
-    type !== 1 &&
-    type !== 2
-  ) {
+  if (!type || (type !== 1 && type !== 2)) {
     throw new Error(errors.notCorrectType);
   }
 }
 
 function validateBalance(balance) {
-  if (
-    !balance ||
-    typeof balance !== 'number' ||
-    balance < 0
-  ) {
+  if (!balance || typeof balance !== 'number' || balance < 0) {
     throw new Error(errors.notCorrectBalance);
   }
 }
@@ -82,5 +74,5 @@ function validateBalance(balance) {
 module.exports = {
   validateLoginBody,
   validateCreateBody,
-  validateUpdateBody
+  validateUpdateBody,
 };

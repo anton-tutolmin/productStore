@@ -6,7 +6,6 @@ const errors = require('../errors/errors');
 
 async function create(body, user) {
   const product = await ProductService.getById(body.productId);
-  console.log(user);
   if (!product) throw new Error('No such product');
 
   if (!user) throw new Error('No such user');
@@ -22,8 +21,8 @@ async function create(body, user) {
     status: 'created',
     clientId: user._id,
     curierId: 'none',
-    productId: body.productId
-  }
+    productId: body.productId,
+  };
 
   const order = await OrderResource.create(createBody);
   return order;
@@ -77,7 +76,7 @@ async function updateById(id, params, user) {
   validator.validateUpdateBody(
     params.status,
     order.status,
-    user.type
+    user.type,
   );
 
   const updates = {
@@ -85,8 +84,8 @@ async function updateById(id, params, user) {
     canceled: cancel,
     delivering: takeDelivery,
     delivered: setDelivered,
-    reset: reset
-  }
+    reset: reset,
+  };
 
   await updates[params.status](order, user);
 }
@@ -108,9 +107,9 @@ async function deleteByProductId(productId) {
 // and add balance to curier(5% order coast)
 async function done(order) {
   const coast = await getCoast(order);
-  const payoff = Number.parseFloat(coast * 0.05).toFixed(2);;
+  const payoff = Number.parseFloat(coast * 0.05).toFixed(2);
   await UserService.addBalance(order.curierId, payoff);
-  await OrderResource.updateById(order._id, {status: 'done'});
+  await OrderResource.updateById(order._id, { status: 'done' });
 }
 
 // Curier cancel order delivery
@@ -118,7 +117,7 @@ async function done(order) {
 async function reset(order) {
   await OrderResource.updateById(order._id, {
     curierId: 'none',
-    status: 'created'
+    status: 'created',
   });
 }
 
@@ -127,18 +126,18 @@ async function reset(order) {
 async function cancel(order) {
   const coast = await getCoast(order);
   await UserService.addBalance(order.clientId, coast);
-  await OrderResource.updateById(order._id, {status: 'canceled'});
+  await OrderResource.updateById(order._id, { status: 'canceled' });
 }
 
 async function takeDelivery(order, user) {
   await OrderResource.updateById(order._id, {
     curierId: user._id,
-    status: 'delivering'
+    status: 'delivering',
   });
 }
 
 async function setDelivered(order) {
-  await OrderResource.updateById(order._id, {status: 'delivered'});
+  await OrderResource.updateById(order._id, { status: 'delivered' });
 }
 
 async function getCoast(order) {
@@ -169,4 +168,4 @@ module.exports = {
   deleteById,
   deleteByClientId,
   deleteByProductId,
-}
+};

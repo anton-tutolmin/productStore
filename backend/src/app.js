@@ -8,7 +8,13 @@ const passport = require('koa-passport');
 
 const router = require('./routes');
 
-const staticDir = path.resolve(__dirname, '..', '..', 'frontend', 'public')
+const staticDir = path.resolve(
+  __dirname,
+  '..',
+  '..',
+  'frontend',
+  'public',
+);
 
 const app = new Koa();
 app.keys = ['secret'];
@@ -21,7 +27,7 @@ app.use(async (ctx, next) => {
     await next();
   } catch (e) {
     ctx.response.status = 200;
-    ctx.response.body = {error: e.message};
+    ctx.response.body = { error: e.message };
   }
 });
 
@@ -29,8 +35,8 @@ app.use(router.routes());
 
 app.use(serve(staticDir));
 
-app.use(async ctx => {
-  await send(ctx, 'index.html', { root: staticDir })
+app.use(async (ctx) => {
+  await send(ctx, 'index.html', { root: staticDir });
 });
 
 module.exports = app;

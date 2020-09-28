@@ -8,8 +8,8 @@ async function create(body) {
     email: body.email,
     phone: body.phone,
     type: body.type,
-    balance: 0
-  }
+    balance: 0,
+  };
 
   userValidator.validateCreateBody(createBody);
   const user = await UserResource.create(createBody);
@@ -17,23 +17,23 @@ async function create(body) {
 }
 
 async function getAll() {
-  let users = await UserResource.getAll();
+  const users = await UserResource.getAll();
   return users;
 }
 
 async function getById(id) {
-  let user = await UserResource.getById(id);
+  const user = await UserResource.getById(id);
   return user;
 }
 
 async function getByUsername(username) {
-  let user = await UserResource.getByUsername(username);
+  const user = await UserResource.getByUsername(username);
   return user;
 }
 
 async function updateById(id, body) {
   const params = {};
-  for (let param of Object.keys(body)) {
+  for (const param of Object.keys(body)) {
     if (param === 'username') params.username = body[param];
     if (param === 'email') params.email = body[param];
     if (param === 'phone') params.phone = body[param];
@@ -55,13 +55,13 @@ async function deleteById(id) {
 async function addBalance(id, coast) {
   const user = await UserResource.getById(id);
   const balance = user.balance + +coast;
-  await UserResource.updateById(id, {balance});
+  await UserResource.updateById(id, { balance });
 }
 
 async function reduceBalance(id, coast) {
   const user = await UserResource.getById(id);
   const balance = user.balance - coast;
-  await UserResource.updateById(id, {balance});
+  await UserResource.updateById(id, { balance });
 }
 
 module.exports = {
@@ -72,5 +72,5 @@ module.exports = {
   updateById,
   deleteById,
   addBalance,
-  reduceBalance
+  reduceBalance,
 };

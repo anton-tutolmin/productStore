@@ -10,21 +10,19 @@ async function start() {
     await mongoose.connect(url, {
       useFindAndModify: false,
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     });
 
-    app.listen(PORT, err => {
+    app.listen(PORT, (err) => {
       if (err) {
         console.log('ERROR', err);
       } else {
         console.log('Server on port ' + PORT);
       }
-    })
-   
+    });
   } catch (err) {
     console.log(err);
   }
-
 }
 
 start();

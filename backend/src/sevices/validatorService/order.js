@@ -1,6 +1,13 @@
 const errors = require('../../errors/errors');
 
-const allowedStatus = ['created', 'delivering', 'delivered', 'done', 'canceled', 'reset'];
+const allowedStatus = [
+  'created',
+  'delivering',
+  'delivered',
+  'done',
+  'canceled',
+  'reset',
+];
 
 function validateUpdateBody(newStatus, oldStatus, userType) {
   if (!allowedStatus.includes(newStatus)) {
@@ -42,16 +49,20 @@ function validateCurierUpdate(newStatus, oldStatus) {
   if (newStatus === 'canceled' || newStatus === 'done') {
     throw new Error(errors.cancelMayOnlyClient);
   }
-  if (newStatus === 'created' && (oldStatus !== 'delivering' && oldStatus !== 'delivered')) {
-    throw new Error(errors.resetNotDelivering)
+  if (
+    newStatus === 'created' &&
+    oldStatus !== 'delivering' &&
+    oldStatus !== 'delivered'
+  ) {
+    throw new Error(errors.resetNotDelivering);
   }
 }
 
 // For case when admin change order status
 function validateAdminUpdate(newStatus) {
-  //TODO
+  // TODO
 }
 
 module.exports = {
-  validateUpdateBody
-}
+  validateUpdateBody,
+};

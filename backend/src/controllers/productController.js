@@ -29,5 +29,5 @@ module.exports = {
   getAll,
   getById,
   updateById,
-  deleteById
-}
+  deleteById,
+};
