@@ -3,6 +3,7 @@ const Koa = require('koa');
 const KoaBody = require('koa-body');
 const send = require('koa-send');
 const serve = require('koa-static');
+const logger = require('./middleware/logger');
 
 const passport = require('koa-passport');
 
@@ -17,9 +18,13 @@ const staticDir = path.resolve(
 );
 
 const app = new Koa();
+
+app.use(logger);
+
 app.keys = ['secret'];
 
 app.use(KoaBody());
+
 app.use(passport.initialize());
 
 app.use(async (ctx, next) => {

@@ -2,7 +2,6 @@ const KoaRouter = require('koa-router');
 const passport = require('../config/passport');
 const ProductController = require('../controllers/productController');
 const OrderController = require('../controllers/ordersController');
-
 const isAllowed = require('./allow');
 
 const router = new KoaRouter();

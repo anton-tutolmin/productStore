@@ -15,5 +15,7 @@
   "bugs": {
     "url": "https://github.com/anton-tutolmin/productStore/issues"
   },
-  "homepage": "https://github.com/anton-tutolmin/productStore#readme"
+  "homepage": "https://github.com/anton-tutolmin/productStore#readme",
+  "devDependencies": {},
+  "dependencies": {}
 }
