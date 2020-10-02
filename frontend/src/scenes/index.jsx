@@ -12,6 +12,7 @@ import Login from './login/login.jsx';
 import { Main } from './main/main.jsx';
 import Profile from './profile/profile.jsx';
 import Notifications from './notification/notifications.jsx';
+import { Footer } from './footer/footer.jsx';
 
 const ClientRoutes = () => {
   return <Route path={Paths.order} component={Orders} />;
@@ -64,6 +65,7 @@ const Scenes = (props) => {
         {!auth ? UnauthRoutes() : authRoutes()}
         <Redirect exact to="/products" />
       </Switch>
+      <Footer />
       <Notifications />
     </>
   );

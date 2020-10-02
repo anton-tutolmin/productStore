@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { LoginForm } from '../../components/forms/login/loginForm.jsx';
 import { doLogin } from '../../store/actions/async/auth';
 import { addNotification } from '../../store/actions/index';
+import './login.sass';
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
@@ -36,13 +37,15 @@ const Login = (props) => {
   };
 
   return (
-    <LoginForm
-      username={username}
-      password={password}
-      onUsernameChange={onUsernameChange}
-      onPasswordChange={onPasswordChange}
-      submit={submit}
-    />
+    <div className="login">
+      <LoginForm
+        username={username}
+        password={password}
+        onUsernameChange={onUsernameChange}
+        onPasswordChange={onPasswordChange}
+        submit={submit}
+      />
+    </div>
   );
 };
 

@@ -4,6 +4,7 @@ import { RegisterForm } from '../../components/forms/register/registerForm.jsx';
 import { doRegister } from '../../store/actions/async/auth.js';
 import { addNotification } from '../../store/actions/index.js';
 import validator from '../../utils/validator/user';
+import './register.sass';
 
 const initialState = {
   username: '',
@@ -80,19 +81,21 @@ const Register = (props) => {
   };
 
   return (
-    <RegisterForm
-      username={state.username}
-      password={state.password}
-      email={state.email}
-      phone={state.phone}
-      onUsernameChange={onUsernameChange}
-      onPasswordChange={onPasswordChange}
-      onEmailChange={onEmailChange}
-      onPhoneChange={onPhoneChange}
-      onTypeChange={onTypeChange}
-      submit={submit}
-      userType={state.type}
-    />
+    <div className="register">
+      <RegisterForm
+        username={state.username}
+        password={state.password}
+        email={state.email}
+        phone={state.phone}
+        onUsernameChange={onUsernameChange}
+        onPasswordChange={onPasswordChange}
+        onEmailChange={onEmailChange}
+        onPhoneChange={onPhoneChange}
+        onTypeChange={onTypeChange}
+        submit={submit}
+        userType={state.type}
+      />
+    </div>
   );
 };
 

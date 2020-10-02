@@ -17,7 +17,9 @@ async function start() {
       if (err) {
         console.log('ERROR', err);
       } else {
-        console.log('Server on port ' + PORT);
+        console.log(
+          `[SERVER]: Server is running on http://localhost:${PORT}`,
+        );
       }
     });
   } catch (err) {

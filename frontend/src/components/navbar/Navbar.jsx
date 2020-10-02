@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MenuButton } from './menuButton.jsx';
+import { Logo } from '../logo/logo.jsx';
 import Dropdown from './dropdown.jsx';
 import './navbar.sass';
 
@@ -13,7 +14,7 @@ export const Navbar = (props) => {
   return (
     <header>
       <div className="navbar">
-        <div className="logo">PRODUCT STORE</div>
+        <Logo />
         <nav>
           <ul className="nav__links">{props.children}</ul>
         </nav>
