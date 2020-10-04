@@ -2,12 +2,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { removeFromCart, addNotification } from '../../store/actions';
 import { doOrderProduct } from '../../store/actions/async/order';
-import {} from '../../components/cart/cartItem.jsx';
+import { CartMobileItem } from '../../components/cart/cartMobileItem.jsx';
 import './cartMobile.sass';
 
 const CartMobile = (props) => {
-  console.log(0.6 + 1);
-  return <h1 className="cartmobile">Cart</h1>;
+  const { cart, balance, order, remove, showError } = props;
+
+  const onOrder = (product, index) => {
+    if (product.coast > balance) {
+      showError('Not enough money');
+    } else {
+      order(product, index);
+    }
+  };
+
+  const onRemove = (index) => {
+    remove(index);
+  };
+
+  return (
+    <div className="cartmobile">
+      {cart.map((c, i) => (
+        <CartMobileItem
+          product={c}
+          removeFromCart={onRemove}
+          index={i}
+          key={Math.random()}
+          order={onOrder}
+        />
+      ))}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({

@@ -1,0 +1,13 @@
+@import '../../constants/templates'
+@import '../../constants/mixins'
+
+.cart-mobile__item
+  @extend %cardStyle
+  margin-top: 5px
+
+.cart-mobile__text
+  @extend %cardText
+
+.cart-mobile__img
+  +cropImg(170px, 150px)
+  margin: auto 0
