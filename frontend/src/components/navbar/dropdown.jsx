@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Paths from '../../constants/paths';
@@ -6,7 +6,14 @@ import './dropdown.sass';
 
 const Dropdown = (props) => {
   const { toggleDropdown, auth } = props;
-  console.log(auth);
+
+  useEffect(() => {
+    document.body.classList.add('lock');
+    return () => {
+      document.body.classList.remove('lock');
+    };
+  });
+
   return (
     <div className="menu">
       <ul>
@@ -91,7 +98,6 @@ export const RegisterItem = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     auth: state.auth.auth,
   };

@@ -13,6 +13,7 @@ import { Main } from './main/main.jsx';
 import Profile from './profile/profile.jsx';
 import Notifications from './notification/notifications.jsx';
 import { Footer } from './footer/footer.jsx';
+import CartMobile from './cart/cartMobile.jsx';
 
 const ClientRoutes = () => {
   return <Route path={Paths.order} component={Orders} />;
@@ -29,6 +30,11 @@ const CurierRoutes = () => {
       path={Paths.request}
       component={Request}
       key={`${Math.random()}request`}
+    />,
+    <Route
+      path={Paths.cart}
+      component={CartMobile}
+      key={`${Math.random()}cart`}
     />,
   ];
 };

@@ -6,20 +6,22 @@ import './footer.sass';
 export const Footer = () => {
   return (
     <footer className="footer">
-      <div className="footer__logo">
-        <Logo />
-        <Info />
-      </div>
-      <nav className="footer__nav">
-        <ul>
-          <li className="footer__nav-item">Main</li>
-          <li className="footer__nav-item">Products</li>
-          <li className="footer__nav-item">About</li>
-          <li className="footer__nav-item">Contacts</li>
-        </ul>
-      </nav>
-      <div className="footer__social-links">
-        <SocialLinks />
+      <div className="footer__container">
+        <div className="footer__logo">
+          <Logo />
+          <Info />
+        </div>
+        <nav className="footer__nav">
+          <ul>
+            <li className="footer__nav-item">Main</li>
+            <li className="footer__nav-item">Products</li>
+            <li className="footer__nav-item">About</li>
+            <li className="footer__nav-item">Contacts</li>
+          </ul>
+        </nav>
+        <div className="footer__social-links">
+          <SocialLinks />
+        </div>
       </div>
     </footer>
   );
