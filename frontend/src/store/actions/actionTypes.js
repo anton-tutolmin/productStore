@@ -14,3 +14,4 @@ export const LOAD_REQUEST = 'LOAD_REQUEST';
 export const REMOVE_REQUEST = 'REMOVE_REQUEST';
 export const LOAD_USER = 'LOAD_USER';
 export const REDUCE_BALANCE = 'REDUCE_BALANCE';
+export const CLEAR_USER = 'CLEAR_USER';

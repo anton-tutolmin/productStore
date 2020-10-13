@@ -1,4 +1,8 @@
-import { LOAD_USER, REDUCE_BALANCE } from '../actions/actionTypes';
+import {
+  CLEAR_USER,
+  LOAD_USER,
+  REDUCE_BALANCE,
+} from '../actions/actionTypes';
 
 const initialState = {
   id: null,
@@ -16,6 +20,8 @@ export default function reducer(state = initialState, action) {
       };
     case REDUCE_BALANCE:
       return { ...state, balance: state.balance - action.payload };
+    case CLEAR_USER:
+      return { ...initialState };
     default:
       return state;
   }

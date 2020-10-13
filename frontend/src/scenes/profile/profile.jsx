@@ -15,10 +15,10 @@ import validator from '../../utils/validator/user';
 import {
   addNotification,
   requireAuth,
+  clearUser,
 } from '../../store/actions/index';
 
 import { doUpdateUser } from '../../store/actions/async/user';
-
 import './profile.sass';
 
 const Profile = (props) => {
@@ -49,6 +49,7 @@ const Profile = (props) => {
   const logout = () => {
     localStorage.removeItem('token');
     props.unauth();
+    props.clearUser();
   };
 
   const modals = [
@@ -118,6 +119,7 @@ const mapDispatchToProps = (dispatch) => ({
   showError: (payload) => dispatch(addNotification(payload)),
   unauth: () => dispatch(requireAuth()),
   update: (param, id) => dispatch(doUpdateUser(param, id)),
+  clearUser: () => dispatch(clearUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

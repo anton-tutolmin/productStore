@@ -15,6 +15,7 @@ import {
   REMOVE_FROM_CART,
   REMOVE_NOTIFICATION,
   REMOVE_REQUEST,
+  CLEAR_USER,
 } from './actionTypes';
 
 export const addToCart = (product) => ({
@@ -86,4 +87,8 @@ export const cancelOrder = (orderId) => ({
 export const doneOrder = (orderId) => ({
   type: DONE_ORDER,
   payload: orderId,
+});
+
+export const clearUser = () => ({
+  type: CLEAR_USER,
 });
