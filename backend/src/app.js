@@ -4,7 +4,6 @@ const KoaBody = require('koa-body');
 const send = require('koa-send');
 const serve = require('koa-static');
 const logger = require('./middleware/logger');
-const cacher = require('./cacher/cacher');
 
 const passport = require('koa-passport');
 
@@ -30,7 +29,6 @@ app.use(passport.initialize());
 
 app.use(async (ctx, next) => {
   try {
-    ctx.cacher = cacher;
     await next();
   } catch (e) {
     ctx.response.status = 200;

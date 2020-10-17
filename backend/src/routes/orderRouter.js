@@ -49,7 +49,9 @@ router
   })
 
   .get('/api/users/:id/orders', async (ctx, next) => {
-    const orders = await OrderController.getByUserId(ctx.params.id);
+    const userId = ctx.params.id;
+    const orders = await OrderController.getByUserId(userId);
+    ctx.cacher.setOrder(userId, orders);
     ctx.response.body = { orders };
   })
 
