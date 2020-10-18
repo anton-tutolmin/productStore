@@ -9,6 +9,12 @@ export const ProductItem = (props) => {
     addToCart(product);
   };
 
+  const getPopularity = (orderedCount) => {
+    if (orderedCount >= 50) return 3;
+    if (orderedCount >= 25) return 2;
+    return 1;
+  };
+
   return (
     <div className="productcard">
       <img
@@ -19,12 +25,17 @@ export const ProductItem = (props) => {
       <div className="productcard__text">
         <ul>
           <li>{product.productname}</li>
+          <li>${product.coast}</li>
           <li>
             <div className="productcard__description">
               {product.description}
             </div>
           </li>
-          <li>${product.coast}</li>
+          <li>
+            <div className="productcard__description">
+              Popularity: {getPopularity(product.orderedCount)}
+            </div>
+          </li>
           <li>
             <CardButton label="Add to cart" onClick={onClick} />
           </li>

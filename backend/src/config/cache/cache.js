@@ -27,6 +27,13 @@ class Cache {
   removeProduct() {
     this.products = null;
   }
+
+  addProductCount(productId) {
+    const product = this.products.find((p) => p._id == productId);
+    if (product) {
+      product.orderedCount += 1;
+    }
+  }
 }
 
 module.exports = Cache;

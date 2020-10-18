@@ -18,6 +18,8 @@ router
 
         await OrderController.create(ctx.request.body, user);
 
+        ctx.cache.removeOrder(user._id + '');
+        ctx.cache.addProductCount(ctx.request.body.productId);
         ctx.response.body = { message: 'Order created' };
       },
     )(ctx, next);
