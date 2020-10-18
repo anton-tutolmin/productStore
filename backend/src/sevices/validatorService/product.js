@@ -5,6 +5,7 @@ function validateCreateBody(body) {
   validateDescription(body.description);
   validateCoast(body.coast);
   validateImg(body.img);
+  validateOrderedCount(body.orderedCount);
 }
 
 function validateUpdateBody(params) {
@@ -49,6 +50,12 @@ function validateImg(imgString) {
     imgString.match(/[^\w|.]/g)
   ) {
     throw new Error(errors.notCorrectImg);
+  }
+}
+
+function validateOrderedCount(count) {
+  if (!count || typeof count !== 'number') {
+    throw new Error(errors.notCorrectOrderedCount);
   }
 }
 
