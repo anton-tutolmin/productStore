@@ -43,14 +43,27 @@ router
           user,
         );
 
+        const updatedOrder = await OrderController.getById(
+          ctx.params.id,
+        );
+
+        ctx.cache.removeOrder(updatedOrder.clientId);
+        ctx.cache.removeOrder(updatedOrder.curierId);
         ctx.response.body = { message: 'Order updated' };
       },
     )(ctx, next);
   })
 
   .get('/api/users/:id/orders', async (ctx, next) => {
-    const orders = await OrderController.getByUserId(ctx.params.id);
-    ctx.response.body = { orders };
+    const userId = ctx.params.id;
+    const cachedOrders = ctx.cache.getOrder(userId);
+    if (cachedOrders) {
+      ctx.response.body = { orders: cachedOrders };
+    } else {
+      const orders = await OrderController.getByUserId(userId);
+      ctx.cache.setOrder(userId, orders);
+      ctx.response.body = { orders };
+    }
   })
 
   .get('/api/requests', async (ctx, next) => {

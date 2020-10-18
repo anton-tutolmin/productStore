@@ -55,7 +55,6 @@ async function deleteById(id) {
 async function addBalance(id, coast) {
   const user = await UserResource.getById(id);
   const balance = user.balance + +coast;
-  console.log(user.balance, coast, balance);
   await UserResource.updateById(id, { balance });
 }
 
