@@ -25,6 +25,11 @@ async function create(body, user) {
   };
 
   const order = await OrderResource.create(createBody);
+
+  await ProductService.updateById(body.productId, {
+    orderedCount: product.orderedCount + 1,
+  });
+
   return order;
 }
 
