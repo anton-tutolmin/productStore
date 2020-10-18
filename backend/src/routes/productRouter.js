@@ -21,8 +21,14 @@ router
   })
 
   .get('/api/products', async (ctx, next) => {
-    const products = await ProductController.getAll();
-    ctx.response.body = { products };
+    const cachedProducts = ctx.cache.getProduct();
+    if (cachedProducts) {
+      ctx.response.body = { products: cachedProducts };
+    } else {
+      const products = await ProductController.getAll();
+      ctx.cache.setProduct(products);
+      ctx.response.body = { products };
+    }
   })
 
   .get('/api/products:id', async (ctx, next) => {
@@ -43,6 +49,7 @@ router
           ctx.request.body,
         );
 
+        ctx.cache.removeProduct();
         ctx.response.body = { message: 'Product updated' };
       },
     )(ctx, next);
