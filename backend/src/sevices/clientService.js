@@ -17,19 +17,19 @@ class ClientService extends UserService {
     }
 
     this.validationService.validateUpdateBody(params);
-    await this.clientResource.updateById(id, params);
+    await this.userResource.updateById(id, params);
   }
 
   async addBalance(id, coast) {
-    const client = await this.clientResource.getById(id);
+    const client = await this.userResource.getById(id);
     const balance = client.balance + +coast;
-    await this.clientResource.updateById(id, { balance });
+    await this.userResource.updateById(id, { balance });
   }
 
   async reduceBalance(id, coast) {
-    const client = await this.clientResource.getById(id);
+    const client = await this.userResource.getById(id);
     const balance = client.balance - coast;
-    await this.clientResource.updateById(id, { balance });
+    await this.userResource.updateById(id, { balance });
   }
 }
 

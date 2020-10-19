@@ -1,6 +1,7 @@
 class UserService {
-  constructor(resource, validation) {
-    this.resource = resource;
+  constructor(userResource, ratingResource, validation) {
+    this.userResource = userResource;
+    this.ratingResource = ratingResource;
     this.validation = validation;
   }
 
@@ -14,23 +15,23 @@ class UserService {
     };
 
     this.validation.validateCreateBody(createBody);
-    return await this.resource.create(createBody);
+    return await this.userResource.create(createBody);
   }
 
   async getById(userId) {
-    return await this.resource.getById(userId);
+    return await this.userResource.getById(userId);
   }
 
   async getAll() {
-    return await this.resource.getAll();
+    return await this.userResource.getAll();
   }
 
   async getByUsername(username) {
-    return await this.resource.getByUsername(username);
+    return await this.userResource.getByUsername(username);
   }
 
   async deleteById(userId) {
-    await this.resource.deleteById(userId);
+    await this.userResource.deleteById(userId);
   }
 }
 
