@@ -10,8 +10,7 @@ const Bcrypt = {
   },
 
   validatePassword: async (password, hashedPassword) => {
-    const isValid = await bcrypt.compare(password, hashedPassword);
-    return isValid;
+    return await bcrypt.compare(password, hashedPassword);
   },
 };
 

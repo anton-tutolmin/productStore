@@ -1,5 +1,5 @@
 const OrderResource = require('../resources/orderResource');
-const UserService = require('./userService');
+const { clientService } = require('./clientService');
 const ProductService = require('./productService');
 const validator = require('./validatorService/order');
 const errors = require('../errors/errors');
@@ -15,7 +15,7 @@ async function create(body, user) {
   if (user.balance < product.coast)
     throw new Error('Not enough money');
 
-  await UserService.reduceBalance(user._id, product.coast);
+  await clientService.reduceBalance(user._id, product.coast);
 
   const createBody = {
     status: 'created',
@@ -44,7 +44,7 @@ async function getById(id) {
 }
 
 async function getByUserId(userId) {
-  const user = await UserService.getById(userId);
+  const user = await clientService.getById(userId);
 
   if (user.type === 1) {
     return await getByClientId(userId);
@@ -113,7 +113,7 @@ async function deleteByProductId(productId) {
 async function done(order) {
   const coast = await getCoast(order);
   const payoff = Number.parseFloat(coast * 0.05).toFixed(2);
-  await UserService.addBalance(order.curierId, payoff);
+  await clientService.addBalance(order.curierId, payoff);
   await OrderResource.updateById(order._id, { status: 'done' });
 }
 
@@ -130,7 +130,7 @@ async function reset(order) {
 // Need return money to client
 async function cancel(order) {
   const coast = await getCoast(order);
-  await UserService.addBalance(order.clientId, coast);
+  await clientService.addBalance(order.clientId, coast);
   await OrderResource.updateById(order._id, { status: 'canceled' });
 }
 

@@ -1,37 +1,37 @@
-const User = require('../models/User');
+const Client = require('../models/Client');
 const { Types } = require('mongoose');
 const errors = require('../errors/errors');
 
 async function create(body) {
-  const user = await User.create({ ...body });
+  const user = await Client.create({ ...body });
   return user;
 }
 
 async function getAll() {
-  const users = await User.find({});
+  const users = await Client.find({});
   return users;
 }
 
 async function getById(id) {
   validateId(id);
 
-  const user = await User.findOne({ _id: id });
+  const user = await Client.findOne({ _id: id });
   return user;
 }
 
 async function getByUsername(username) {
-  const user = await User.findOne({ username });
+  const user = await Client.findOne({ username });
   return user;
 }
 
 async function updateById(id, params) {
   validateId(id);
-  await User.updateOne({ _id: id }, { ...params });
+  await Client.updateOne({ _id: id }, { ...params });
 }
 
 async function deleteById(id) {
   validateId(id);
-  await User.deleteOne({ _id: id });
+  await Client.deleteOne({ _id: id });
 }
 
 function validateId(id) {

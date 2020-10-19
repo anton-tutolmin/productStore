@@ -6,7 +6,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const Bcrypt = require('../bcrypt');
 const keys = require('./keys');
 
-const UserService = require('../../sevices/userService');
+const { clientService } = require('../../sevices/clientService');
 
 const JwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -24,14 +24,17 @@ passport.use(
   new LocalStrategy(
     LocalOptions,
     async (username, password, done) => {
-      const user = await UserService.getByUsername(username);
+      const user = await clientService.getByUsername(username);
       if (user) {
-        done(null, false, {
+        return done(null, false, {
           message: 'This username already been taken',
         });
       } else {
         const hashedPassword = await Bcrypt.hashPassword(password);
-        done(null, { username: username, password: hashedPassword });
+        return done(null, {
+          username: username,
+          password: hashedPassword,
+        });
       }
     },
   ),
@@ -42,10 +45,10 @@ passport.use(
   new LocalStrategy(
     LocalOptions,
     async (username, password, done) => {
-      const user = await UserService.getByUsername(username);
+      const user = await clientService.getByUsername(username);
 
       if (!user) {
-        done(null, false, {
+        return done(null, false, {
           message: 'There is no user with this username',
         });
       } else {
@@ -54,9 +57,9 @@ passport.use(
           user.password,
         );
         if (!isValidPassword) {
-          done(null, false, { message: 'Wrong password' });
+          return done(null, false, { message: 'Wrong password' });
         } else {
-          done(null, user);
+          return done(null, user);
         }
       }
     },
@@ -66,11 +69,11 @@ passport.use(
 passport.use(
   'jwt',
   new JwtStrategy(JwtOptions, async (data, done) => {
-    const user = await UserService.getById(data.id);
+    const user = await clientService.getById(data.id);
     if (!user) {
-      done(null, false, { message: 'There is no such user' });
+      return done(null, false, { message: 'There is no such user' });
     }
-    done(null, user);
+    return done(null, user);
   }),
 );
 

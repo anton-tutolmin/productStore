@@ -1,26 +1,26 @@
-const UserService = require('../sevices/userService');
+const { clientService } = require('../sevices/clientService');
 
 async function create(body) {
-  const user = await UserService.create(body);
+  const user = await clientService.create(body);
   return user;
 }
 
 async function getAll() {
-  const users = await UserService.getAll();
+  const users = await clientService.getAll();
   return users;
 }
 
 async function getById(id) {
-  const user = await UserService.getById(id);
+  const user = await clientService.getById(id);
   return user;
 }
 
 async function updateById(id, params, user) {
-  await UserService.updateById(id, params);
+  await clientService.updateById(id, params);
 }
 
 async function deleteById(id) {
-  await UserService.deleteById(id);
+  await clientService.deleteById(id);
 }
 
 module.exports = {

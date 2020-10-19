@@ -1,7 +1,7 @@
 const errors = require('../errors/errors');
 const passport = require('../config/passport');
 const jwt = require('jsonwebtoken');
-const UserService = require('./userService');
+const { clientService } = require('./clientService');
 
 const key = require('../config/passport/keys').jwtKey;
 
@@ -38,7 +38,7 @@ async function register(ctx, next) {
         type: ctx.request.body.type,
       };
 
-      const createdUser = await UserService.create(hashedUser);
+      const createdUser = await clientService.create(hashedUser);
       const token = jwt.sign({ id: createdUser._id }, key);
       ctx.response.body = {
         auth: true,

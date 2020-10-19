@@ -48,7 +48,7 @@ router
         const updatedOrder = await OrderController.getById(
           ctx.params.id,
         );
-
+        user.testMethod(() => console.log('hello'));
         ctx.cache.removeOrder(updatedOrder.clientId);
         ctx.cache.removeOrder(updatedOrder.curierId);
         ctx.response.body = { message: 'Order updated' };

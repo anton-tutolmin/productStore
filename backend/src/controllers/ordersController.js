@@ -1,6 +1,6 @@
 const OrderService = require('../sevices/orderService');
 const ProductService = require('../sevices/productService');
-const UserService = require('../sevices/userService');
+const { clientService } = require('../sevices/clientService');
 
 async function create(body, user) {
   const order = await OrderService.create(body, user);
@@ -22,7 +22,7 @@ async function getByUserId(userId) {
   const response = [];
 
   for (const order of orders) {
-    const user = await UserService.getById(order.clientId);
+    const user = await clientService.getById(order.clientId);
     const product = await ProductService.getById(order.productId);
 
     response.push({
@@ -51,7 +51,7 @@ async function getRequests() {
   const response = [];
 
   for (const order of orders) {
-    const user = await UserService.getById(order.clientId);
+    const user = await clientService.getById(order.clientId);
     const product = await ProductService.getById(order.productId);
 
     response.push({
