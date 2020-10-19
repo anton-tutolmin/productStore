@@ -13,6 +13,12 @@ const CurierSchema = new Schema({
   status: {
     type: String,
   },
+  phone: {
+    type: String,
+  },
+  balance: {
+    type: Number,
+  },
 });
 
 module.exports = model('curiers', CurierSchema);
