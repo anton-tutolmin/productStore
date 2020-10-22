@@ -1,50 +1,48 @@
 const Client = require('../models/Client');
-const { Types } = require('mongoose');
+const mongoose = require('mongoose');
 const errors = require('../errors/errors');
 
-async function create(body) {
-  const user = await Client.create({ ...body });
-  return user;
-}
+class ClientMongoResource {
+  constructor(clientSchema, Mongoose) {
+    this.clientSchema = clientSchema;
+    this.Mogoose = Mongoose;
+  }
 
-async function getAll() {
-  const users = await Client.find({});
-  return users;
-}
+  async create(body) {
+    return await this.clientSchema.create({ ...body });
+  }
 
-async function getById(id) {
-  validateId(id);
+  async getAll() {
+    return await this.clientSchema.find({});
+  }
 
-  const user = await Client.findOne({ _id: id });
-  return user;
-}
+  async getById(id) {
+    this.validateId(id);
+    return await this.clientSchema.findOne({ _id: id });
+  }
 
-async function getByUsername(username) {
-  const user = await Client.findOne({ username });
-  return user;
-}
+  async getByUsername(username) {
+    return await this.clientSchema.findOne({ username });
+  }
 
-async function updateById(id, params) {
-  validateId(id);
-  await Client.updateOne({ _id: id }, { ...params });
-}
+  async updateById(id, params) {
+    this.validateId(id);
+    await this.clientSchema.updateOne({ _id: id }, { ...params });
+  }
 
-async function deleteById(id) {
-  validateId(id);
-  await Client.deleteOne({ _id: id });
-}
+  async deleteById(id) {
+    this.validateId(id);
+    await this.clientSchema.deleteOne({ _id: id });
+  }
 
-function validateId(id) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error(errors.notCorrectId);
+  validateId(id) {
+    if (!this.Mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(errors.notCorrectId);
+    }
   }
 }
 
 module.exports = {
-  getAll,
-  getById,
-  getByUsername,
-  create,
-  updateById,
-  deleteById,
+  ClientMongoResource,
+  clientMongoResource: new ClientMongoResource(Client, mongoose),
 };

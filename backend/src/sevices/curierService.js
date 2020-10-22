@@ -1,6 +1,6 @@
 const { UserService } = require('./userService');
 const userValidator = require('./validatorService/user');
-const CurierResource = require('../resources/curierResource');
+const { curierMongoResource } = require('../resources/curierResource');
 const ratingResource = require('../resources/ratingResource');
 
 class CurierService extends UserService {
@@ -13,8 +13,7 @@ class CurierService extends UserService {
       if (param === 'status') params.type = body[param];
       if (param === 'balance') {
         const curier = await this.curierResource.getById(id);
-        params.balance =
-          curier.balance + Number.parseInt(body[param]);
+        params.balance = curier.balance + Number.parseInt(body[param]);
       }
     }
 
@@ -39,7 +38,7 @@ class CurierService extends UserService {
 module.exports = {
   CurierService,
   curierService: new CurierService(
-    CurierResource,
+    curierMongoResource,
     ratingResource,
     userValidator,
   ),

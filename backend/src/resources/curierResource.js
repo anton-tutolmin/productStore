@@ -1,50 +1,48 @@
 const Curier = require('../models/Curier');
-const { Types } = require('mongoose');
+const mongoose = require('mongoose');
 const errors = require('../errors/errors');
 
-async function create(body) {
-  const user = await Curier.create({ ...body });
-  return user;
-}
+class CurierMongoResource {
+  constructor(curierSchema, Mongoose) {
+    this.curierSchema = curierSchema;
+    this.Mongoose = Mongoose;
+  }
 
-async function getAll() {
-  const users = await Curier.find({});
-  return users;
-}
+  async create(body) {
+    return await this.curierSchema.create({ ...body });
+  }
 
-async function getById(id) {
-  validateId(id);
+  async getAll() {
+    return await this.curierSchema.find({});
+  }
 
-  const user = await Curier.findOne({ _id: id });
-  return user;
-}
+  async getById(id) {
+    this.validateId(id);
+    return await this.curierSchema.findOne({ _id: id });
+  }
 
-async function getByUsername(username) {
-  const user = await Curier.findOne({ username });
-  return user;
-}
+  async getByUsername(username) {
+    return await this.curierSchema.findOne({ username });
+  }
 
-async function updateById(id, params) {
-  validateId(id);
-  await Curier.updateOne({ _id: id }, { ...params });
-}
+  async updateById(id, params) {
+    this.validateId(id);
+    await this.curierSchema.updateOne({ _id: id }, { ...params });
+  }
 
-async function deleteById(id) {
-  validateId(id);
-  await Curier.deleteOne({ _id: id });
-}
+  async deleteById(id) {
+    this.validateId(id);
+    await this.curierSchema.deleteOne({ _id: id });
+  }
 
-function validateId(id) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error(errors.notCorrectId);
+  validateId(id) {
+    if (!this.Mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(errors.notCorrectId);
+    }
   }
 }
 
 module.exports = {
-  getAll,
-  getById,
-  getByUsername,
-  create,
-  updateById,
-  deleteById,
+  CurierMongoResource,
+  curierMongoResource: new CurierMongoResource(Curier, mongoose),
 };
