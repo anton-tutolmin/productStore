@@ -13,7 +13,6 @@ function validateCreateBody(body) {
   validatePassword(body.password);
   validateEmail(body.email);
   validatePhone(body.phone);
-  validateType(body.type);
 }
 
 function validateUpdateBody(params) {
@@ -21,7 +20,6 @@ function validateUpdateBody(params) {
     if (param === 'username') validateUsername(params[param]);
     if (param === 'email') validateEmail(params[param]);
     if (param === 'phone') validatePhone(params[param]);
-    if (param === 'type') validateType(params[param]);
     if (param === 'balance') validateBalance(params[param]);
   }
 }
@@ -56,12 +54,6 @@ function validateEmail(email) {
     !email.match(/\w{5,}@(gmail|yandex).(ru|com)/g)
   ) {
     throw new Error(errors.notCorrectEmail);
-  }
-}
-
-function validateType(type) {
-  if (!type || (type !== 1 && type !== 2)) {
-    throw new Error(errors.notCorrectType);
   }
 }
 

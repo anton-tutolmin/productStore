@@ -1,60 +1,57 @@
 const KoaRouter = require('koa-router');
-const UserController = require('../controllers/userController');
+const { clientController } = require('../controllers/clientController');
 const OrderController = require('../controllers/ordersController');
 const passport = require('../config/passport');
-const router = new KoaRouter();
-
 const isAllowed = require('./allow');
 
+const router = new KoaRouter();
+
 router
-  .get('/api/users', async (ctx, next) => {
+  .get('/api/clients', async (ctx, next) => {
     await passport.authenticate(
       'jwt',
       { session: false },
       async (err, user, msg) => {
         isAllowed(err, user, msg);
-        const users = await UserController.getAll();
+        const users = await clientController.getAll();
         ctx.response.body = { users };
       },
     )(ctx, next);
   })
 
-  .get('/api/users/:id', async (ctx, next) => {
+  .get('/api/clients/:id', async (ctx, next) => {
     await passport.authenticate(
       'jwt',
       { session: false },
       async (err, usr, msg) => {
         isAllowed(err, usr, msg, ctx.params.id);
-        const user = await UserController.getById(ctx.params.id);
+        const user = await clientController.getById(ctx.params.id);
         ctx.response.body = { user };
       },
     )(ctx, next);
   })
 
-  .put('/api/users/:id', async (ctx, next) => {
+  .put('/api/clients/:id', async (ctx, next) => {
     await passport.authenticate(
       'jwt',
       { session: false },
       async (err, user, msg) => {
         isAllowed(err, user, msg, ctx.params.id);
 
-        await UserController.updateById(
-          ctx.params.id,
-          ctx.request.body,
-        );
+        await clientController.updateById(ctx.params.id, ctx.request.body);
 
         ctx.response.body = { message: 'User updated' };
       },
     )(ctx, next);
   })
 
-  .delete('/api/users/:id', async (ctx, next) => {
+  .delete('/api/clients/:id', async (ctx, next) => {
     await passport.authenticate(
       'jwt',
       { session: false },
       async (err, user, msg) => {
         isAllowed(err, user, msg, ctx.params.id);
-        await UserController.deleteById(ctx.params.id);
+        await clientController.deleteById(ctx.params.id);
         await OrderController.deleteByClientId(ctx.params.id);
         ctx.response.body = { message: 'User deleted' };
       },

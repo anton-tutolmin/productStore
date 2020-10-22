@@ -1,6 +1,7 @@
 const { UserService } = require('./userService');
 const ClientResource = require('../resources/clientResource');
-const userValidator = require('./validatorService/user');
+const clientValidator = require('./validatorService/user');
+const ratingResource = require('../resources/ratingResource');
 
 class ClientService extends UserService {
   async updateById(id, body) {
@@ -35,5 +36,9 @@ class ClientService extends UserService {
 
 module.exports = {
   ClientService,
-  clientService: new ClientService(ClientResource, userValidator),
+  clientService: new ClientService(
+    ClientResource,
+    ratingResource,
+    clientValidator,
+  ),
 };
