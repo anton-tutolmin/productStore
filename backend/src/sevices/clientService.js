@@ -1,6 +1,6 @@
 const { UserService } = require('./userService');
 const { clientMongoResource } = require('../resources/clientResource');
-const clientValidator = require('./validatorService/user');
+const { userValidationService } = require('./userValidationService');
 const ratingResource = require('../resources/ratingResource');
 
 class ClientService extends UserService {
@@ -10,11 +10,7 @@ class ClientService extends UserService {
       if (param === 'username') params.username = body[param];
       if (param === 'email') params.email = body[param];
       if (param === 'phone') params.phone = body[param];
-      if (param === 'type') params.type = body[param];
-      if (param === 'balance') {
-        const client = await this.clientResource.getById(id);
-        params.balance = client.balance + body[param];
-      }
+      if (param === 'balance') params.balance = body.param;
     }
 
     this.validationService.validateUpdateBody(params);
@@ -39,6 +35,6 @@ module.exports = {
   clientService: new ClientService(
     clientMongoResource,
     ratingResource,
-    clientValidator,
+    userValidationService,
   ),
 };

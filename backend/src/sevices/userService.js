@@ -1,8 +1,10 @@
+const { UserDto } = require('../dto/userDto');
+
 class UserService {
-  constructor(userResource, ratingResource, validation) {
+  constructor(userResource, ratingResource, validationService) {
     this.userResource = userResource;
     this.ratingResource = ratingResource;
-    this.validation = validation;
+    this.validationService = validationService;
   }
 
   async create(body) {
@@ -14,20 +16,25 @@ class UserService {
       balance: 0,
     };
 
-    this.validation.validateCreateBody(createBody);
-    return await this.userResource.create(createBody);
+    this.validationService.validateCreateBody(createBody);
+
+    const createdUser = await this.userResource.create(createBody);
+    return new UserDto(createdUser);
   }
 
   async getById(userId) {
-    return await this.userResource.getById(userId);
+    const user = await this.userResource.getById(userId);
+    return user ? new UserDto(user) : undefined;
   }
 
   async getAll() {
-    return await this.userResource.getAll();
+    const users = await this.userResource.getAll();
+    return users.map((u) => new UserDto(u));
   }
 
   async getByUsername(username) {
-    return await this.userResource.getByUsername(username);
+    const user = await this.userResource.getByUsername(username);
+    return new UserDto(user);
   }
 
   async deleteById(userId) {

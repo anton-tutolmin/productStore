@@ -49,27 +49,23 @@ async function register(ctx, next) {
 }
 
 async function profile(ctx, next) {
-  await passport.authenticate(
-    'jwt',
-    { session: false },
-    (err, user, info) => {
-      if (err) {
-        throw new Error(errors.wrongAuthorizaed);
-      }
-      if (info !== undefined) {
-        ctx.response.body = { ...info };
-      } else {
-        ctx.response.body = {
-          id: user._id,
-          username: user.username,
-          email: user.email,
-          phone: user.phone,
-          balance: user.balance,
-          type: user.type,
-        };
-      }
-    },
-  )(ctx, next);
+  await passport.authenticate('jwt', { session: false }, (err, user, info) => {
+    if (err) {
+      throw new Error(errors.wrongAuthorizaed);
+    }
+    if (info !== undefined) {
+      ctx.response.body = { ...info };
+    } else {
+      ctx.response.body = {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        balance: user.balance,
+        type: user.type,
+      };
+    }
+  })(ctx, next);
 }
 
 module.exports = {

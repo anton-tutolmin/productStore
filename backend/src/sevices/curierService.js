@@ -1,5 +1,5 @@
 const { UserService } = require('./userService');
-const userValidator = require('./validatorService/user');
+const { userValidationService } = require('./userValidationService');
 const { curierMongoResource } = require('../resources/curierResource');
 const ratingResource = require('../resources/ratingResource');
 
@@ -40,6 +40,6 @@ module.exports = {
   curierService: new CurierService(
     curierMongoResource,
     ratingResource,
-    userValidator,
+    userValidationService,
   ),
 };
