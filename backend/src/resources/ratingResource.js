@@ -14,6 +14,14 @@ class RatingMongoResource {
   async remove(clientId, curierId) {
     return await this.ratingSchema.deleteOne({ clientId, curierId });
   }
+
+  async getByCurierId(curierId) {
+    return await this.ratingSchema.findAll({ curierId });
+  }
+
+  async getByClientId(clientId) {
+    return await this.ratingSchema.findAll({ clientId });
+  }
 }
 
 module.exports = {

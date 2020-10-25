@@ -24,7 +24,7 @@ class UserService {
 
   async getById(userId) {
     const user = await this.userResource.getById(userId);
-    return user ? new UserDto(user) : undefined;
+    return user ? new UserDto(user) : null;
   }
 
   async getAll() {

@@ -1,5 +1,6 @@
 const OrderResource = require('../resources/orderResource');
 const { clientService } = require('./clientService');
+const { curierService } = require('./curierService');
 const ProductService = require('./productService');
 const validator = require('./validatorService/order');
 const errors = require('../errors/errors');
@@ -12,8 +13,7 @@ async function create(body, user) {
 
   if (user.type === 2) throw new Error('Curier cant create order');
 
-  if (user.balance < product.coast)
-    throw new Error('Not enough money');
+  if (user.balance < product.coast) throw new Error('Not enough money');
 
   await clientService.reduceBalance(user._id, product.coast);
 
@@ -78,11 +78,7 @@ async function updateById(id, params, user) {
 
   isAllowed(order, user);
 
-  validator.validateUpdateBody(
-    params.status,
-    order.status,
-    user.type,
-  );
+  validator.validateUpdateBody(params.status, order.status, user.type);
 
   const updates = {
     done: done,

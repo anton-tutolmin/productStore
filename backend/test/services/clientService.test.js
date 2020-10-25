@@ -77,6 +77,6 @@ describe('Test client service', () => {
     await clientService.deleteById(client.id);
     const deleted = await clientService.getById(client.id);
 
-    expect(deleted).toBe(undefined);
+    expect(deleted).toBe(null);
   });
 });
