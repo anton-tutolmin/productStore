@@ -7,21 +7,6 @@ class UserService {
     this.validationService = validationService;
   }
 
-  async create(body) {
-    const createBody = {
-      username: body.username,
-      password: body.password,
-      email: body.email,
-      phone: body.phone,
-      balance: 0,
-    };
-
-    this.validationService.validateCreateBody(createBody);
-
-    const createdUser = await this.userResource.create(createBody);
-    return new UserDto(createdUser);
-  }
-
   async getById(userId) {
     const user = await this.userResource.getById(userId);
     return user ? new UserDto(user) : null;

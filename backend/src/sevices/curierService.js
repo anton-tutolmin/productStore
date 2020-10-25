@@ -15,7 +15,7 @@ class CurierService extends UserService {
       status: 'open',
     };
 
-    this.validationService.validateCreateBody(createBody);
+    this.validationService.validateCreateCurier(createBody);
 
     const createdCurier = await this.userResource.create(createBody);
     return new UserDto(createdCurier);

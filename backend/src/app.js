@@ -13,13 +13,7 @@ const Cache = require('./config/cache/cache');
 
 const cache = new Cache();
 
-const staticDir = path.resolve(
-  __dirname,
-  '..',
-  '..',
-  'frontend',
-  'public',
-);
+const staticDir = path.resolve(__dirname, '..', '..', 'frontend', 'public');
 
 const app = new Koa();
 

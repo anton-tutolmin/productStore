@@ -1,11 +1,19 @@
 const errors = require('../errors/errors');
 
 class UserValidationService {
-  validateCreateBody(body) {
+  validateCreateClient(body) {
     this.validateUsername(body.username);
     this.validatePassword(body.password);
     this.validateEmail(body.email);
     this.validatePhone(body.phone);
+  }
+
+  validateCreateCurier(body) {
+    this.validateUsername(body.username);
+    this.validatePassword(body.password);
+    this.validateEmail(body.email);
+    this.validatePhone(body.phone);
+    this.validateStatus(body.status);
   }
 
   validateUpdateBody(params) {
@@ -18,7 +26,7 @@ class UserValidationService {
   }
 
   validatePassword(password) {
-    if (!password || password.length === 0) {
+    if (!password || password.length < 1) {
       throw new Error(errors.notCorrectPassword);
     }
   }
@@ -53,6 +61,16 @@ class UserValidationService {
   validateBalance(balance) {
     if (!balance || typeof balance !== 'number' || balance < 0) {
       throw new Error(errors.notCorrectBalance);
+    }
+  }
+
+  validateStatus(status) {
+    if (
+      !status ||
+      typeof status !== 'string' ||
+      (status !== 'open' && status !== 'close')
+    ) {
+      throw new Error(errors.notCorrectStatus);
     }
   }
 }

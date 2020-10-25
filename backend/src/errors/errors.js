@@ -23,6 +23,7 @@ const notAllowedAdress = 'Not allowed address';
 const notCurier = 'Must be curier';
 const notCorrectId = 'Not valid id';
 const notCorrectOrderedCount = 'Not valid ordered counter';
+const notCorrectStatus = 'Status is not correct';
 
 module.exports = {
   notAllowedOrderStatus,
@@ -49,4 +50,5 @@ module.exports = {
   notCurier,
   notCorrectId,
   notCorrectOrderedCount,
+  notCorrectStatus,
 };
