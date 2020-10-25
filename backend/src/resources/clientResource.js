@@ -5,7 +5,7 @@ const errors = require('../errors/errors');
 class ClientMongoResource {
   constructor(clientSchema, Mongoose) {
     this.clientSchema = clientSchema;
-    this.Mogoose = Mongoose;
+    this.Mongoose = Mongoose;
   }
 
   async create(body) {
