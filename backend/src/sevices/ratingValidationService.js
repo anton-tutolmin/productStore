@@ -1,11 +1,9 @@
-const { clientService } = require('./clientService');
-const { curierService } = require('./curierService');
+const { userCheckerService } = require('./userCheckerService');
 const errors = require('../errors/errors');
 
 class RatingValidationService {
-  constructor(clientService, curierService) {
-    this.clientService = clientService;
-    this.curierService = curierService;
+  constructor(userCheckerService) {
+    this.userCheckerService = userCheckerService;
   }
 
   async validateCreating(clientId, curierId, rating) {
@@ -24,7 +22,7 @@ class RatingValidationService {
       throw new Error(errors.notCorrectClientId);
     }
 
-    const client = await this.clientService.checkIfExist(clientId);
+    const client = await this.userCheckerService.checkIfClientExists(clientId);
 
     if (!client) {
       throw new Error(errors.noSuchClient);
@@ -36,7 +34,7 @@ class RatingValidationService {
       throw new Error(errors.notCorrectCurierId);
     }
 
-    const curier = await this.curierService.checkIfExist(curierId);
+    const curier = await this.userCheckerService.checkIfCurierExists(curierId);
 
     if (!curier) {
       throw new Error(errors.noSuchCurier);
@@ -51,8 +49,6 @@ class RatingValidationService {
 }
 
 module.exports = {
-  ratingValidationService: new RatingValidationService(
-    clientService,
-    curierService,
-  ),
+  RatingValidationService,
+  ratingValidationService: new RatingValidationService(userCheckerService),
 };

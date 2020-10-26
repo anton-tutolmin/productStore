@@ -3,9 +3,11 @@ const { Schema, model } = require('mongoose');
 const CurierSchema = new Schema({
   username: {
     type: String,
+    unique: true,
   },
   email: {
     type: String,
+    unique: true,
   },
   password: {
     type: String,
@@ -14,6 +16,7 @@ const CurierSchema = new Schema({
     type: String,
   },
   phone: {
+    unique: true,
     type: String,
   },
   balance: {
