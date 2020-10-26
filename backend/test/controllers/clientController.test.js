@@ -73,9 +73,13 @@ describe('Test clientController:', () => {
       request: {},
       response: {},
     };
-    await clientController.deleteById(ctx, () => {});
-    const deleted = await clientController.getById(ctx, () => {});
 
-    expect(deleted).toBe(undefined);
+    await clientController.deleteById(ctx, () => {});
+
+    expect(ctx.response.body.message).toBe('User deleted');
+
+    await clientController.getById(ctx, () => {});
+
+    expect(ctx.response.body.client).toBe(undefined);
   });
 });

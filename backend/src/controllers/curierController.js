@@ -5,24 +5,29 @@ class CurierController {
     this.curierService = curierService;
   }
 
-  async create(body) {
-    return await this.curierService.create(body);
+  async create(ctx, next) {
+    const user = await this.curierService.create(ctx.request.body);
+    ctx.response.body = { user };
   }
 
-  async getAll() {
-    return await this.curierService.getAll();
+  async getAll(ctx, next) {
+    const curiers = await this.curierService.getAll();
+    ctx.response.body = { curiers };
   }
 
-  async getById(id) {
-    return await this.curierService.getById(id);
+  async getById(ctx, next) {
+    const curier = await this.curierService.getById(ctx.params.id);
+    ctx.response.body = { curier };
   }
 
-  async updateById(id, params) {
-    await this.curierService.updateById(id, params);
+  async updateById(ctx, next) {
+    await this.curierService.updateById(ctx.params.id, ctx.request.body);
+    ctx.response.body = { message: 'User updated' };
   }
 
-  async deleteById(id) {
-    await this.curierService.deleteById(id);
+  async deleteById(ctx, next) {
+    await this.curierService.deleteById(ctx.params.id);
+    ctx.response.body = { message: 'User deleted' };
   }
 }
 

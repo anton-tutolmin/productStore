@@ -12,41 +12,77 @@ let curier = {
 
 describe('Test curier controller', () => {
   it('create curier', async () => {
-    const createdCurier = await curierController.create(curier);
+    const ctx = {
+      request: {
+        body: curier,
+      },
+      response: {},
+    };
 
-    expect(createdCurier.username).toBe('anton');
-    expect(createdCurier.email).toBe('anton@test.com');
-    expect(createdCurier.phone).toBe('11111111111');
-    expect(createdCurier.balance).toBe(0);
-    expect(createdCurier.status).toBe('open');
+    await curierController.create(ctx, () => {});
 
-    curier = createdCurier;
+    expect(ctx.response.body.user.username).toBe('anton');
+    expect(ctx.response.body.user.email).toBe('anton@test.com');
+    expect(ctx.response.body.user.phone).toBe('11111111111');
+    expect(ctx.response.body.user.balance).toBe(0);
+    expect(ctx.response.body.user.status).toBe('open');
+
+    curier = ctx.response.body.user;
   });
 
   it('get curier by id', async () => {
-    const returnedCurier = await curierController.getById(curier._id);
+    const ctx = {
+      params: { id: curier._id },
+      request: {},
+      response: {},
+    };
 
-    expect(returnedCurier).toEqual(curier);
+    await curierController.getById(ctx, () => {});
+
+    expect(ctx.response.body.curier).toEqual(curier);
   });
 
   it('get all curier', async () => {
-    const returnedCuriers = await curierController.getAll();
+    const ctx = {
+      request: {},
+      response: {},
+    };
 
-    expect(returnedCuriers.length).toBe(1);
-    expect(returnedCuriers[0]).toEqual(curier);
+    await curierController.getAll(ctx, () => {});
+
+    expect(ctx.response.body.curiers.length).toBe(1);
+    expect(ctx.response.body.curiers[0]).toEqual(curier);
   });
 
   it('update curier by id', async () => {
-    await curierController.updateById(curier._id, { username: 'pavel' });
-    const updatedCurier = await curierController.getById(curier._id);
+    const ctx = {
+      params: { id: curier._id },
+      request: { body: { username: 'pavel' } },
+      response: {},
+    };
 
-    expect(updatedCurier.username).toBe('pavel');
+    await curierController.updateById(ctx, () => {});
+
+    expect(ctx.response.body.message).toBe('User updated');
+
+    await curierController.getById(ctx, () => {});
+
+    expect(ctx.response.body.curier.username).toBe('pavel');
   });
 
   it('delete curier by id', async () => {
-    await curierController.deleteById(curier._id);
-    const deleted = await curierController.getById(curier._id);
+    const ctx = {
+      params: { id: curier._id },
+      request: {},
+      response: {},
+    };
 
-    expect(deleted).toBe(undefined);
+    await curierController.deleteById(ctx, () => {});
+
+    expect(ctx.response.body.message).toBe('User deleted');
+
+    await curierController.getById(ctx, () => {});
+
+    expect(ctx.response.body.curier).toBe(undefined);
   });
 });
