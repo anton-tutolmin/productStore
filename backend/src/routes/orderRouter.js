@@ -39,15 +39,9 @@ router
 
         if (msg) throw new Error(msg.message);
 
-        await OrderController.updateById(
-          ctx.params.id,
-          ctx.request.body,
-          user,
-        );
+        await OrderController.updateById(ctx.params.id, ctx.request.body, user);
 
-        const updatedOrder = await OrderController.getById(
-          ctx.params.id,
-        );
+        const updatedOrder = await OrderController.getById(ctx.params.id);
         user.testMethod(() => console.log('hello'));
         ctx.cache.removeOrder(updatedOrder.clientId);
         ctx.cache.removeOrder(updatedOrder.curierId);

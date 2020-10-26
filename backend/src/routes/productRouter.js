@@ -44,10 +44,7 @@ router
       async (err, user, msg) => {
         isAllowed(err, user, msg);
 
-        await ProductController.updateById(
-          ctx.params.id,
-          ctx.request.body,
-        );
+        await ProductController.updateById(ctx.params.id, ctx.request.body);
 
         ctx.cache.removeProduct();
         ctx.response.body = { message: 'Product updated' };

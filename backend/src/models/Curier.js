@@ -4,10 +4,12 @@ const CurierSchema = new Schema({
   username: {
     type: String,
     unique: true,
+    index: true,
   },
   email: {
     type: String,
     unique: true,
+    index: true,
   },
   password: {
     type: String,
@@ -16,8 +18,9 @@ const CurierSchema = new Schema({
     type: String,
   },
   phone: {
-    unique: true,
     type: String,
+    unique: true,
+    index: true,
   },
   balance: {
     type: Number,

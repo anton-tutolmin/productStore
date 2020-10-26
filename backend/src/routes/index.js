@@ -5,6 +5,7 @@ const CurierRouter = require('./curierRouter');
 const AuthRouter = require('./authRouter');
 const ProductRouter = require('./productRouter');
 const OrderRouter = require('./orderRouter');
+const RatingRouter = require('./ratingRouter');
 
 const router = new KoaRouter();
 
@@ -14,6 +15,7 @@ router.use(
   AuthRouter.routes(),
   ProductRouter.routes(),
   OrderRouter.routes(),
+  RatingRouter.routes(),
 );
 
 module.exports = router;
