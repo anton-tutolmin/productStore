@@ -13,8 +13,7 @@ router
       { session: false },
       async (err, user, msg) => {
         isAllowed(err, user, msg);
-        const users = await clientController.getAll();
-        ctx.response.body = { users };
+        await clientController.getAll();
       },
     )(ctx, next);
   })
@@ -25,8 +24,7 @@ router
       { session: false },
       async (err, usr, msg) => {
         isAllowed(err, usr, msg, ctx.params.id);
-        const user = await clientController.getById(ctx.params.id);
-        ctx.response.body = { user };
+        await clientController.getById(ctx.params.id);
       },
     )(ctx, next);
   })
@@ -39,8 +37,6 @@ router
         isAllowed(err, user, msg, ctx.params.id);
 
         await clientController.updateById(ctx.params.id, ctx.request.body);
-
-        ctx.response.body = { message: 'User updated' };
       },
     )(ctx, next);
   })
@@ -53,7 +49,6 @@ router
         isAllowed(err, user, msg, ctx.params.id);
         await clientController.deleteById(ctx.params.id);
         await OrderController.deleteByClientId(ctx.params.id);
-        ctx.response.body = { message: 'User deleted' };
       },
     )(ctx, next);
   });

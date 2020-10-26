@@ -5,24 +5,29 @@ class ClientController {
     this.clientService = clientService;
   }
 
-  async create(body) {
-    return await this.clientService.create(body);
+  async create(ctx, next) {
+    const client = await this.clientService.create(ctx.request.body);
+    ctx.response.body = { client };
   }
 
-  async getAll() {
-    return await this.clientService.getAll();
+  async getAll(ctx, next) {
+    const clients = await this.clientService.getAll();
+    ctx.response.body = { clients };
   }
 
-  async getById(id) {
-    return await this.clientService.getById(id);
+  async getById(ctx, next) {
+    const client = await this.clientService.getById(ctx.params.id);
+    ctx.response.body = { client };
   }
 
-  async updateById(id, params) {
-    await this.clientService.updateById(id, params);
+  async updateById(ctx, next) {
+    await this.clientService.updateById(ctx.params.id, ctx.request.body);
+    ctx.response.body = { message: 'User updated' };
   }
 
-  async deleteById(id) {
-    await this.clientService.deleteById(id);
+  async deleteById(ctx, next) {
+    await this.clientService.deleteById(ctx.params.id);
+    ctx.response.body = { message: 'User deleted' };
   }
 }
 
