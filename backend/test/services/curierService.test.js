@@ -1,13 +1,11 @@
 const { CurierService } = require('../../src/sevices/curierService');
 const { mockCurierResource } = require('../mocks/mockCurierResource');
-const { mockRatingResource } = require('../mocks/mockRatingResource');
 const {
   mockUserValidationService,
 } = require('../mocks/mockUserValidationService');
 
 const curierService = new CurierService(
   mockCurierResource,
-  mockRatingResource,
   mockUserValidationService,
 );
 

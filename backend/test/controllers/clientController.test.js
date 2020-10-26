@@ -19,11 +19,11 @@ describe('Test clientController:', () => {
 
     await clientController.create(ctx, () => {});
 
-    expect(ctx.response.body.client.username).toBe('anton');
-    expect(ctx.response.body.client.email).toBe('anton@test.com');
-    expect(ctx.response.body.client.phone).toBe('11111111111');
+    expect(ctx.response.body.user.username).toBe('anton');
+    expect(ctx.response.body.user.email).toBe('anton@test.com');
+    expect(ctx.response.body.user.phone).toBe('11111111111');
 
-    client = ctx.response.body.client;
+    client = ctx.response.body.user;
   });
 
   it('get client by id', async () => {

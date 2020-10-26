@@ -8,8 +8,8 @@ class ClientMongoResource {
     this.Mongoose = Mongoose;
   }
 
-  async create(body) {
-    return await this.clientSchema.create({ ...body });
+  async create(client) {
+    return await this.clientSchema.create(client);
   }
 
   async getAll() {

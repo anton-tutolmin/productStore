@@ -1,5 +1,6 @@
 const { ratingMongoResource } = require('../resources/ratingResource');
 const { ratingValidationService } = require('./ratingValidationService');
+const { Rating } = require('../entities/rating');
 
 class RatingService {
   constructor(ratingResource, validationService) {
@@ -8,8 +9,9 @@ class RatingService {
   }
 
   async addRating(requestBody) {
-    await this.validationService.validateCreating(requestBody);
-    return await this.ratingResource.add(requestBody);
+    const rating = new Rating(requestBody);
+    await this.validationService.validateCreating(rating);
+    return await this.ratingResource.add(rating);
   }
 
   async removeRating(requestBody) {

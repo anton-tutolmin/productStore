@@ -1,13 +1,11 @@
 const { ClientService } = require('../../src/sevices/clientService');
 const { mockClientResource } = require('../mocks/mockClientResource');
-const { mockRatingResource } = require('../mocks/mockRatingResource');
 const {
   mockUserValidationService,
 } = require('../mocks/mockUserValidationService');
 
 const clientService = new ClientService(
   mockClientResource,
-  mockRatingResource,
   mockUserValidationService,
 );
 

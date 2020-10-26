@@ -2,30 +2,25 @@ const { UserService } = require('./userService');
 const { clientMongoResource } = require('../resources/clientResource');
 const { userValidationService } = require('./userValidationService');
 const { UserDto } = require('../dto/userDto');
+const { Client } = require('../entities/client');
 
 class ClientService extends UserService {
-  async create(body) {
-    const createBody = {
-      username: body.username,
-      password: body.password,
-      email: body.email,
-      phone: body.phone,
-      balance: 0,
-    };
+  async create(requestBody) {
+    const client = new Client(requestBody);
 
-    this.validationService.validateCreateClient(createBody);
+    this.validationService.validateCreateClient(client);
 
-    const createdClients = await this.userResource.create(createBody);
-    return new UserDto(createdClients);
+    const createdClient = await this.userResource.create(client);
+    return new UserDto(createdClient);
   }
 
-  async updateById(id, body) {
+  async updateById(id, requestBody) {
     const params = {};
-    for (const param of Object.keys(body)) {
-      if (param === 'username') params.username = body[param];
-      if (param === 'email') params.email = body[param];
-      if (param === 'phone') params.phone = body[param];
-      if (param === 'balance') params.balance = body.param;
+    for (const param of Object.keys(requestBody)) {
+      if (param === 'username') params.username = requestBody[param];
+      if (param === 'email') params.email = requestBody[param];
+      if (param === 'phone') params.phone = requestBody[param];
+      if (param === 'balance') params.balance = requestBody[param];
     }
 
     this.validationService.validateUpdateBody(params);

@@ -7,8 +7,8 @@ class RatingMongoResource {
     this.Mongoose = Mongoose;
   }
 
-  async add({ clientId, curierId, rating }) {
-    return await this.ratingSchema.create({ clientId, curierId, rating });
+  async add(rating) {
+    return await this.ratingSchema.create(rating);
   }
 
   async remove({ clientId, curierId }) {

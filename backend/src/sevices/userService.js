@@ -24,10 +24,6 @@ class UserService {
   async deleteById(userId) {
     await this.userResource.deleteById(userId);
   }
-
-  async checkIfExist(userId) {
-    return await this.userResource.isExist(userId);
-  }
 }
 
 module.exports = {

@@ -6,8 +6,8 @@ class ClientController {
   }
 
   async create(ctx, next) {
-    const client = await this.clientService.create(ctx.request.body);
-    ctx.response.body = { client };
+    const user = await this.clientService.create(ctx.request.body);
+    ctx.response.body = { user };
   }
 
   async getAll(ctx, next) {

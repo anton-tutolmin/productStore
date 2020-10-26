@@ -2,21 +2,15 @@ const { UserService } = require('./userService');
 const { userValidationService } = require('./userValidationService');
 const { curierMongoResource } = require('../resources/curierResource');
 const { UserDto } = require('../dto/userDto');
+const { Curier } = require('../entities/curier');
 
 class CurierService extends UserService {
-  async create(body) {
-    const createBody = {
-      username: body.username,
-      password: body.password,
-      email: body.email,
-      phone: body.phone,
-      balance: 0,
-      status: 'open',
-    };
+  async create(requestBody) {
+    const curier = new Curier(requestBody);
 
-    this.validationService.validateCreateCurier(createBody);
+    this.validationService.validateCreateCurier(curier);
 
-    const createdCurier = await this.userResource.create(createBody);
+    const createdCurier = await this.userResource.create(curier);
     return new UserDto(createdCurier);
   }
 

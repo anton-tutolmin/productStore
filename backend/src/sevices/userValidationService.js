@@ -1,19 +1,21 @@
 const errors = require('../errors/errors');
 
 class UserValidationService {
-  validateCreateClient(body) {
-    this.validateUsername(body.username);
-    this.validatePassword(body.password);
-    this.validateEmail(body.email);
-    this.validatePhone(body.phone);
+  validateCreateClient({ username, password, email, phone, balance }) {
+    this.validateUsername(username);
+    this.validatePassword(password);
+    this.validateEmail(email);
+    this.validatePhone(phone);
+    this.validateBalance(balance);
   }
 
-  validateCreateCurier(body) {
-    this.validateUsername(body.username);
-    this.validatePassword(body.password);
-    this.validateEmail(body.email);
-    this.validatePhone(body.phone);
-    this.validateStatus(body.status);
+  validateCreateCurier({ username, password, email, phone, balance, status }) {
+    this.validateUsername(username);
+    this.validatePassword(password);
+    this.validateEmail(email);
+    this.validatePhone(phone);
+    this.validateStatus(status);
+    this.validateBalance(balance);
   }
 
   validateUpdateBody(params) {
@@ -22,6 +24,7 @@ class UserValidationService {
       if (param === 'email') this.validateEmail(params[param]);
       if (param === 'phone') this.validatePhone(params[param]);
       if (param === 'balance') this.validateBalance(params[param]);
+      if (param === 'status') this.validateStatus(params[param]);
     }
   }
 

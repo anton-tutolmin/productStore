@@ -8,8 +8,8 @@ class CurierMongoResource {
     this.Mongoose = Mongoose;
   }
 
-  async create(body) {
-    return await this.curierSchema.create({ ...body });
+  async create(curier) {
+    return await this.curierSchema.create(curier);
   }
 
   async getAll() {
