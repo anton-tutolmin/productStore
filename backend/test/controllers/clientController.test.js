@@ -12,38 +12,69 @@ let client = {
 
 describe('Test clientController:', () => {
   it('create client', async () => {
-    const createdClient = await clientController.create(client);
+    const ctx = {
+      request: { body: client },
+      response: {},
+    };
 
-    expect(client.username).toBe('anton');
-    expect(client.email).toBe('anton@test.com');
-    expect(client.phone).toBe('11111111111');
+    await clientController.create(ctx, () => {});
 
-    client = createdClient;
+    expect(ctx.response.body.client.username).toBe('anton');
+    expect(ctx.response.body.client.email).toBe('anton@test.com');
+    expect(ctx.response.body.client.phone).toBe('11111111111');
+
+    client = ctx.response.body.client;
   });
 
   it('get client by id', async () => {
-    const returnedClient = await clientController.getById(client._id);
+    const ctx = {
+      params: { id: client._id },
+      response: {},
+    };
 
-    expect(returnedClient).toEqual(client);
+    await clientController.getById(ctx, () => {});
+
+    expect(ctx.response.body.client).toEqual(client);
   });
 
   it('get all clients', async () => {
-    const returnedClients = await clientController.getAll();
+    const ctx = {
+      request: {},
+      response: {},
+    };
 
-    expect(returnedClients.length).toBe(1);
-    expect(returnedClients[0]).toEqual(client);
+    await clientController.getAll(ctx, () => {});
+
+    expect(ctx.response.body.clients.length).toBe(1);
+    expect(ctx.response.body.clients[0]).toEqual(client);
   });
 
   it('update client by id', async () => {
-    await clientController.updateById(client._id, { username: 'pavel' });
-    const updatedClient = await clientController.getById(client._id);
+    const ctx = {
+      params: {
+        id: client._id,
+      },
+      request: { body: { username: 'pavel' } },
+      response: {},
+    };
 
-    expect(updatedClient.username).toBe('pavel');
+    await clientController.updateById(ctx, () => {});
+
+    expect(ctx.response.body.message).toBe('User updated');
+
+    await clientController.getById(ctx);
+
+    expect(ctx.response.body.client.username).toBe('pavel');
   });
 
   it('delete by id', async () => {
-    await clientController.deleteById(client._id);
-    const deleted = await clientController.getById(client._id);
+    const ctx = {
+      params: { id: client._id },
+      request: {},
+      response: {},
+    };
+    await clientController.deleteById(ctx, () => {});
+    const deleted = await clientController.getById(ctx, () => {});
 
     expect(deleted).toBe(undefined);
   });

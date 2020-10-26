@@ -1,5 +1,7 @@
 class MockUserValidationService {
-  validateCreateBody(body) {}
+  validateCreateClient(body) {}
+
+  validateCreateCurier(body) {}
 
   validateUpdateBody(params) {}
 

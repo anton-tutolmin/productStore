@@ -13,7 +13,7 @@ class ClientService extends UserService {
       phone: body.phone,
       balance: 0,
     };
-
+    console.log(this.validationService);
     this.validationService.validateCreateClient(createBody);
 
     const createdClients = await this.userResource.create(createBody);
