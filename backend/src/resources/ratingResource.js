@@ -7,11 +7,11 @@ class RatingMongoResource {
     this.Mongoose = Mongoose;
   }
 
-  async add(clientId, curierId, rating) {
+  async add({ clientId, curierId, rating }) {
     return await this.ratingSchema.create({ clientId, curierId, rating });
   }
 
-  async remove(clientId, curierId) {
+  async remove({ clientId, curierId }) {
     return await this.ratingSchema.deleteOne({ clientId, curierId });
   }
 
@@ -21,6 +21,10 @@ class RatingMongoResource {
 
   async getByClientId(clientId) {
     return await this.ratingSchema.findAll({ clientId });
+  }
+
+  async isExist(clientId, curierId) {
+    return await this.ratingSchema.exists({ clientId, curierId });
   }
 }
 

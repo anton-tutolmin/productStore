@@ -7,14 +7,14 @@ class RatingService {
     this.validationService = validationService;
   }
 
-  async addRating(clientId, curierId, rating) {
-    await this.validationService.validateCreating(clientId, curierId, rating);
-    return await this.ratingResource.add(clientId, curierId, rating);
+  async addRating(requestBody) {
+    await this.validationService.validateCreating(requestBody);
+    return await this.ratingResource.add(requestBody);
   }
 
-  async removeRating(clientId, curierId) {
-    await this.validationService.validateRemoving(clientId, curierId);
-    return await this.ratingResource.remove(clientId, curierId);
+  async removeRating(requestBody) {
+    await this.validationService.validateRemoving(requestBody);
+    return await this.ratingResource.remove(requestBody);
   }
 
   async getRatingsByClientId(clientId) {

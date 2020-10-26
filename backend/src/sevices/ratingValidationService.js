@@ -6,13 +6,13 @@ class RatingValidationService {
     this.userCheckerService = userCheckerService;
   }
 
-  async validateCreating(clientId, curierId, rating) {
+  async validateCreating({ clientId, curierId, rating }) {
     await this.validateClientId(clientId);
     await this.validateCurierId(curierId);
     await this.validateRating(rating);
   }
 
-  async validateRemoving(clientId, curierId) {
+  async validateRemoving({ clientId, curierId }) {
     await this.validateClientId(clientId);
     await this.validateCurierId(curierId);
   }

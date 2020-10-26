@@ -1,17 +1,27 @@
 const { ratingService } = require('../sevices/ratingService');
+const { ratingCheckerService } = require('../sevices/ratingCheckerService');
 
 class RatingController {
-  constructor(ratingService) {
+  constructor(ratingService, ratingCheckerService) {
     this.ratingService = ratingService;
+    this.ratingCheckerService = ratingCheckerService;
   }
 
   async addRating(ctx, next) {
-    await this.ratingService.addRating(...ctx.request.body);
-    ctx.response.body = { message: 'Rating is added' };
+    const isExist = await this.ratingCheckerService.checkIfExist(
+      ctx.request.body,
+    );
+
+    if (isExist) {
+      ctx.response.body = { message: 'Rating already added' };
+    } else {
+      await this.ratingService.addRating(ctx.request.body);
+      ctx.response.body = { message: 'Rating is added' };
+    }
   }
 
   async removeRating(ctx, next) {
-    await this.ratingService.removeRating(...ctx.request.body);
+    await this.ratingService.removeRating(ctx.request.body);
     ctx.response.body = { message: 'Rating is removed' };
   }
 
@@ -37,5 +47,5 @@ class RatingController {
 
 module.exports = {
   RatingController,
-  ratingController: new RatingController(ratingService),
+  ratingController: new RatingController(ratingService, ratingCheckerService),
 };
