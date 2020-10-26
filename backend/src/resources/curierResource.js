@@ -35,6 +35,11 @@ class CurierMongoResource {
     await this.curierSchema.deleteOne({ _id: id });
   }
 
+  async isExist(curierId) {
+    this.validateId(curierId);
+    return await this.curierSchema.exists({ _id: curierId });
+  }
+
   validateId(id) {
     if (!this.Mongoose.Types.ObjectId.isValid(id)) {
       throw new Error(errors.notCorrectId);

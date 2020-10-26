@@ -24,6 +24,11 @@ const notCurier = 'Must be curier';
 const notCorrectId = 'Not valid id';
 const notCorrectOrderedCount = 'Not valid ordered counter';
 const notCorrectStatus = 'Status is not correct';
+const notCorrectRating = 'Rating is not correct';
+const notCorrectCurierId = 'Curier id is not correct';
+const notCorrectClientId = 'Client id is not correct';
+const noSuchCurier = 'There is no curier with such id';
+const noSuchClient = 'There is no client with such id';
 
 module.exports = {
   notAllowedOrderStatus,
@@ -51,4 +56,9 @@ module.exports = {
   notCorrectId,
   notCorrectOrderedCount,
   notCorrectStatus,
+  notCorrectRating,
+  notCorrectCurierId,
+  notCorrectClientId,
+  noSuchClient,
+  noSuchCurier,
 };

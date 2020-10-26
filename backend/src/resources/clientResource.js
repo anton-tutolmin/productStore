@@ -35,6 +35,11 @@ class ClientMongoResource {
     await this.clientSchema.deleteOne({ _id: id });
   }
 
+  async isExist(clientId) {
+    this.validateId(clientId);
+    return await this.clientSchema.exists({ _id: clientId });
+  }
+
   validateId(id) {
     if (!this.Mongoose.Types.ObjectId.isValid(id)) {
       throw new Error(errors.notCorrectId);
