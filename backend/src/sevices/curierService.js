@@ -1,7 +1,6 @@
 const { UserService } = require('./userService');
 const { userValidationService } = require('./userValidationService');
 const { curierMongoResource } = require('../resources/curierResource');
-const { ratingMongoResource } = require('../resources/ratingResource');
 const { UserDto } = require('../dto/userDto');
 
 class CurierService extends UserService {
@@ -35,13 +34,6 @@ class CurierService extends UserService {
     await this.userResource.updateById(id, params);
   }
 
-  async getRating(curierId) {
-    const ratings = await this.ratingResource.getByCurierId(curierId);
-    return ratings.length > 0
-      ? ratings.reduce((a, c) => a + c.rating, 0) / ratings.length
-      : 0;
-  }
-
   async addBalance(curierId, balance) {
     const curier = await this.userResource.getById(curierId);
     const newBalance = curier.balance + balance;
@@ -53,9 +45,5 @@ class CurierService extends UserService {
 
 module.exports = {
   CurierService,
-  curierService: new CurierService(
-    curierMongoResource,
-    ratingMongoResource,
-    userValidationService,
-  ),
+  curierService: new CurierService(curierMongoResource, userValidationService),
 };

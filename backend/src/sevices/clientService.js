@@ -1,7 +1,6 @@
 const { UserService } = require('./userService');
 const { clientMongoResource } = require('../resources/clientResource');
 const { userValidationService } = require('./userValidationService');
-const { ratingMongoResource } = require('../resources/ratingResource');
 const { UserDto } = require('../dto/userDto');
 
 class ClientService extends UserService {
@@ -48,9 +47,5 @@ class ClientService extends UserService {
 
 module.exports = {
   ClientService,
-  clientService: new ClientService(
-    clientMongoResource,
-    ratingMongoResource,
-    userValidationService,
-  ),
+  clientService: new ClientService(clientMongoResource, userValidationService),
 };

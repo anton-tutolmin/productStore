@@ -9,7 +9,7 @@ const passport = require('koa-passport');
 
 const router = require('./routes');
 
-const Cache = require('./config/cache/cache');
+const Cache = require('./cache/cache');
 
 const cache = new Cache();
 

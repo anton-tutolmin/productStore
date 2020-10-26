@@ -1,9 +1,8 @@
 const { UserDto } = require('../dto/userDto');
 
 class UserService {
-  constructor(userResource, ratingResource, validationService) {
+  constructor(userResource, validationService) {
     this.userResource = userResource;
-    this.ratingResource = ratingResource;
     this.validationService = validationService;
   }
 
