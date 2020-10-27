@@ -12,15 +12,13 @@ class MockUserSchema {
   }
 
   find(params) {
-    let clients = [];
+    const clients = [];
 
-    for (const clinet of this.clients.values()) {
-      clients.push(clinet);
+    for (const client of this.clients.values()) {
+      clients.push(client);
     }
 
-    clients = clients.filter((c) => this.isCompatible(c, params));
-
-    return clients;
+    return clients.filter((c) => this.isCompatible(c, params));
   }
 
   findOne(params) {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const errors = require('../errors/errors');
 const Rating = require('../models/Rating');
 
 class RatingMongoResource {
@@ -7,24 +8,38 @@ class RatingMongoResource {
     this.Mongoose = Mongoose;
   }
 
-  async add(rating) {
-    return await this.ratingSchema.create(rating);
+  async add({ clientId, curierId, rating }) {
+    this.validateId(clientId);
+    this.validateId(curierId);
+    return await this.ratingSchema.create({ clientId, curierId, rating });
   }
 
   async getByCurierId(curierId) {
+    this.validateId(curierId);
     return await this.ratingSchema.findAll({ curierId });
   }
 
   async getByClientId(clientId) {
+    this.validateId(clientId);
     return await this.ratingSchema.findAll({ clientId });
   }
 
-  async isExist(clientId, curierId) {
+  async isExist({ clientId, curierId }) {
+    this.validateId(clientId);
+    this.validateId(curierId);
     return await this.ratingSchema.exists({ clientId, curierId });
   }
 
   async remove({ clientId, curierId }) {
+    this.validateId(clientId);
+    this.validateId(curierId);
     return await this.ratingSchema.deleteOne({ clientId, curierId });
+  }
+
+  validateId(id) {
+    if (!this.Mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(errors.notCorrectId);
+    }
   }
 }
 

@@ -6,7 +6,7 @@ class RatingCheckerService {
   }
 
   async checkIfExist({ clientId, curierId }) {
-    return await this.ratingResource.isExist(clientId, curierId);
+    return await this.ratingResource.isExist({ clientId, curierId });
   }
 }
 
