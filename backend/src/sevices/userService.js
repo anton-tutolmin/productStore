@@ -1,9 +1,10 @@
 const { UserDto } = require('../dto/userDto');
 
 class UserService {
-  constructor(userResource, validationService) {
+  constructor(userResource, validationService, hashService) {
     this.userResource = userResource;
     this.validationService = validationService;
+    this.hashService = hashService;
   }
 
   async getById(userId) {

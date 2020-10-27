@@ -1,6 +1,7 @@
 const { UserService } = require('./userService');
 const { clientMongoResource } = require('../resources/clientResource');
 const { userValidationService } = require('./userValidationService');
+const { hashPasswordService } = require('./hashPasswordService');
 const { UserDto } = require('../dto/userDto');
 const { Client } = require('../entities/client');
 
@@ -9,6 +10,8 @@ class ClientService extends UserService {
     const client = new Client(requestBody);
 
     this.validationService.validateCreateClient(client);
+
+    client.password = await this.hashService.hashPassword(client.password);
 
     const createdClient = await this.userResource.create(client);
     return new UserDto(createdClient);
@@ -42,5 +45,9 @@ class ClientService extends UserService {
 
 module.exports = {
   ClientService,
-  clientService: new ClientService(clientMongoResource, userValidationService),
+  clientService: new ClientService(
+    clientMongoResource,
+    userValidationService,
+    hashPasswordService,
+  ),
 };

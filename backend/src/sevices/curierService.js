@@ -1,6 +1,7 @@
 const { UserService } = require('./userService');
 const { userValidationService } = require('./userValidationService');
 const { curierMongoResource } = require('../resources/curierResource');
+const { hashPasswordService } = require('./hashPasswordService');
 const { UserDto } = require('../dto/userDto');
 const { Curier } = require('../entities/curier');
 
@@ -9,6 +10,8 @@ class CurierService extends UserService {
     const curier = new Curier(requestBody);
 
     this.validationService.validateCreateCurier(curier);
+
+    curier.password = await this.hashService.hashPassword(curier.password);
 
     const createdCurier = await this.userResource.create(curier);
     return new UserDto(createdCurier);
@@ -39,5 +42,9 @@ class CurierService extends UserService {
 
 module.exports = {
   CurierService,
-  curierService: new CurierService(curierMongoResource, userValidationService),
+  curierService: new CurierService(
+    curierMongoResource,
+    userValidationService,
+    hashPasswordService,
+  ),
 };
