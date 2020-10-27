@@ -42,7 +42,7 @@ class RatingValidationService {
   }
 
   validateRating(rating) {
-    if (!rating || typeof rating !== 'number' || (rating < 1 && rating > 5)) {
+    if (!rating || typeof rating !== 'number' || rating < 1 || rating > 5) {
       throw new Error(errors.notCorrectRating);
     }
   }
