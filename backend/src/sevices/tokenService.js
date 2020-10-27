@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const { clientService } = require('./clientService');
 const { curierService } = require('./curierService');
 
-const { jwtKey } = require('../config/passport/keys');
+const { jwtKey } = require('../config/jwtKey');
 
 class TokenService {
   constructor(clientService, curierService, jwt) {
@@ -13,29 +13,36 @@ class TokenService {
 
   async login(requestBody) {
     let user = await this.clientService.getByUsername(requestBody.username);
+    let type = 'client';
 
     if (!user) {
       user = await this.curierService.getByUsername(requestBody.username);
+      type = 'curier';
     }
 
     if (!user) {
       return { error: 'Wrong username' };
     }
 
-    if (requestBody.password !== user.password) {
-      return { error: 'Wrong password' };
-    }
+    // TODO
+    // if (requestBody.password !== user.password) {
+    //   return { error: 'Wrong password' };
+    // }
 
-    return this.jwt.sign({ id: user.id }, jwtKey);
+    return this.jwt.sign({ id: user.id, type }, jwtKey);
   }
 
   async register(requestBody) {
+    if (requestBody.type !== 'client' && requestBody.type !== 'curier') {
+      return { error: 'Wrong user type' };
+    }
+
     const user =
       requestBody.type === 'client'
         ? await this.clientService.create(requestBody)
         : await this.curierService.create(requestBody);
 
-    return this.jwt.sign({ id: user.id }, jwtKey);
+    return this.jwt.sign({ id: user.id, type: requestBody.type }, jwtKey);
   }
 }
 

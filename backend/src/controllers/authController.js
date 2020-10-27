@@ -16,7 +16,7 @@ class AuthController {
   }
 
   async profile(ctx, next) {
-    // TODO
+    ctx.response.body = { user: ctx.state.user };
   }
 }
 

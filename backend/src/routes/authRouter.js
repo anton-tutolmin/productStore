@@ -1,10 +1,15 @@
 const KoaRouter = require('koa-router');
 const { authController } = require('../controllers/authController');
+const { jwtMiddleware } = require('../middleware/jwtMiddleware');
 
 const router = new KoaRouter();
 
 router
-  .get('/api/profile', authController.profile.bind(authController))
+  .get(
+    '/api/profile',
+    jwtMiddleware,
+    authController.profile.bind(authController),
+  )
 
   .post('/api/login', authController.login.bind(authController))
 
