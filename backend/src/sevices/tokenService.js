@@ -1,75 +1,45 @@
-const errors = require('../errors/errors');
-const passport = require('../config/passport');
 const jwt = require('jsonwebtoken');
 const { clientService } = require('./clientService');
+const { curierService } = require('./curierService');
 
-const key = require('../config/passport/keys').jwtKey;
+const { jwtKey } = require('../config/passport/keys');
 
-async function login(ctx, next) {
-  await passport.authenticate('login', (err, user, info) => {
-    if (err) {
-      throw new Error(errors.wrongAuthorizaed);
-    }
-    if (info !== undefined) {
-      ctx.response.body = { ...info };
-    } else {
-      const token = jwt.sign({ id: user._id }, key);
-      ctx.response.body = {
-        auth: true,
-        token: token,
-      };
-    }
-  })(ctx, next);
-}
+class TokenService {
+  constructor(clientService, curierService, jwt) {
+    this.clientService = clientService;
+    this.curierService = curierService;
+    this.jwt = jwt;
+  }
 
-async function register(ctx, next) {
-  await passport.authenticate('register', async (err, user, info) => {
-    if (err) {
-      throw new Error(errors.wrongAuthorizaed);
-    }
-    if (info !== undefined) {
-      ctx.response.body = { ...info };
-    } else {
-      const hashedUser = {
-        username: user.username,
-        password: user.password,
-        email: ctx.request.body.email,
-        phone: ctx.request.body.phone,
-        type: ctx.request.body.type,
-      };
+  async login(requestBody) {
+    let user = await this.clientService.getByUsername(requestBody.username);
 
-      const createdUser = await clientService.create(hashedUser);
-      const token = jwt.sign({ id: createdUser._id }, key);
-      ctx.response.body = {
-        auth: true,
-        token: token,
-      };
+    if (!user) {
+      user = await this.curierService.getByUsername(requestBody.username);
     }
-  })(ctx, next);
-}
 
-async function profile(ctx, next) {
-  await passport.authenticate('jwt', { session: false }, (err, user, info) => {
-    if (err) {
-      throw new Error(errors.wrongAuthorizaed);
+    if (!user) {
+      return { error: 'Wrong username' };
     }
-    if (info !== undefined) {
-      ctx.response.body = { ...info };
-    } else {
-      ctx.response.body = {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        phone: user.phone,
-        balance: user.balance,
-        type: user.type,
-      };
+
+    if (requestBody.password !== user.password) {
+      return { error: 'Wrong password' };
     }
-  })(ctx, next);
+
+    return this.jwt.sign({ id: user.id }, jwtKey);
+  }
+
+  async register(requestBody) {
+    const user =
+      requestBody.type === 'client'
+        ? await this.clientService.create(requestBody)
+        : await this.curierService.create(requestBody);
+
+    return this.jwt.sign({ id: user.id }, jwtKey);
+  }
 }
 
 module.exports = {
-  login,
-  register,
-  profile,
+  TokenService,
+  tokenService: new TokenService(clientService, curierService, jwt),
 };

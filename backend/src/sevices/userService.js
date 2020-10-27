@@ -18,7 +18,7 @@ class UserService {
 
   async getByUsername(username) {
     const user = await this.userResource.getByUsername(username);
-    return new UserDto(user);
+    return user;
   }
 
   async deleteById(userId) {
