@@ -27,16 +27,6 @@ class MockUserSchema {
     }
   }
 
-  isCompatible(client, params) {
-    const keys = Object.keys(params);
-    for (let i = 0; i < keys.length; ++i) {
-      if (client[keys[i]] !== params[keys[i]]) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   updateOne(whereObj, params) {
     let client = this.clients.get(whereObj._id);
     client = { ...client, ...params };
@@ -45,6 +35,16 @@ class MockUserSchema {
 
   deleteOne(whereObj) {
     this.clients.delete(whereObj._id);
+  }
+
+  isCompatible(client, params) {
+    const keys = Object.keys(params);
+    for (let i = 0; i < keys.length; ++i) {
+      if (client[keys[i]] !== params[keys[i]]) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 
