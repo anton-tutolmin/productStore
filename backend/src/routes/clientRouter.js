@@ -1,56 +1,24 @@
 const KoaRouter = require('koa-router');
 const { clientController } = require('../controllers/clientController');
-const OrderController = require('../controllers/ordersController');
-const passport = require('../config/passport');
-const isAllowed = require('./allow');
+const { jwtMiddleware } = require('../middleware/jwtMiddleware');
 
 const router = new KoaRouter();
 
 router
-  .get('/api/clients', async (ctx, next) => {
-    await passport.authenticate(
-      'jwt',
-      { session: false },
-      async (err, user, msg) => {
-        isAllowed(err, user, msg);
-        await clientController.getAll();
-      },
-    )(ctx, next);
-  })
+  .get('/api/clients', clientController.getAll.bind(clientController))
 
-  .get('/api/clients/:id', async (ctx, next) => {
-    await passport.authenticate(
-      'jwt',
-      { session: false },
-      async (err, usr, msg) => {
-        isAllowed(err, usr, msg, ctx.params.id);
-        await clientController.getById(ctx.params.id);
-      },
-    )(ctx, next);
-  })
+  .get('/api/clients/:id', clientController.getById.bind(clientController))
 
-  .put('/api/clients/:id', async (ctx, next) => {
-    await passport.authenticate(
-      'jwt',
-      { session: false },
-      async (err, user, msg) => {
-        isAllowed(err, user, msg, ctx.params.id);
+  .put(
+    '/api/clients/:id',
+    jwtMiddleware,
+    clientController.updateById.bind(clientController),
+  )
 
-        await clientController.updateById(ctx.params.id, ctx.request.body);
-      },
-    )(ctx, next);
-  })
-
-  .delete('/api/clients/:id', async (ctx, next) => {
-    await passport.authenticate(
-      'jwt',
-      { session: false },
-      async (err, user, msg) => {
-        isAllowed(err, user, msg, ctx.params.id);
-        await clientController.deleteById(ctx.params.id);
-        await OrderController.deleteByClientId(ctx.params.id);
-      },
-    )(ctx, next);
-  });
+  .delete(
+    '/api/clients/:id',
+    jwtMiddleware,
+    clientController.deleteById.bind(clientController),
+  );
 
 module.exports = router;
