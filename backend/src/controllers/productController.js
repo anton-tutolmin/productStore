@@ -1,33 +1,34 @@
-const ProductService = require('../sevices/productService');
+class ProductController {
+  constructor(productService) {
+    this.productService = productService;
+  }
 
-async function create(body) {
-  const product = await ProductService.create(body);
-  return product;
-}
+  async create(ctx, next) {
+    const product = await this.productService.create(ctx.request.body);
+    ctx.response.body = { product };
+  }
 
-async function getAll() {
-  const products = await ProductService.getAll();
-  return products;
-}
+  async getAll(ctx, next) {
+    const products = await this.productService.getAll();
+    ctx.response.body = { products };
+  }
 
-async function getById(id) {
-  const product = await ProductService.getById(id);
-  return product;
-}
+  async getById(ctx, next) {
+    const product = await this.productService.getById(ctx.params.id);
+    ctx.response.body = { product };
+  }
 
-async function updateById(id, params) {
-  const product = await ProductService.updateById(id, params);
-  return product;
-}
+  async updateById(ctx, next) {
+    await this.productService.updateById(ctx.params.id, ctx.request.body);
+    ctx.response.body = { message: 'Product updated' };
+  }
 
-async function deleteById(id) {
-  await ProductService.deleteById(id);
+  async deleteById(ctx, next) {
+    await this.productService.deleteById(ctx.params.id);
+    ctx.response.body = { message: 'Product deleted' };
+  }
 }
 
 module.exports = {
-  create,
-  getAll,
-  getById,
-  updateById,
-  deleteById,
+  ProductController,
 };

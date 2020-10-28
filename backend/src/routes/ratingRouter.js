@@ -1,5 +1,6 @@
 const KoaRouter = require('koa-router');
 const { ratingController } = require('../controllers/ratingController');
+const { jwtMiddleware } = require('../middleware/jwtMiddleware');
 
 const router = new KoaRouter();
 
@@ -20,8 +21,16 @@ router
     ratingController.getCurierRating.bind(ratingController),
   )
 
-  .post('/api/rating', ratingController.addRating.bind(ratingController))
+  .post(
+    '/api/rating',
+    jwtMiddleware,
+    ratingController.addRating.bind(ratingController),
+  )
 
-  .delete('/api/rating', ratingController.removeRating.bind(ratingController));
+  .delete(
+    '/api/rating',
+    jwtMiddleware,
+    ratingController.removeRating.bind(ratingController),
+  );
 
 module.exports = router;

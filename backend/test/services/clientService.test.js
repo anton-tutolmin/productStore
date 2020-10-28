@@ -3,10 +3,12 @@ const { mockClientResource } = require('../mocks/mockClientResource');
 const {
   mockUserValidationService,
 } = require('../mocks/mockUserValidationService');
+const { mockHashPasswordService } = require('../mocks/mockHashPasswordService');
 
 const clientService = new ClientService(
   mockClientResource,
   mockUserValidationService,
+  mockHashPasswordService,
 );
 
 let client = {
@@ -47,7 +49,11 @@ describe('Test client service', () => {
   it('get user by username', async () => {
     const returnedUser = await clientService.getByUsername(client.username);
 
-    expect(returnedUser).toEqual(client);
+    expect(returnedUser._id).toEqual(client.id);
+    expect(returnedUser.username).toEqual(client.username);
+    expect(returnedUser.email).toEqual(client.email);
+    expect(returnedUser.phone).toEqual(client.phone);
+    expect(returnedUser.balance).toEqual(client.balance);
   });
 
   it('update client by id', async () => {

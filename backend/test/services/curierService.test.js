@@ -3,10 +3,12 @@ const { mockCurierResource } = require('../mocks/mockCurierResource');
 const {
   mockUserValidationService,
 } = require('../mocks/mockUserValidationService');
+const { mockHashPasswordService } = require('../mocks/mockHashPasswordService');
 
 const curierService = new CurierService(
   mockCurierResource,
   mockUserValidationService,
+  mockHashPasswordService,
 );
 
 let curier = {
@@ -39,6 +41,16 @@ describe('Test curier service', () => {
 
     expect(returnedCuriers.length).toBe(1);
     expect(returnedCuriers[0]).toEqual(curier);
+  });
+
+  it('get user by username', async () => {
+    const returnedUser = await curierService.getByUsername(curier.username);
+
+    expect(returnedUser._id).toEqual(curier.id);
+    expect(returnedUser.username).toEqual(curier.username);
+    expect(returnedUser.email).toEqual(curier.email);
+    expect(returnedUser.phone).toEqual(curier.phone);
+    expect(returnedUser.balance).toEqual(curier.balance);
   });
 
   it('update curier by id', async () => {

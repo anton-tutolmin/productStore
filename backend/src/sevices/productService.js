@@ -1,37 +1,48 @@
-const ProductResource = require('../resources/productResource');
-const validator = require('./validatorService/product');
+const { Product } = require('../entities/product');
+const { ProductDto } = require('../dto/productDto');
 
-async function create(body) {
-  validator.validateCreateBody(body);
-  const product = await ProductResource.create(body);
-  return product;
-}
+class ProductService {
+  constructor(productResource, validationService) {
+    this.productResource = productResource;
+    this.validationService = validationService;
+  }
 
-async function getAll() {
-  const products = await ProductResource.getAll();
-  return products;
-}
+  async create(requestBody) {
+    const product = new Product(requestBody);
+    this.validationService.validateCreateBody(product);
+    const createdProduct = await this.productResource.create(product);
+    return new ProductDto(createdProduct);
+  }
 
-async function getById(id) {
-  const product = await ProductResource.getById(id);
-  return product;
-}
+  async getAll() {
+    const products = await this.productResource.getAll();
+    return products.map((p) => new ProductDto(p));
+  }
 
-async function updateById(id, params) {
-  validator.validateUpdateBody(params);
-  await ProductResource.updateById(id, params);
-  const product = await ProductResource.getById(id);
-  return product;
-}
+  async getById(id) {
+    const product = await this.productResource.getById(id);
+    return product ? new ProductDto(product) : null;
+  }
 
-async function deleteById(id) {
-  await ProductResource.deleteById(id);
+  async updateById(id, requestBody) {
+    const params = {};
+    for (const param of Object.keys(requestBody)) {
+      if (param === 'productname') params.productname = requestBody[param];
+      if (param === 'cost') params.cost = requestBody[param];
+      if (param === 'description') params.description = requestBody[param];
+      if (param === 'img') params.img = requestBody[param];
+      if (param === 'orderedCount') params.orderedCount = requestBody[param];
+    }
+
+    this.validationService.validateUpdateBody(params);
+    await this.productResource.updateById(id, params);
+  }
+
+  async deleteById(id) {
+    await this.productResource.deleteById(id);
+  }
 }
 
 module.exports = {
-  create,
-  getAll,
-  getById,
-  updateById,
-  deleteById,
+  ProductService,
 };
