@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
 const errors = require('../errors/errors');
 
@@ -39,4 +40,5 @@ class ProductResource {
 
 module.exports = {
   ProductResource,
+  productResource: new ProductResource(Product, mongoose),
 };

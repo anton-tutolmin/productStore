@@ -1,3 +1,5 @@
+const { productResource } = require('../resources/productResource');
+const { productValidationService } = require('./productValidationService');
 const { Product } = require('../entities/product');
 const { ProductDto } = require('../dto/productDto');
 
@@ -45,4 +47,5 @@ class ProductService {
 
 module.exports = {
   ProductService,
+  productService: new ProductService(productResource, productValidationService),
 };

@@ -1,3 +1,5 @@
+const { productService } = require('../sevices/productService');
+
 class ProductController {
   constructor(productService) {
     this.productService = productService;
@@ -31,4 +33,5 @@ class ProductController {
 
 module.exports = {
   ProductController,
+  productController: new ProductController(productService),
 };
