@@ -1,3 +1,8 @@
+const { orderMongoResource } = require('../resources/orderResource');
+const { clientService } = require('./clientService');
+const { curierService } = require('./curierService');
+const { productService } = require('./productService');
+const { orderValidationService } = require('./orderValidationService');
 const { Order } = require('../entities/order');
 const { OrderDto } = require('../dto/orderDto');
 
@@ -140,4 +145,11 @@ class OrderService {
 
 module.exports = {
   OrderService,
+  orderService: new OrderService(
+    orderMongoResource,
+    clientService,
+    curierService,
+    productService,
+    orderValidationService,
+  ),
 };
