@@ -16,12 +16,12 @@ class RatingMongoResource {
 
   async getByCurierId(curierId) {
     this.validateId(curierId);
-    return await this.ratingSchema.findAll({ curierId });
+    return await this.ratingSchema.find({ curierId });
   }
 
   async getByClientId(clientId) {
     this.validateId(clientId);
-    return await this.ratingSchema.findAll({ clientId });
+    return await this.ratingSchema.find({ clientId });
   }
 
   async isExist({ clientId, curierId }) {

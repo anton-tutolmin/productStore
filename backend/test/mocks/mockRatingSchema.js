@@ -8,7 +8,7 @@ class MockRatingSchema {
     return { ...params };
   }
 
-  findAll(params) {
+  find(params) {
     return this.ratings.filter((r) => this.isCompatible(r, params));
   }
 

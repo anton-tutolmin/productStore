@@ -1,85 +1,68 @@
-const { Types } = require('mongoose');
+const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const errors = require('../errors/errors');
 
-async function create(body) {
-  const order = await Order.create(body);
-  return order;
-}
+class OrderMongoResource {
+  constructor(orderSchema, Mongoose) {
+    this.orderSchema = orderSchema;
+    this.Mongoose = Mongoose;
+  }
 
-async function getAll() {
-  const orders = await Order.find({});
-  return orders;
-}
+  async create(body) {
+    return await this.orderSchema.create(body);
+  }
 
-async function getById(id) {
-  validateId(id);
-  const order = await Order.findOne({ _id: id });
-  return order;
-}
+  async getAll() {
+    return await this.orderSchema.find({});
+  }
 
-async function getByClientId(clientId) {
-  validateId(clientId);
-  const order = await Order.find({ clientId });
-  return order;
-}
+  async getById(id) {
+    this.validateId(id);
+    return await this.orderSchema.findOne({ _id: id });
+  }
 
-async function getByCurierId(curierId) {
-  validateId(curierId);
-  const order = await Order.find({ curierId });
-  return order;
-}
+  async getByClientId(clientId) {
+    return await this.orderSchema.find({ clientId });
+  }
 
-async function getByProductId(productId) {
-  validateId(productId);
-  const orders = await Order.find({ productId });
-  return orders;
-}
+  async getByCurierId(curierId) {
+    return await this.orderSchema.find({ curierId });
+  }
 
-async function getRequests() {
-  const orders = await Order.find({
-    curierId: 'none',
-    status: 'created',
-  });
-  return orders;
-}
+  async getByProductId(productId) {
+    return await this.orderSchema.find({ productId });
+  }
 
-async function updateById(id, params) {
-  validateId(id);
-  await Order.updateOne({ _id: id }, { ...params });
-}
+  async getRequests() {
+    return await this.orderSchema.find({ curierId: 'none', status: 'created' });
+  }
 
-async function deleteById(id) {
-  validateId(id);
-  await Order.deleteOne({ _id: id });
-}
+  async updateById(id, params) {
+    this.validateId(id);
+    await this.orderSchema.updateOne({ _id: id }, { ...params });
+  }
 
-async function deleteByClientId(clientId) {
-  validateId(clientId);
-  await Order.deleteMany({ clientId });
-}
+  async deleteById(id) {
+    this.validateId(id);
+    await this.orderSchema.deleteOne({ _id: id });
+  }
 
-async function deleteByProductId(productId) {
-  validateId(productId);
-  await Order.deleteMany({ productId });
-}
+  async deleteByClientId(clientId) {
+    await this.orderSchema.deleteMany({ clientId });
+  }
 
-function validateId(id) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error(errors.notCorrectId);
+  async deleteByProductId(productId) {
+    await this.orderSchema.deleteMany({ productId });
+  }
+
+  validateId(id) {
+    if (!this.Mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(errors.notCorrectId);
+    }
   }
 }
 
 module.exports = {
-  create,
-  getAll,
-  getById,
-  getByClientId,
-  getByCurierId,
-  getByProductId,
-  getRequests,
-  updateById,
-  deleteById,
-  deleteByClientId,
-  deleteByProductId,
+  OrderMongoResource,
+  orderMongoResource: new OrderMongoResource(Order, mongoose),
 };
