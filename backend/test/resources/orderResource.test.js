@@ -77,4 +77,42 @@ describe('Test order resource', () => {
 
     expect(deleted).toBe(undefined);
   });
+
+  it('delete order by client id', async () => {
+    const createdOrder = await orderResource.create({
+      clientId: 1,
+      productId: 1,
+      curierId: 'none',
+      status: 'created',
+    });
+
+    const returnedOrder = await orderResource.getById(createdOrder._id);
+
+    expect(returnedOrder).not.toBe(undefined);
+
+    await orderResource.deleteByClientId(order.clientId);
+
+    const deletedOrder = await orderResource.getById(createdOrder._id);
+
+    expect(deletedOrder).toBe(undefined);
+  });
+
+  it('delete order by product id', async () => {
+    const createdOrder = await orderResource.create({
+      clientId: 1,
+      productId: 1,
+      curierId: 'none',
+      status: 'created',
+    });
+
+    const returnedOrder = await orderResource.getById(createdOrder._id);
+
+    expect(returnedOrder).not.toBe(undefined);
+
+    await orderResource.deleteByProductId(order.productId);
+
+    const deletedOrder = await orderResource.getById(createdOrder._id);
+
+    expect(deletedOrder).toBe(undefined);
+  });
 });
