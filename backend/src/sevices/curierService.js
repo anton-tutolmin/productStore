@@ -31,9 +31,9 @@ class CurierService extends UserService {
     await this.userResource.updateById(id, params);
   }
 
-  async addBalance(curierId, balance) {
+  async addBalance(curierId, payoff) {
     const curier = await this.userResource.getById(curierId);
-    const newBalance = curier.balance + balance;
+    const newBalance = curier.balance + +payoff;
     await this.userResource.updateById(curierId, {
       balance: newBalance,
     });

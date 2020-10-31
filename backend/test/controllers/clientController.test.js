@@ -28,7 +28,7 @@ describe('Test clientController:', () => {
 
   it('get client by id', async () => {
     const ctx = {
-      params: { id: client._id },
+      params: { id: client.id },
       response: {},
     };
 
@@ -52,7 +52,7 @@ describe('Test clientController:', () => {
   it('update client by id', async () => {
     const ctx = {
       params: {
-        id: client._id,
+        id: client.id,
       },
       request: { body: { username: 'pavel' } },
       response: {},
@@ -69,7 +69,7 @@ describe('Test clientController:', () => {
 
   it('delete by id', async () => {
     const ctx = {
-      params: { id: client._id },
+      params: { id: client.id },
       request: {},
       response: {},
     };

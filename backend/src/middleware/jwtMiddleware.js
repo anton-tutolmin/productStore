@@ -22,7 +22,7 @@ passport.use(
       return done(null, false, { message: 'There is no such user' });
     }
 
-    return done(null, user);
+    return done(null, { ...user, type: data.type });
   }),
 );
 

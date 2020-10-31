@@ -4,26 +4,26 @@ class MockClientService {
     this.lastId = clients.size;
   }
 
-  async create(body) {
+  create(body) {
     this.lastId += 1;
 
     const client = {
-      _id: this.lastId,
+      id: this.lastId,
       username: body.username,
       email: body.email,
       phone: body.phone,
-      balance: 0,
+      balance: body.balance || 0,
     };
 
-    this.clients.set(client._id, client);
+    this.clients.set(client.id, client);
     return client;
   }
 
-  async getById(clientId) {
+  getById(clientId) {
     return this.clients.get(clientId);
   }
 
-  async getAll() {
+  getAll() {
     const result = [];
 
     for (const client of this.clients.values()) {
@@ -33,7 +33,7 @@ class MockClientService {
     return result;
   }
 
-  async getByUsername(username) {
+  getByUsername(username) {
     for (const client of this.clients.values()) {
       if (client.username === username) {
         return client;
@@ -41,23 +41,23 @@ class MockClientService {
     }
   }
 
-  async deleteById(clientId) {
+  deleteById(clientId) {
     this.clients.delete(clientId);
   }
 
-  async updateById(id, body) {
+  updateById(id, body) {
     let client = this.clients.get(id);
     client = { ...client, ...body };
     this.clients.set(id, client);
   }
 
-  async addBalance(id, coast) {
-    const client = await this.clients.get(id);
+  addBalance(id, coast) {
+    const client = this.clients.get(id);
     client.balance = client.balance + +coast;
   }
 
-  async reduceBalance(id, coast) {
-    const client = await this.clients.get(id);
+  reduceBalance(id, coast) {
+    const client = this.clients.get(id);
     client.balance = client.balance - coast;
   }
 }

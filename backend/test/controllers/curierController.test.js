@@ -32,7 +32,7 @@ describe('Test curier controller', () => {
 
   it('get curier by id', async () => {
     const ctx = {
-      params: { id: curier._id },
+      params: { id: curier.id },
       request: {},
       response: {},
     };
@@ -56,7 +56,7 @@ describe('Test curier controller', () => {
 
   it('update curier by id', async () => {
     const ctx = {
-      params: { id: curier._id },
+      params: { id: curier.id },
       request: { body: { username: 'pavel' } },
       response: {},
     };
@@ -72,7 +72,7 @@ describe('Test curier controller', () => {
 
   it('delete curier by id', async () => {
     const ctx = {
-      params: { id: curier._id },
+      params: { id: curier.id },
       request: {},
       response: {},
     };
