@@ -79,7 +79,6 @@ class OrderService {
     const updates = {
       done: this.done.bind(this),
       canceled: this.cancel.bind(this),
-      delivering: this.takeDelivery.bind(this),
       delivered: this.setDelivered.bind(this),
       reset: this.reset.bind(this),
     };
@@ -126,13 +125,6 @@ class OrderService {
     await this.orderResource.updateById(order._id, { status: 'canceled' });
   }
 
-  async takeDelivery(order, curier) {
-    await this.orderResource.updateById(order._id, {
-      curierId: curier.id,
-      status: 'delivering',
-    });
-  }
-
   async setDelivered(order) {
     await this.orderResource.updateById(order._id, { status: 'delivered' });
   }
@@ -140,6 +132,30 @@ class OrderService {
   async getCoast(productId) {
     const product = await this.productService.getById(productId);
     return product.coast;
+  }
+
+  async setCandidate({ orderId, curierId }) {
+    return await this.orderResource.setCandidate(orderId, curierId);
+  }
+
+  async getCandidatesByOrderId(orderId) {
+    const candidates = await this.orderResource.getCandidatesByOrderId(orderId);
+    const curiers = [];
+
+    for (const candidate of candidates) {
+      const curier = await this.curierService.getById(candidate.curierId);
+      curiers.push(curier);
+    }
+
+    return curiers;
+  }
+
+  async electCandidate({ orderId, curierId }) {
+    await this.orderResource.deleteCandidateByOrderId(orderId);
+    await this.orderResource.updateById(orderId, {
+      curierId,
+      status: 'delivering',
+    });
   }
 }
 

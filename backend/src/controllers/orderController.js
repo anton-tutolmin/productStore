@@ -72,6 +72,21 @@ class OrderController {
   async deleteByProductId(ctx, next) {
     await this.orderService.deleteByProductId(ctx.params.id);
   }
+
+  async setCandidate(ctx, next) {
+    await this.orderService.setCandidate({
+      ...ctx.request.body,
+      curierId: ctx.state.user.id,
+    });
+    ctx.response.body = { message: 'Candidacy accepted' };
+  }
+
+  async getCandidantesByOrderId(ctx, next) {
+    const candidates = await this.orderService.getCandidantesByOrderId(
+      ctx.parans.id,
+    );
+    ctx.response.body = { candidates };
+  }
 }
 
 module.exports = {

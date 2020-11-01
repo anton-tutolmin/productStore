@@ -40,7 +40,7 @@ export const RequestItem = (props) => {
             </span>
           </li>
           <li>
-            <CardButton label="Take" onClick={() => take(orderId)} />
+            <CardButton label="Get" onClick={() => take(orderId)} />
           </li>
         </ul>
       </div>

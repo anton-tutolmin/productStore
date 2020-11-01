@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Order = require('../models/Order');
+const Candidate = require('../models/Candidates');
 const errors = require('../errors/errors');
 
 class OrderMongoResource {
-  constructor(orderSchema, Mongoose) {
+  constructor(orderSchema, candidatesSchema, Mongoose) {
     this.orderSchema = orderSchema;
     this.Mongoose = Mongoose;
   }
@@ -55,6 +56,32 @@ class OrderMongoResource {
     await this.orderSchema.deleteMany({ productId });
   }
 
+  async setCandidate(orderId, curierId) {
+    this.validateId(orderId);
+    this.validateId(curierId);
+    await this.candidatesSchema.create({ orderId, curierId });
+  }
+
+  async getCandidatesByOrderId(orderId) {
+    this.validateId(orderId);
+    return await this.candidatesSchema.find({ orderId });
+  }
+
+  async getCandidatesByCurierId(curierId) {
+    this.validateId(curierId);
+    return await this.candidatesSchema.find({ curierId });
+  }
+
+  async deleteCandidatesByCurierId(curierId) {
+    this.validateId(curierId);
+    await this.candidatesSchema.delete({ curierId });
+  }
+
+  async deleteCandidatesByOrderId(orderId) {
+    this.validateId(orderId);
+    await this.candidatesSchema.delete({ orderId });
+  }
+
   validateId(id) {
     if (!this.Mongoose.Types.ObjectId.isValid(id)) {
       throw new Error(errors.notCorrectOrderId);
@@ -64,5 +91,6 @@ class OrderMongoResource {
 
 module.exports = {
   OrderMongoResource,
+  Candidate,
   orderMongoResource: new OrderMongoResource(Order, mongoose),
 };

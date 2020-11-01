@@ -34,6 +34,11 @@ router
     '/api/requests',
     jwtMiddleware,
     orderController.getRequests.bind(orderController),
+  )
+
+  .get(
+    '/api/orders/:id/candidates',
+    orderController.getCandidantesByOrderId.bind(orderController),
   );
 
 module.exports = router;
