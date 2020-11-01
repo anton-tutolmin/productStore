@@ -20,9 +20,9 @@ const Requests = (props) => {
         requests.map((r) => (
           <div className="request__container" key={r.id}>
             <RequestItem
-              product={r.product}
-              client={r.client}
               orderId={r.id}
+              productId={r.productId}
+              clientId={r.clientId}
               take={onTakeRequest}
             />
           </div>

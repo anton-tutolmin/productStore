@@ -11,8 +11,8 @@ const load = async () => {
 
 const loadById = async (productId) => {
   try {
-    const response = await axios.get(`/api/products:${productId}`);
-    return response;
+    const response = await axios.get(`/api/products/${productId}`);
+    return response.data;
   } catch (error) {
     return { error };
   }

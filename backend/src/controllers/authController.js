@@ -1,19 +1,26 @@
-const AuthService = require('../sevices/tokenService');
+const { tokenService } = require('../sevices/tokenService');
 
-async function login(ctx, next) {
-  await AuthService.login(ctx, next);
-}
+class AuthController {
+  constructor(authService) {
+    this.authService = authService;
+  }
 
-async function register(ctx, next) {
-  await AuthService.register(ctx, next);
-}
+  async login(ctx, next) {
+    const token = await this.authService.login(ctx.request.body);
+    ctx.response.body = { token };
+  }
 
-async function profile(ctx, next) {
-  await AuthService.profile(ctx, next);
+  async register(ctx, next) {
+    const token = await this.authService.register(ctx.request.body);
+    ctx.response.body = { token };
+  }
+
+  async profile(ctx, next) {
+    ctx.response.body = { user: ctx.state.user };
+  }
 }
 
 module.exports = {
-  login,
-  register,
-  profile,
+  AuthController,
+  authController: new AuthController(tokenService),
 };

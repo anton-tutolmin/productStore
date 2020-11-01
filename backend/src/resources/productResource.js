@@ -1,43 +1,44 @@
+const mongoose = require('mongoose');
 const Product = require('../models/Product');
-const { Types } = require('mongoose');
 const errors = require('../errors/errors');
 
-async function create(body) {
-  const product = await Product.create(body);
-  return product;
-}
+class ProductResource {
+  constructor(productSchema, Mongoose) {
+    this.productSchema = productSchema;
+    this.Mongoose = Mongoose;
+  }
 
-async function getAll() {
-  const products = await Product.find({});
-  return products;
-}
+  async create(product) {
+    return await this.productSchema.create(product);
+  }
 
-async function getById(id) {
-  validateId(id);
-  const product = await Product.findOne({ _id: id });
-  return product;
-}
+  async getAll() {
+    return await this.productSchema.find({});
+  }
 
-async function updateById(id, params) {
-  validateId(id);
-  await Product.updateOne({ _id: id }, { ...params });
-}
+  async getById(id) {
+    this.validateId(id);
+    return await this.productSchema.findOne({ _id: id });
+  }
 
-async function deleteById(id) {
-  validateId(id);
-  await Product.deleteOne({ _id: id });
-}
+  async updateById(id, params) {
+    this.validateId(id);
+    await this.productSchema.updateOne({ _id: id }, { ...params });
+  }
 
-function validateId(id) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error(errors.notCorrectId);
+  async deleteById(id) {
+    this.validateId(id);
+    await this.productSchema.deleteOne({ _id: id });
+  }
+
+  validateId(id) {
+    if (!this.Mongoose.Types.ObjectId.isValid(id)) {
+      throw new Error(errors.notCorrectProductId);
+    }
   }
 }
 
 module.exports = {
-  create,
-  getAll,
-  getById,
-  updateById,
-  deleteById,
+  ProductResource,
+  productResource: new ProductResource(Product, mongoose),
 };

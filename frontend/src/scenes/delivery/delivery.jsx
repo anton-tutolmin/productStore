@@ -25,9 +25,9 @@ const Delivery = (props) => {
       return (
         <div className="delivery__container" key={d.id}>
           <DeliveryItem
-            product={d.product}
-            client={d.client}
             orderId={d.id}
+            productId={d.productId}
+            clientId={d.clientId}
             deliver={onDeliver}
             status={d.status}
           />
@@ -43,9 +43,9 @@ const Delivery = (props) => {
       return (
         <div className="delivery__container" key={d.id}>
           <HistoryDeliveryItem
-            product={d.product}
-            client={d.client}
             orderId={d.id}
+            productId={d.productId}
+            clientId={d.clientId}
             status={d.status}
           />
         </div>

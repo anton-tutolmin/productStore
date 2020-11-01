@@ -1,77 +1,32 @@
-const UserResource = require('../resources/userResource');
-const userValidator = require('./validatorService/user');
+const { UserDto } = require('../dto/userDto');
 
-async function create(body) {
-  const createBody = {
-    username: body.username,
-    password: body.password,
-    email: body.email,
-    phone: body.phone,
-    type: body.type,
-    balance: 0,
-  };
-
-  userValidator.validateCreateBody(createBody);
-  const user = await UserResource.create(createBody);
-  return user;
-}
-
-async function getAll() {
-  const users = await UserResource.getAll();
-  return users;
-}
-
-async function getById(id) {
-  const user = await UserResource.getById(id);
-  return user;
-}
-
-async function getByUsername(username) {
-  const user = await UserResource.getByUsername(username);
-  return user;
-}
-
-async function updateById(id, body) {
-  const params = {};
-  for (const param of Object.keys(body)) {
-    if (param === 'username') params.username = body[param];
-    if (param === 'email') params.email = body[param];
-    if (param === 'phone') params.phone = body[param];
-    if (param === 'type') params.type = body[param];
-    if (param === 'balance') {
-      const user = await UserResource.getById(id);
-      params.balance = user.balance + body[param];
-    }
+class UserService {
+  constructor(userResource, validationService, hashService) {
+    this.userResource = userResource;
+    this.validationService = validationService;
+    this.hashService = hashService;
   }
 
-  userValidator.validateUpdateBody(params);
-  await UserResource.updateById(id, params);
-}
+  async getById(userId) {
+    const user = await this.userResource.getById(userId);
+    return user ? new UserDto(user) : null;
+  }
 
-async function deleteById(id) {
-  await UserResource.deleteById(id);
-}
+  async getAll() {
+    const users = await this.userResource.getAll();
+    return users.map((u) => new UserDto(u));
+  }
 
-async function addBalance(id, coast) {
-  const user = await UserResource.getById(id);
-  const balance = user.balance + +coast;
-  console.log(user.balance, coast, balance);
-  await UserResource.updateById(id, { balance });
-}
+  async getByUsername(username) {
+    const user = await this.userResource.getByUsername(username);
+    return user;
+  }
 
-async function reduceBalance(id, coast) {
-  const user = await UserResource.getById(id);
-  const balance = user.balance - coast;
-  await UserResource.updateById(id, { balance });
+  async deleteById(userId) {
+    await this.userResource.deleteById(userId);
+  }
 }
 
 module.exports = {
-  getAll,
-  getById,
-  getByUsername,
-  create,
-  updateById,
-  deleteById,
-  addBalance,
-  reduceBalance,
+  UserService,
 };

@@ -11,6 +11,9 @@
   +cropImg(180px, 150px)
   margin: auto 0
   padding: $cardtext_padding
+  @media screen and ( max-width: 350px )
+    +cropImg(100px, 150px)
+    
 
 .deliverycard__text
   @extend %cardText

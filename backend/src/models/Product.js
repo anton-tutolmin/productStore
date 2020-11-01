@@ -5,6 +5,7 @@ const ProductSchema = new Schema({
   description: String,
   coast: Number,
   img: String,
+  orderedCount: Number,
 });
 
 module.exports = model('products', ProductSchema);

@@ -9,13 +9,11 @@ const passport = require('koa-passport');
 
 const router = require('./routes');
 
-const staticDir = path.resolve(
-  __dirname,
-  '..',
-  '..',
-  'frontend',
-  'public',
-);
+const Cache = require('./cache/cache');
+
+const cache = new Cache();
+
+const staticDir = path.resolve(__dirname, '..', '..', 'frontend', 'public');
 
 const app = new Koa();
 
@@ -29,6 +27,7 @@ app.use(passport.initialize());
 
 app.use(async (ctx, next) => {
   try {
+    ctx.cache = cache;
     await next();
   } catch (e) {
     ctx.response.status = 200;

@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CardButton } from '../buttons/cardButton.jsx';
+import productAgent from '../../utils/agent/products';
+import userAgent from '../../utils/agent/user';
 import './requestItem.sass';
 
 export const RequestItem = (props) => {
-  const { product, client, orderId, take } = props;
+  const { orderId, productId, clientId, take } = props;
+
+  const [product, setProduct] = useState({});
+  const [client, setClient] = useState({});
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await productAgent.loadById(productId);
+      setProduct(response.product);
+    }
+    async function loadClient() {
+      const response = await userAgent.loadById(clientId);
+      setClient(response.client);
+    }
+    loadProduct();
+    loadClient();
+  }, []);
 
   return (
     <div className="requestcard">

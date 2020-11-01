@@ -43,7 +43,9 @@ const Profile = (props) => {
       if (validator.isValidBalance(value)) param.balance = +value;
       else showError('Balance must be number greater 0');
     }
-    if (Object.keys(param).length) props.update(param, user.id);
+    if (Object.keys(param).length) {
+      props.update(param, user.id, user.type);
+    }
   };
 
   const logout = () => {
@@ -118,7 +120,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   showError: (payload) => dispatch(addNotification(payload)),
   unauth: () => dispatch(requireAuth()),
-  update: (param, id) => dispatch(doUpdateUser(param, id)),
+  update: (param, userId, userType) =>
+    dispatch(doUpdateUser(param, userId, userType)),
   clearUser: () => dispatch(clearUser()),
 });
 
