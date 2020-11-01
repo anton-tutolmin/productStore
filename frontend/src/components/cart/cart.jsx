@@ -27,7 +27,7 @@ const Cart = (props) => {
           product={c}
           removeFromCart={onRemove}
           index={i}
-          key={Math.random()}
+          key={c.id}
           order={onOrder}
         />
       ))}

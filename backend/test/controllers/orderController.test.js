@@ -57,9 +57,10 @@ describe('Test order controller', () => {
       params: { id: order.clientId },
       request: {},
       response: {},
+      state: { user: { type: 'client' } },
     };
 
-    await orderController.getByClientId(ctx, () => {});
+    await orderController.getByUserId(ctx, () => {});
 
     expect(ctx.response.body.orders.length).toBe(1);
     expect(ctx.response.body.orders[0]).toEqual(order);
@@ -70,9 +71,10 @@ describe('Test order controller', () => {
       params: { id: order.curierId },
       request: {},
       response: {},
+      state: { user: { type: 'curier' } },
     };
 
-    await orderController.getByClientId(ctx, () => {});
+    await orderController.getByUserId(ctx, () => {});
 
     expect(ctx.response.body.orders.length).toBe(1);
     expect(ctx.response.body.orders[0]).toEqual(order);
@@ -94,6 +96,7 @@ describe('Test order controller', () => {
       params: { id: order.id },
       request: { body: { status: 'delivered' } },
       response: {},
+      state: { user: { type: 'curier' } },
     };
 
     await orderController.updateById(ctx, () => {});

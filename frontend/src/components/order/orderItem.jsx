@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CardButton } from '../buttons/cardButton.jsx';
+import productAgent from '../../utils/agent/products';
 import './orderItem.sass';
 
 export const OrderItem = (props) => {
-  const { product, cancelOrder, doneOrder, orderId, status } = props;
+  const {
+    cancelOrder,
+    doneOrder,
+    orderId,
+    productId,
+    status,
+  } = props;
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await productAgent.loadById(productId);
+      setProduct(response.product);
+    }
+    loadProduct();
+  }, []);
 
   return (
     <div className="ordercard">
@@ -33,7 +50,18 @@ export const OrderItem = (props) => {
 };
 
 export const HistoryOrderItem = (props) => {
-  const { product, status } = props;
+  const { status, productId } = props;
+
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await productAgent.loadById(productId);
+      setProduct(response.product);
+    }
+    loadProduct();
+  }, []);
+
   return (
     <div className="ordercard">
       <img className="ordrcard__img" src={product.img} alt="pizza" />

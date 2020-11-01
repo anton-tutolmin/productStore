@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import productAgent from '../../utils/agent/products';
+import userAgent from '../../utils/agent/user';
 import { CardButton } from '../buttons/cardButton.jsx';
 import './deliveryItem.sass';
 
 export const DeliveryItem = (props) => {
-  const { product, client, orderId, status, deliver } = props;
+  const { orderId, productId, clientId, status, deliver } = props;
+
+  const [product, setProduct] = useState({});
+  const [client, setClient] = useState({});
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await productAgent.loadById(productId);
+      setProduct(response.product);
+    }
+    async function loadClient() {
+      const response = await userAgent.loadById(clientId);
+      setClient(response.client);
+    }
+    loadProduct();
+    loadClient();
+  }, []);
 
   return (
     <div className="deliverycard">
@@ -39,7 +57,23 @@ export const DeliveryItem = (props) => {
 };
 
 export const HistoryDeliveryItem = (props) => {
-  const { product, client, status } = props;
+  const { productId, clientId, status } = props;
+
+  const [product, setProduct] = useState({});
+  const [client, setClient] = useState({});
+
+  useEffect(() => {
+    async function loadProduct() {
+      const response = await productAgent.loadById(productId);
+      setProduct(response.product);
+    }
+    async function loadClient() {
+      const response = await userAgent.loadById(clientId);
+      setClient(response.client);
+    }
+    loadProduct();
+    loadClient();
+  }, []);
 
   return (
     <div className="deliverycard">

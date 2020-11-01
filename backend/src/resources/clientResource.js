@@ -42,7 +42,7 @@ class ClientMongoResource {
 
   validateId(id) {
     if (!this.Mongoose.Types.ObjectId.isValid(id)) {
-      throw new Error(errors.notCorrectId);
+      throw new Error(errors.notCorrectClientId);
     }
   }
 }

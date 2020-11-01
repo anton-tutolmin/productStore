@@ -1,9 +1,17 @@
 import axios from './axios';
 
-const update = async (param, id) => {
+const loadById = async (userId) => {
+  const response = await axios.get(`/api/clients/${userId}`);
+  return response.data;
+};
+
+const update = async (param, userId, userType) => {
   const response = await axios({
     method: 'PUT',
-    url: `/api/users/${id}`,
+    url:
+      userType === 'client'
+        ? `/api/clients/${userId}`
+        : `/api/curiers/${userId}`,
     data: param,
     headers: {
       authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -12,4 +20,4 @@ const update = async (param, id) => {
   return response.data;
 };
 
-export default { update };
+export default { update, loadById };

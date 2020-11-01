@@ -7,8 +7,8 @@ const ClientSchema = new Schema({
     index: true,
   },
   email: {
-    unique: true,
     type: String,
+    unique: true,
     index: true,
   },
   password: String,
@@ -20,4 +20,4 @@ const ClientSchema = new Schema({
   balance: Number,
 });
 
-module.exports = model('users', ClientSchema);
+module.exports = model('clients', ClientSchema);

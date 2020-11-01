@@ -32,11 +32,11 @@ const Orders = (props) => {
       return (
         <div className="orders__container" key={o.id}>
           <OrderItem
-            product={o.product}
             cancelOrder={cancelOrder}
             doneOrder={doneOrder}
             orderId={o.id}
             status={o.status}
+            productId={o.productId}
           />
         </div>
       );
@@ -52,9 +52,9 @@ const Orders = (props) => {
       return (
         <div className="orders__container" key={o.id}>
           <HistoryOrderItem
-            product={o.product}
             orderId={o.id}
             status={o.status}
+            productId={o.productId}
           />
         </div>
       );

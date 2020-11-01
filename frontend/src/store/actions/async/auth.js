@@ -10,22 +10,21 @@ import {
 export const doAuth = () => {
   return async (dispatch) => {
     if (localStorage.getItem('token')) {
-      const user = await agent.load();
-
-      if (user.error) {
-        dispatch(addNotification(user.error));
-      } else if (user.message) {
-        dispatch(addNotification(user.message));
+      const response = await agent.load();
+      if (response.error) {
+        dispatch(addNotification(response.error));
+      } else if (response.message) {
+        dispatch(addNotification(response.message));
       } else {
         dispatch(authorize());
         dispatch(
           loadUser({
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            phone: user.phone,
-            balance: user.balance,
-            type: user.type,
+            id: response.user.id,
+            username: response.user.username,
+            email: response.user.email,
+            phone: response.user.phone,
+            balance: response.user.balance,
+            type: response.user.type,
           }),
         );
       }

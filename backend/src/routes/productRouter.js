@@ -14,16 +14,16 @@ router
 
   .get('/api/products', productController.getAll.bind(productController))
 
-  .get('/api/products:id', productController.getById.bind(productController))
+  .get('/api/products/:id', productController.getById.bind(productController))
 
   .put(
-    '/api/products:id',
+    '/api/products/:id',
     jwtMiddleware,
     productController.updateById.bind(productController),
   )
 
   .delete(
-    '/api/products:id',
+    '/api/products/:id',
     jwtMiddleware,
     productController.deleteById.bind(productController),
   );

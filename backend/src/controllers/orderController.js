@@ -11,7 +11,7 @@ class OrderController {
       ctx.state.user,
     );
 
-    ctx.response.body = { order };
+    ctx.response.body = { order, message: 'Order created' };
   }
 
   async getAll(ctx, next) {
@@ -24,14 +24,22 @@ class OrderController {
     ctx.response.body = { order };
   }
 
-  async getByClientId(ctx, next) {
-    const orders = await this.orderService.getByClientId(ctx.params.id);
+  async getByUserId(ctx, next) {
+    const getMethods = {
+      client: this.getByClientId.bind(this),
+      curier: this.getByCurierId.bind(this),
+    };
+
+    const orders = await getMethods[ctx.state.user.type](ctx.params.id);
     ctx.response.body = { orders };
   }
 
-  async getByCurierId(ctx, next) {
-    const orders = await this.orderService.getByCurierId(ctx.params.id);
-    ctx.response.body = { orders };
+  async getByClientId(clientId) {
+    return await this.orderService.getByClientId(clientId);
+  }
+
+  async getByCurierId(curierId) {
+    return await this.orderService.getByCurierId(curierId);
   }
 
   async getRequests(ctx, next) {
@@ -40,7 +48,11 @@ class OrderController {
   }
 
   async updateById(ctx, next) {
-    await this.orderService.updateById(ctx.params.id, ctx.request.body);
+    await this.orderService.updateById(
+      ctx.params.id,
+      ctx.request.body,
+      ctx.state.user,
+    );
     ctx.response.body = { message: 'Order updated' };
   }
 

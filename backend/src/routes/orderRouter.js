@@ -25,15 +25,9 @@ router
   )
 
   .get(
-    '/api/clients/:id/orders',
+    '/api/users/:id/orders',
     jwtMiddleware,
-    orderController.getByClientId.bind(orderController),
-  )
-
-  .get(
-    '/api/curiers/:id/orders',
-    jwtMiddleware,
-    orderController.getByCurierId.bind(orderController),
+    orderController.getByUserId.bind(orderController),
   )
 
   .get(

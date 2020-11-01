@@ -7,7 +7,7 @@ class ClientController {
 
   async create(ctx, next) {
     const user = await this.clientService.create(ctx.request.body);
-    ctx.response.body = { user };
+    ctx.response.body = { user, message: 'User created' };
   }
 
   async getAll(ctx, next) {

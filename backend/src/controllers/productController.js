@@ -7,7 +7,7 @@ class ProductController {
 
   async create(ctx, next) {
     const product = await this.productService.create(ctx.request.body);
-    ctx.response.body = { product };
+    ctx.response.body = { product, message: 'Product created' };
   }
 
   async getAll(ctx, next) {

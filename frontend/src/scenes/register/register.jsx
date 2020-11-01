@@ -73,10 +73,7 @@ const Register = (props) => {
     if (!isValid()) {
       props.showError('Wrong filled fields');
     } else {
-      props.submit({
-        ...state,
-        type: state.type === 'client' ? 1 : 2,
-      });
+      props.submit(state);
     }
   };
 

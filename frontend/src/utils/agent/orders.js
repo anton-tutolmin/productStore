@@ -18,7 +18,13 @@ const order = async (productId) => {
 
 const load = async (userId) => {
   try {
-    const response = await axios.get(`/api/users/${userId}/orders`);
+    const response = await axios({
+      method: 'GET',
+      url: `/api/users/${userId}/orders`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
     return response.data;
   } catch (error) {
     return { error };

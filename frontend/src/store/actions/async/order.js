@@ -13,7 +13,7 @@ import {
 
 export const doOrderProduct = (product, indexInCart) => {
   return async (dispatch) => {
-    const response = await agent.order(product._id);
+    const response = await agent.order(product.id);
     if (response.error) {
       dispatch(addNotification(response.error));
     } else if (response.message) {
@@ -31,6 +31,7 @@ export const doLoadOrders = (userId) => {
     }
 
     const response = await agent.load(userId);
+
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
@@ -56,7 +57,7 @@ export const doLoadRequests = () => {
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
-      dispatch(loadRequests(response.requests));
+      dispatch(loadRequests(response.orders));
     }
   };
 };

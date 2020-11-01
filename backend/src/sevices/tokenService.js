@@ -23,7 +23,7 @@ class TokenService {
     }
 
     if (!user) {
-      return { error: 'Wrong username' };
+      throw new Error('Wrong username');
     }
 
     const isValidPassword = await this.hashService.validatePassword(
@@ -31,8 +31,8 @@ class TokenService {
       user.password,
     );
 
-    if (isValidPassword) {
-      return { error: 'Wrong password' };
+    if (!isValidPassword) {
+      throw new Error('Wrong password');
     }
 
     return this.jwt.sign({ id: user.id, type }, jwtKey);
@@ -40,7 +40,7 @@ class TokenService {
 
   async register(requestBody) {
     if (requestBody.type !== 'client' && requestBody.type !== 'curier') {
-      return { error: 'Wrong user type' };
+      throw new Error('Wrong user type');
     }
 
     const user =

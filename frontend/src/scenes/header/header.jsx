@@ -90,10 +90,10 @@ const Header = (props) => {
           active={active}
           setActive={setActive}
         />
-        {userType === 1 ? (
+        {userType === 'client' ? (
           <ClientNavbarItems active={active} setActive={setActive} />
         ) : null}
-        {userType === 2 ? (
+        {userType === 'curier' ? (
           <CurierNavbarItems active={active} setActive={setActive} />
         ) : null}
         {auth ? (

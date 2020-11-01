@@ -62,7 +62,7 @@ class UserValidationService {
   }
 
   validateBalance(balance) {
-    if (!balance || typeof balance !== 'number' || balance < 0) {
+    if (typeof balance !== 'number' || balance < 0) {
       throw new Error(errors.notCorrectBalance);
     }
   }

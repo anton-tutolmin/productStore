@@ -23,7 +23,10 @@ class ClientService extends UserService {
       if (param === 'username') params.username = requestBody[param];
       if (param === 'email') params.email = requestBody[param];
       if (param === 'phone') params.phone = requestBody[param];
-      if (param === 'balance') params.balance = requestBody[param];
+      if (param === 'balance') {
+        const client = await this.getById(id);
+        params.balance = requestBody[param] + (await client).balance;
+      }
     }
 
     this.validationService.validateUpdateBody(params);
