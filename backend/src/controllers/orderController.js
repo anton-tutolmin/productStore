@@ -6,6 +6,10 @@ class OrderController {
   }
 
   async create(ctx, next) {
+    if (ctx.state.user.type !== 'client') {
+      throw new Error('Order product can only client');
+    }
+
     const order = await this.orderService.create(
       ctx.request.body,
       ctx.state.user,

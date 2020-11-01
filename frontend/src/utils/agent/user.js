@@ -1,6 +1,11 @@
 import axios from './axios';
 
-const loadById = async (userId) => {
+const loadByClientId = async (userId) => {
+  const response = await axios.get(`/api/clients/${userId}`);
+  return response.data;
+};
+
+const loadByCurierId = async (userId) => {
   const response = await axios.get(`/api/clients/${userId}`);
   return response.data;
 };
@@ -20,4 +25,4 @@ const update = async (param, userId, userType) => {
   return response.data;
 };
 
-export default { update, loadById };
+export default { update, loadByClientId, loadByCurierId };

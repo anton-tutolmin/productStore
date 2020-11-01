@@ -5,7 +5,7 @@ import Paths from '../../constants/paths';
 import './dropdown.sass';
 
 const Dropdown = (props) => {
-  const { toggleDropdown, auth } = props;
+  const { toggleDropdown, auth, userType } = props;
 
   useEffect(() => {
     document.body.classList.add('lock');
@@ -22,21 +22,27 @@ const Dropdown = (props) => {
           label="Products"
           toggleDropdown={toggleDropdown}
         />
-        <DropdownItem
-          path={Paths.order}
-          label="Orders"
-          toggleDropdown={toggleDropdown}
-        />
-        <DropdownItem
-          path={Paths.delivery}
-          label="Delivery"
-          toggleDropdown={toggleDropdown}
-        />
-        <DropdownItem
-          path={Paths.request}
-          label="Requests"
-          toggleDropdown={toggleDropdown}
-        />
+        {userType === 'client' ? (
+          <DropdownItem
+            path={Paths.order}
+            label="Orders"
+            toggleDropdown={toggleDropdown}
+          />
+        ) : null}
+        {userType === 'curier' ? (
+          <>
+            <DropdownItem
+              path={Paths.delivery}
+              label="Delivery"
+              toggleDropdown={toggleDropdown}
+            />
+            <DropdownItem
+              path={Paths.request}
+              label="Requests"
+              toggleDropdown={toggleDropdown}
+            />
+          </>
+        ) : null}
         {auth ? (
           <>
             <DropdownItem
@@ -100,6 +106,7 @@ export const RegisterItem = (props) => {
 const mapStateToProps = (state) => {
   return {
     auth: state.auth.auth,
+    userType: state.user.type,
   };
 };
 

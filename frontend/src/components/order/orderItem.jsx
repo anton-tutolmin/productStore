@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CardButton } from '../buttons/cardButton.jsx';
+import { CardButton } from '../buttons/cardButton';
 import productAgent from '../../utils/agent/products';
 import './orderItem.sass';
 
@@ -50,7 +50,7 @@ export const OrderItem = (props) => {
 };
 
 export const HistoryOrderItem = (props) => {
-  const { status, productId } = props;
+  const { status, orderId, productId } = props;
 
   const [product, setProduct] = useState({});
 
