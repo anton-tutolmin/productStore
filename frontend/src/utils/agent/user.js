@@ -6,7 +6,7 @@ const loadByClientId = async (userId) => {
 };
 
 const loadByCurierId = async (userId) => {
-  const response = await axios.get(`/api/clients/${userId}`);
+  const response = await axios.get(`/api/curiers/${userId}`);
   return response.data;
 };
 

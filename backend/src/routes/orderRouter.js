@@ -39,6 +39,18 @@ router
   .get(
     '/api/orders/:id/candidates',
     orderController.getCandidantesByOrderId.bind(orderController),
+  )
+
+  .post(
+    '/api/orders/:id/candidates',
+    jwtMiddleware,
+    orderController.setCandidate.bind(orderController),
+  )
+
+  .put(
+    '/api/orders/:id/candidates',
+    jwtMiddleware,
+    orderController.pickCandidate.bind(orderController),
   );
 
 module.exports = router;

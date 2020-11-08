@@ -44,7 +44,20 @@ class OrderService {
 
   async getById(id) {
     const order = await this.orderResource.getById(id);
-    return order ? new OrderDto(order) : null;
+
+    if (!order) return null;
+
+    const response = {};
+
+    response.status = order.status;
+    response.product = await this.productService.getById(order.productId);
+    response.client = await this.clientService.getById(order.clientId);
+
+    if (order.curierId !== 'none') {
+      response.curier = await this.curierService.getById(order.curierId);
+    }
+
+    return response;
   }
 
   async getByClientId(clientId) {
@@ -62,9 +75,14 @@ class OrderService {
     return orders.map((o) => new OrderDto(o));
   }
 
-  async getRequests() {
-    const orders = await this.orderResource.getRequests();
-    return orders.map((o) => new OrderDto(o));
+  async getRequests(curierId) {
+    let requests = await this.orderResource.getRequests();
+    let candidacy = await this.orderResource.getCandidatesByCurierId(curierId);
+
+    candidacy = candidacy.map((o) => o.orderId);
+    requests = requests.filter((r) => !candidacy.includes(r._id.toString()));
+
+    return requests.map((r) => new OrderDto(r));
   }
 
   async updateById(id, params, user) {
@@ -135,6 +153,12 @@ class OrderService {
   }
 
   async setCandidate({ orderId, curierId }) {
+    const isExist = await this.orderResource.checkIfExist(orderId, curierId);
+
+    if (isExist) {
+      return null;
+    }
+
     return await this.orderResource.setCandidate(orderId, curierId);
   }
 
@@ -150,8 +174,8 @@ class OrderService {
     return curiers;
   }
 
-  async electCandidate({ orderId, curierId }) {
-    await this.orderResource.deleteCandidateByOrderId(orderId);
+  async pickCandidate(orderId, curierId) {
+    await this.orderResource.deleteCandidatesByOrderId(orderId);
     await this.orderResource.updateById(orderId, {
       curierId,
       status: 'delivering',

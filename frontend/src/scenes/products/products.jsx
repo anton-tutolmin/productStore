@@ -7,6 +7,7 @@ import './products.sass';
 
 const Products = (props) => {
   const { products, add, loading } = props;
+
   return (
     <div className="products">
       {loading ? (

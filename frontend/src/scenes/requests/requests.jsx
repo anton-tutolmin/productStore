@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { RequestItem } from '../../components/request/requestItem.jsx';
-import { doTakeRequest } from '../../store/actions/async/order';
+import { doGetRequest } from '../../store/actions/async/order';
 import { Loader } from '../../components/loader/loader.jsx';
 import './requests.sass';
 
 const Requests = (props) => {
   const { requests, loading, takeRequest } = props;
 
-  const onTakeRequest = (orderId) => {
+  const onGetRequest = (orderId) => {
     takeRequest(orderId);
   };
 
@@ -23,7 +23,7 @@ const Requests = (props) => {
               orderId={r.id}
               productId={r.productId}
               clientId={r.clientId}
-              take={onTakeRequest}
+              get={onGetRequest}
             />
           </div>
         ))
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  takeRequest: (orderId) => dispatch(doTakeRequest(orderId)),
+  takeRequest: (orderId) => dispatch(doGetRequest(orderId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

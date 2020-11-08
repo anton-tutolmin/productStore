@@ -5,7 +5,7 @@ import userAgent from '../../utils/agent/user';
 import './requestItem.sass';
 
 export const RequestItem = (props) => {
-  const { orderId, productId, clientId, take } = props;
+  const { orderId, productId, clientId, get } = props;
 
   const [product, setProduct] = useState({});
   const [client, setClient] = useState({});
@@ -40,7 +40,7 @@ export const RequestItem = (props) => {
             </span>
           </li>
           <li>
-            <CardButton label="Get" onClick={() => take(orderId)} />
+            <CardButton label="Get" onClick={() => get(orderId)} />
           </li>
         </ul>
       </div>

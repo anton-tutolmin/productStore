@@ -7,10 +7,7 @@ import {
 import { Loader } from '../../components/loader/loader.jsx';
 import { Empty } from '../../components/empties/empty.jsx';
 import { OrderTitle } from '../../components/titles/order/orderTitle.jsx';
-import {
-  doDoneOrder,
-  doCancelOrder,
-} from '../../store/actions/async/order';
+import { doDoneOrder, doCancelOrder } from '../../store/actions/async/order';
 import './orders.sass';
 
 const Orders = (props) => {
@@ -32,11 +29,9 @@ const Orders = (props) => {
       return (
         <div className="orders__container" key={o.id}>
           <OrderItem
+            order={o}
             cancelOrder={cancelOrder}
             doneOrder={doneOrder}
-            orderId={o.id}
-            status={o.status}
-            productId={o.productId}
           />
         </div>
       );
@@ -51,11 +46,7 @@ const Orders = (props) => {
     result = result.map((o) => {
       return (
         <div className="orders__container" key={o.id}>
-          <HistoryOrderItem
-            orderId={o.id}
-            status={o.status}
-            productId={o.productId}
-          />
+          <HistoryOrderItem order={o} />
         </div>
       );
     });

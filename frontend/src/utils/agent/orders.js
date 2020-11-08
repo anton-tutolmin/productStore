@@ -31,6 +31,21 @@ const load = async (userId) => {
   }
 };
 
+const loadById = async (orderId) => {
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: `/api/orders/${orderId}`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return { error };
+  }
+};
+
 const update = async (orderId, status) => {
   try {
     const response = await axios({
@@ -64,4 +79,58 @@ const loadRequests = async () => {
   }
 };
 
-export default { order, load, update, loadRequests };
+const getRequest = async (orderId) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      data: {
+        orderId,
+      },
+      url: `/api/orders/${orderId}/candidates`,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return { error };
+  }
+};
+
+const loadCandidates = async (orderId) => {
+  try {
+    const response = await axios.get(`/api/orders/${orderId}/candidates`);
+    return response.data;
+  } catch (error) {
+    return { error };
+  }
+};
+
+const pickCandidate = async (orderId, curierId) => {
+  try {
+    const response = await axios({
+      method: 'PUT',
+      url: `/api/orders/${orderId}/candidates`,
+      data: {
+        curierId,
+      },
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return { error };
+  }
+};
+
+export default {
+  order,
+  load,
+  loadById,
+  update,
+  loadRequests,
+  getRequest,
+  loadCandidates,
+  pickCandidate,
+};

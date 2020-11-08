@@ -2,21 +2,33 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Paths from '../constants/paths';
-import Header from './header/header.jsx';
-import Products from './products/wrapper.jsx';
-import Orders from './orders/wrapper.jsx';
-import Delivery from './delivery/wrapper.jsx';
-import Request from './requests/wrapper.jsx';
-import Register from './register/register.jsx';
-import Login from './login/login.jsx';
-import { Main } from './main/main.jsx';
-import Profile from './profile/profile.jsx';
-import Notifications from './notification/notifications.jsx';
-import { Footer } from './footer/footer.jsx';
-import CartMobile from './cart/cartMobile.jsx';
+import Header from './header/header';
+import Products from './products/wrapper';
+import Orders from './orders/wrapper';
+import Delivery from './delivery/wrapper';
+import Request from './requests/wrapper';
+import Register from './register/register';
+import Login from './login/login';
+import { Main } from './main/main';
+import Profile from './profile/profile';
+import Notifications from './notification/notifications';
+import { Footer } from './footer/footer';
+import CartMobile from './cart/cartMobile';
+import { OrderInfo } from './orderInfo/orderInfo';
 
 const ClientRoutes = () => {
-  return <Route path={Paths.order} component={Orders} />;
+  return [
+    <Route
+      path={Paths.order}
+      component={Orders}
+      key={`${Math.random()}order`}
+    />,
+    <Route
+      path="/order/:id"
+      component={OrderInfo}
+      key={`${Math.random()}order-info`}
+    />,
+  ];
 };
 
 const CurierRoutes = () => {

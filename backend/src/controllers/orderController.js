@@ -25,7 +25,7 @@ class OrderController {
 
   async getById(ctx, next) {
     const order = await this.orderService.getById(ctx.params.id);
-    ctx.response.body = { order };
+    ctx.response.body = { ...order };
   }
 
   async getByUserId(ctx, next) {
@@ -47,7 +47,7 @@ class OrderController {
   }
 
   async getRequests(ctx, next) {
-    const orders = await this.orderService.getRequests();
+    const orders = await this.orderService.getRequests(ctx.state.user.id);
     ctx.response.body = { orders };
   }
 
@@ -74,18 +74,31 @@ class OrderController {
   }
 
   async setCandidate(ctx, next) {
-    await this.orderService.setCandidate({
+    const candidate = await this.orderService.setCandidate({
       ...ctx.request.body,
       curierId: ctx.state.user.id,
     });
+
+    if (!candidate) {
+      throw new Error('Already candidate');
+    }
+
     ctx.response.body = { message: 'Candidacy accepted' };
   }
 
   async getCandidantesByOrderId(ctx, next) {
-    const candidates = await this.orderService.getCandidantesByOrderId(
-      ctx.parans.id,
+    const candidates = await this.orderService.getCandidatesByOrderId(
+      ctx.params.id,
     );
     ctx.response.body = { candidates };
+  }
+
+  async pickCandidate(ctx, next) {
+    await this.orderService.pickCandidate(
+      ctx.params.id,
+      ctx.request.body.curierId,
+    );
+    ctx.response.body = { message: 'Candidate is picked' };
   }
 }
 

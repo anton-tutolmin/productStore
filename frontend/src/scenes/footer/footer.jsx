@@ -29,8 +29,6 @@ export const Footer = () => {
 
 const Info = () => {
   return (
-    <div className="footer__info">
-      Copyright © 2017-2020 HUP by John Rambo
-    </div>
+    <div className="footer__info">Copyright © 2017-2020 HUP by John Rambo</div>
   );
 };

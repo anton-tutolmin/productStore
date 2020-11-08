@@ -62,9 +62,9 @@ export const doLoadRequests = () => {
   };
 };
 
-export const doTakeRequest = (orderId) => {
+export const doGetRequest = (orderId) => {
   return async (dispatch) => {
-    const response = await agent.update(orderId, 'delivering');
+    const response = await agent.getRequest(orderId);
     if (response.error) {
       dispatch(addNotification(response.error));
     } else {
