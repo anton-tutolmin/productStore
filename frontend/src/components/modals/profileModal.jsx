@@ -23,7 +23,7 @@ export const ProfileModal = (props) => {
           />
           <button
             type="submit"
-            className="modal__subnit-btn"
+            className="modal__submit-btn"
             onClick={(e) => {
               e.preventDefault();
               onSubmit(value, props.label);

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import {
   OrderItem,
   HistoryOrderItem,
-} from '../../components/order/orderItem.jsx';
-import { Loader } from '../../components/loader/loader.jsx';
-import { Empty } from '../../components/empties/empty.jsx';
-import { OrderTitle } from '../../components/titles/order/orderTitle.jsx';
+} from '../../components/orderCard/orderCard';
+import { Loader } from '../../components/loader/loader';
+import { Empty } from '../../components/empties/empty';
+import { OrderTitle } from '../../components/titles/order/orderTitle';
 import { doDoneOrder, doCancelOrder } from '../../store/actions/async/order';
 import './orders.sass';
 

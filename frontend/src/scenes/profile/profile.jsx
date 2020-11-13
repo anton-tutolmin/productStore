@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-import {
-  faEdit,
-  faCreditCard,
-} from '@fortawesome/free-solid-svg-icons';
-
+import { faEdit, faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { TextLine } from '../../components/profile/textLine.jsx';
 import { ProfileModal } from '../../components/modals/profileModal.jsx';
 import { CardButton } from '../../components/buttons/cardButton.jsx';
