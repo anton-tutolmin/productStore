@@ -1,11 +1,12 @@
 @import '../../constants/colors'
   
 .rating-modal
-  z-index: 1000
-  position: relative
+  z-index: 100
+  position: fixed
+  top: 40%
   width: 320px
   height: 100px
-  margin: 250px 0 0 250px
+  padding: 15px
   background-color: $navbar_bgn
   border-radius: 5px
 
@@ -13,6 +14,21 @@
   margin: 0 5px
   color: $text_color
   font-size: 2rem
+  &:hover
+    cursor: pointer
 
 .gold-star
   color: $text_hover_color
+
+.rating-modal__label
+  margin-bottom: 10px
+  color: $text_color
+  font-family: Arial, Helvetica, sans-serif
+
+.rating-modal__stars
+  width: 230px
+  margin: 0 auto
+
+.rating-modal__container
+  display: flex
+  justify-content: center

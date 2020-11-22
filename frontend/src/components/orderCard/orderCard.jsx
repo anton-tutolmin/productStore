@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CardButton } from '../buttons/cardButton';
 import productAgent from '../../utils/agent/products';
+import { RatingModal } from '../modals/ratingModal';
 import './orderItem.sass';
 
 export const OrderItem = (props) => {
-  const { order, cancelOrder, doneOrder } = props;
+  const { order, cancelOrder, doneOrder, handleRatingCurier } = props;
 
   const [product, setProduct] = useState({});
+  const [isShowRatingModal, setIsShowRatingModal] = useState(false);
 
   const history = useHistory();
 
@@ -27,7 +29,7 @@ export const OrderItem = (props) => {
 
   const handleDoneOrder = (e) => {
     e.stopPropagation();
-    doneOrder(order.id);
+    setIsShowRatingModal(true);
   };
 
   const handleCancelOrder = (e) => {
@@ -35,30 +37,37 @@ export const OrderItem = (props) => {
     cancelOrder(order.id);
   };
 
+  const handleCloseRatingModal = (rating) => {
+    setIsShowRatingModal(false);
+    doneOrder(order.id);
+    handleRatingCurier(rating, order.curierId);
+  };
+
   return (
-    <div className="ordercard" onClick={handleOrderInfoRedirect}>
-      <img className="ordrcard__img" src={product.img} alt="pizza" />
-      <div className="ordercard__text">
-        <ul>
-          <li>{product.productname}</li>
-          <li>
-            <span className="ordercard__status">{order.status}</span>
-          </li>
-          <li>
-            <CardButton
-              label="Done"
-              onClick={handleDoneOrder}
-              disabled={order.status !== 'delivered'}
-            />
-            <CardButton
-              label="Cancel"
-              onClick={handleCancelOrder}
-              disabled={order.status !== 'created'}
-            />
-          </li>
-        </ul>
+    <>
+      <div className="ordercard" onClick={handleOrderInfoRedirect}>
+        <img className="ordrcard__img" src={product.img} alt="pizza" />
+        <div className="ordercard__text">
+          <ul>
+            <li>{product.productname}</li>
+            <li>
+              <span className="ordercard__status">{order.status}</span>
+            </li>
+            <li>
+              <CardButton label="Done" onClick={handleDoneOrder} />
+              <CardButton
+                label="Cancel"
+                onClick={handleCancelOrder}
+                disabled={order.status !== 'created'}
+              />
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+      {isShowRatingModal ? (
+        <RatingModal closeRatingModal={handleCloseRatingModal} />
+      ) : null}
+    </>
   );
 };
 

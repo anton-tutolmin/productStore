@@ -102,8 +102,8 @@ const Profile = (props) => {
           onClick={() => setShownModal(modals[3])}
         />
       </TextLine>
-      {shownModal}
       <CardButton label="Log out" onClick={logout} />
+      {shownModal}
     </div>
   );
 };

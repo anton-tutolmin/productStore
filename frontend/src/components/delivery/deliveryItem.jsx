@@ -16,8 +16,8 @@ export const DeliveryItem = (props) => {
       setProduct(response.product);
     }
     async function loadClient() {
-      const response = await userAgent.loadById(clientId);
-      setClient(response.client);
+      // const response = await userAgent.loadById(clientId);
+      // setClient(response.client);
     }
     loadProduct();
     loadClient();
@@ -25,11 +25,7 @@ export const DeliveryItem = (props) => {
 
   return (
     <div className="deliverycard">
-      <img
-        className="deliverycard__img"
-        src={product.img}
-        alt="pizza"
-      />
+      <img className="deliverycard__img" src={product.img} alt="pizza" />
       <div className="deliverycard__text">
         <ul>
           <li>
@@ -64,12 +60,12 @@ export const HistoryDeliveryItem = (props) => {
 
   useEffect(() => {
     async function loadProduct() {
-      const response = await productAgent.loadById(productId);
-      setProduct(response.product);
+      // const response = await productAgent.loadById(productId);
+      // setProduct(response.product);
     }
     async function loadClient() {
-      const response = await userAgent.loadById(clientId);
-      setClient(response.client);
+      // const response = await userAgent.loadById(clientId);
+      // setClient(response.client);
     }
     loadProduct();
     loadClient();
@@ -77,11 +73,7 @@ export const HistoryDeliveryItem = (props) => {
 
   return (
     <div className="deliverycard">
-      <img
-        className="deliverycard__img"
-        src={product.img}
-        alt="pizza"
-      />
+      <img className="deliverycard__img" src={product.img} alt="pizza" />
       <div className="deliverycard__text">
         <ul>
           <li>

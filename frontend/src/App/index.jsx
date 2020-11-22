@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Scenes from '../scenes/index.jsx';
 import { doAuth } from '../store/actions/async/auth';
 import './App.sass';
-import { RatingModal } from '../components/modals/ratingModal';
 
 const App = (props) => {
   useEffect(() => {
@@ -16,8 +15,7 @@ const App = (props) => {
   return (
     <div className="app">
       <Router>
-        {/* <Scenes /> */}
-        <RatingModal />
+        <Scenes />
       </Router>
     </div>
   );

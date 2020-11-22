@@ -8,16 +8,9 @@ class RatingController {
   }
 
   async addRating(ctx, next) {
-    const isExist = await this.ratingCheckerService.checkIfExist(
-      ctx.request.body,
-    );
-
-    if (isExist) {
-      ctx.response.body = { message: 'Rating already added' };
-    } else {
-      await this.ratingService.addRating(ctx.request.body);
-      ctx.response.body = { message: 'Rating is added' };
-    }
+    const clientId = ctx.state.user.id;
+    await this.ratingService.addRating({ clientId, ...ctx.request.body });
+    ctx.response.body = { message: 'Rating is added' };
   }
 
   async removeRating(ctx, next) {

@@ -8,6 +8,7 @@ import { Loader } from '../../components/loader/loader';
 import { Empty } from '../../components/empties/empty';
 import { OrderTitle } from '../../components/titles/order/orderTitle';
 import { doDoneOrder, doCancelOrder } from '../../store/actions/async/order';
+import { addRating } from '../../utils/agent/rating';
 import './orders.sass';
 
 const Orders = (props) => {
@@ -21,6 +22,10 @@ const Orders = (props) => {
     done(orderId);
   };
 
+  const handleRatingCurier = (rating, curierId) => {
+    addRating(rating, curierId);
+  };
+
   const getUnfinishedOrders = () => {
     let result = orders.filter(
       (o) => o.status !== 'canceled' && o.status !== 'done',
@@ -32,6 +37,7 @@ const Orders = (props) => {
             order={o}
             cancelOrder={cancelOrder}
             doneOrder={doneOrder}
+            handleRatingCurier={handleRatingCurier}
           />
         </div>
       );

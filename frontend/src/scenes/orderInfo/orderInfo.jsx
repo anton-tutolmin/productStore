@@ -100,6 +100,7 @@ function CandidateItem(props) {
   return (
     <div className="candidate__item">
       <div>{candidate.username}</div>
+      <div>{candidate.rating}</div>
       <div>
         <CardButton label="Pick" onClick={() => pickCandidate(candidate)} />
       </div>

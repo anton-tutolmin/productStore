@@ -2,6 +2,7 @@ const { orderMongoResource } = require('../resources/orderResource');
 const { clientService } = require('./clientService');
 const { curierService } = require('./curierService');
 const { productService } = require('./productService');
+const { ratingService } = require('./ratingService');
 const { orderValidationService } = require('./orderValidationService');
 const { Order } = require('../entities/order');
 const { OrderDto } = require('../dto/orderDto');
@@ -12,12 +13,14 @@ class OrderService {
     clientService,
     curierService,
     productService,
+    ratingService,
     validationService,
   ) {
     this.orderResource = orderResource;
     this.clientService = clientService;
     this.curierService = curierService;
     this.productService = productService;
+    this.ratingService = ratingService;
     this.validationService = validationService;
   }
 
@@ -168,7 +171,8 @@ class OrderService {
 
     for (const candidate of candidates) {
       const curier = await this.curierService.getById(candidate.curierId);
-      curiers.push(curier);
+      const rating = await this.ratingService.getCurierRating(curier.id);
+      curiers.push({...curier, rating});
     }
 
     return curiers;
@@ -190,6 +194,7 @@ module.exports = {
     clientService,
     curierService,
     productService,
+    ratingService,
     orderValidationService,
   ),
 };
